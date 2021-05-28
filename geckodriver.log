@@ -58,3 +58,76 @@ webdriverClickElement@chrome://marionette/content/interaction.js:179:31
 
 ###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
 
+1622177095440	geckodriver	INFO	Listening on 127.0.0.1:55167
+1622177096434	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileeLnusw"
+1622177099399	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1622177106185	Marionette	INFO	Listening on port 39001
+1622177106291	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.error: Region.jsm: "Error fetching region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 772))
+console.error: Region.jsm: "Failed to fetch region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 419))
+1622177264467	geckodriver	INFO	Listening on 127.0.0.1:51249
+1622177265471	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileSLD3vs"
+1622177267810	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1622177276483	Marionette	INFO	Listening on port 34305
+1622177276514	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.error: Region.jsm: "Error fetching region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 772))
+console.error: Region.jsm: "Failed to fetch region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 419))
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 34: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 34: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 34: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 34: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 34: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 34: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 34: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 34: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 34: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 34: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 34: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 34: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 34: TypeError: undefined is not a function
+1622177562898	Marionette	INFO	Stopped listening on port 34305
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+1622178063666	Marionette	INFO	Stopped listening on port 39001
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1622178487639	geckodriver	INFO	Listening on 127.0.0.1:35719
+1622178488585	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilegjQYIn"
+1622178495703	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+console.error: Region.jsm: "Error fetching region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 772))
+console.error: Region.jsm: "Failed to fetch region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 419))
+1622178510266	Marionette	INFO	Listening on port 41857
+1622178510538	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: , line 0: uncaught exception: undefined
+1622178556991	Marionette	INFO	Stopped listening on port 41857
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1622178755802	geckodriver	INFO	Listening on 127.0.0.1:36075
+1622178756805	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilehijUdo"
+1622178758873	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1622178763356	Marionette	INFO	Listening on port 37709
+1622178763434	Marionette	WARN	TLS certificate errors will be ignored for this session
+1622179033065	Marionette	INFO	Stopped listening on port 37709
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1622180558271	geckodriver	INFO	Listening on 127.0.0.1:53459
+1622180559239	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilemi87pc"
+1622180562387	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1622180568534	Marionette	INFO	Listening on port 39773
+1622180568605	Marionette	WARN	TLS certificate errors will be ignored for this session
+1622180818386	Marionette	INFO	Stopped listening on port 39773
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
