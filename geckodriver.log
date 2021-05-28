@@ -39,3 +39,22 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 
 ###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
 
+1622172565963	geckodriver	INFO	Listening on 127.0.0.1:38381
+1622172566072	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile9C6uXF"
+1622172569016	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+console.error: Region.jsm: "Error fetching region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 772))
+console.error: Region.jsm: "Failed to fetch region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 419))
+1622172580102	Marionette	INFO	Listening on port 42471
+1622172580230	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 3: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 3: TypeError: undefined is not a function
+1622172707916	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:237:19
+TimedPromise@chrome://marionette/content/sync.js:222:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:431:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+1622172947171	Marionette	INFO	Stopped listening on port 42471
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
