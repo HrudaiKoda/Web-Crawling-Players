@@ -149,3 +149,218 @@ _importChanges@resource://services-settings/RemoteSettingsClient.jsm:928:20
 console.warn: services.settings: security-state/cert-revocations sync interrupted by shutdown
 console.warn: services.settings: security-state/intermediates sync interrupted by shutdown
 console.warn: services.settings: security-state/onecrl sync interrupted by shutdown
+1622191416889	geckodriver	INFO	Listening on 127.0.0.1:60105
+1622191417847	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileI6hYai"
+1622191424465	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+console.error: Region.jsm: "Error fetching region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 772))
+console.error: Region.jsm: "Failed to fetch region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 419))
+1622191436822	Marionette	INFO	Listening on port 38019
+1622191437191	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 3: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 3: TypeError: undefined is not a function
+1622192554775	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:237:19
+TimedPromise@chrome://marionette/content/sync.js:222:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:431:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 575: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+1622194568158	Marionette	INFO	Stopped listening on port 38019
+1622194811533	geckodriver	INFO	Listening on 127.0.0.1:41255
+1622194812474	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile5WzYac"
+1622194825108	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+console.error: Region.jsm: "Error fetching region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 772))
+console.error: Region.jsm: "Failed to fetch region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 419))
+1622194842232	Marionette	INFO	Listening on port 45715
+1622194842540	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+1622196259289	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:237:19
+TimedPromise@chrome://marionette/content/sync.js:222:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:431:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+1622196470359	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:237:19
+TimedPromise@chrome://marionette/content/sync.js:222:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:431:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+1622197872833	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:237:19
+TimedPromise@chrome://marionette/content/sync.js:222:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:431:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+console.error: Region.jsm: "Error fetching region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 772))
+console.error: Region.jsm: "Failed to fetch region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 419))
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+1622198544288	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:237:19
+TimedPromise@chrome://marionette/content/sync.js:222:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:431:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+1622198691717	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:237:19
+TimedPromise@chrome://marionette/content/sync.js:222:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:431:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+1622198933517	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:237:19
+TimedPromise@chrome://marionette/content/sync.js:222:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:431:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+1622199089227	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:237:19
+TimedPromise@chrome://marionette/content/sync.js:222:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:431:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+1622199301353	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:237:19
+TimedPromise@chrome://marionette/content/sync.js:222:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:431:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+JavaScript error: https://cdn.taboola.com/libtrc/espn-network/loader.js, line 37: TypeError: undefined is not a function
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1622280877480	geckodriver	INFO	Listening on 127.0.0.1:42791
+1622280878648	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile07plD9"
+1622280887542	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+console.error: Region.jsm: "Error fetching region" (new AbortError("The operation was aborted. ", (void 0), 770))
+console.error: Region.jsm: "Failed to fetch region" (new Error("NO_RESULT", "resource://gre/modules/Region.jsm", 419))
+1622280897971	Marionette	INFO	Listening on port 44563
+1622280898898	Marionette	WARN	TLS certificate errors will be ignored for this session
+1622280922264	Marionette	INFO	Stopped listening on port 44563
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1622281822113	geckodriver	INFO	Listening on 127.0.0.1:36047
+1622281823120	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilekdH3a0"
+1622281825542	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1622281831666	Marionette	INFO	Listening on port 35011
+1622281831759	Marionette	WARN	TLS certificate errors will be ignored for this session
+1622282195708	Marionette	INFO	Stopped listening on port 35011
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1622282248223	geckodriver	INFO	Listening on 127.0.0.1:57219
+1622282249548	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile8Qyfcy"
+1622282254455	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1622282260244	Marionette	INFO	Listening on port 39431
+1622282260312	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://wassets.hscicdn.com/_next/static/chunks/c6d5f2fc3a575c88b89dd3e56571da980727d85e.b0c2c70eac1fdd1a5d4f.js, line 1: ReferenceError: Visitor is not defined
+1622282572090	Marionette	INFO	Stopped listening on port 39431
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1622282733108	geckodriver	INFO	Listening on 127.0.0.1:59409
+1622282734119	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilexYssWS"
+1622282736703	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1622282741260	Marionette	INFO	Listening on port 43175
+1622282741359	Marionette	WARN	TLS certificate errors will be ignored for this session
+1622282957159	Marionette	INFO	Stopped listening on port 43175
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
