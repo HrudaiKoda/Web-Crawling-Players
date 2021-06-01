@@ -372,3 +372,10 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 1622526285765	Marionette	WARN	TLS certificate errors will be ignored for this session
 JavaScript error: https://d2r1yp2w7bby2u.cloudfront.net/js/a.js, line 71: TypeError: window.v is undefined
 1622527017561	Marionette	INFO	Stopped listening on port 35979
+1622528548344	geckodriver	INFO	Listening on 127.0.0.1:35549
+1622528549355	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilelj8Q3n"
+1622528552033	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1622528558286	Marionette	INFO	Listening on port 44689
+1622528558406	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://d2r1yp2w7bby2u.cloudfront.net/js/a.js, line 71: TypeError: window.v is undefined
