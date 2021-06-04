@@ -88,10 +88,9 @@ edge_case_of_batting_style_and_role(a, ["Batting Style", "Playing Role"])
 clean_up_awards(a)
 clean_up_records(a)
 clean_up_major_trophies(a)
-
-a.replace('-', pd.NA)
-a.replace([], pd.NA)
-a.replace({}, pd.NA)
+a = a.replace(to_replace="-",value="")
+a = a.replace(to_replace="[]",value="")
+a = a.replace(to_replace="{}",value="")
 
 a.drop(a.columns[a.columns.str.contains('unnamed',case = False)],axis = 1, inplace = True)
 a.to_csv('final_cricket_players.csv', index=False)
