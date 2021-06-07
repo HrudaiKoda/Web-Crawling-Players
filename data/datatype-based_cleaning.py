@@ -38,8 +38,10 @@ def to_int_attrs(attributes):
     for attribute in attributes:
         for i, row in a.iterrows():
             if pd.isnull(a.at[i, attribute]):
+                a.at[i, attribute] = -1   
                 continue
             if str(a.at[i, attribute]) == "":
+                a.at[i, attribute] = -1
                 continue
             a.at[i, attribute] = int(float(a.at[i, attribute]))
 
@@ -49,8 +51,10 @@ def to_float_attrs(attributes):
     for attribute in attributes:
         for i, row in a.iterrows():
             if pd.isnull(a.at[i, attribute]):
+                a.at[i, attribute] = -1.0
                 continue
             if str(a.at[i, attribute]) == "":
+                a.at[i, attribute] = -1.0
                 continue
             a.at[i, attribute] = float(a.at[i, attribute])
 
@@ -72,14 +76,17 @@ il = batting_attributes + bowling_attributes + stat_attributes + ["Jersey_Number
 
 fl = [att for att in all_attributes if (not att in dl) and (not att in ll) and (not att in il) and (not att in sl)]
 
+a = pd.read_csv("Cleaned_dataset-datatype.csv", low_memory=False)
+
 # dict_attrs(dl)
 # list_attrs(ll)
 # to_int_attrs(il)
 # to_float_attrs(fl)
 
-# a.drop(a.columns[a.columns.str.contains('unnamed',case = False)],axis = 1, inplace = True)
-# a.to_csv('Cleaned_dataset-datatype.csv', index=False)
+# a[il] = a[il].astype(int)
+# a[fl] = a[fl].astype(float)
 
-a = pd.read_csv("Cleaned_dataset-datatype.csv", low_memory=False)
+a.drop(a.columns[a.columns.str.contains('unnamed',case = False)],axis = 1, inplace = True)
+a.to_csv('Cleaned_dataset-datatype.csv', index=False)
 report = sv.analyze(a, pairwise_analysis='off')
 report.show_html()
