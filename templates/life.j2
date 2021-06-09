@@ -1,19 +1,19 @@
 {%- if gender == "Male" -%}
-    {{- set gender_pronoun_1 = "అతడు" -}}
-    {{- set gender_pronoun_2 = "అతడి" -}}
-    {{- set has_played = "ఆడాడు" -}}
-    {{- set has_done = "చేశాడు" -}}
-    {{- set wears = "ధరిస్తాడు" -}}
-    {{- set has_taken = "తీసాడు" -}}
-    {{- set has_started = "ప్రారంభించాడు" -}}
+    {% set gender_pronoun_1 = "అతడు" %}
+    {% set gender_pronoun_2 = "అతడి" %}
+    {% set has_played = "ఆడాడు" %}
+    {% set has_done = "చేశాడు" %}
+    {% set wears = "ధరిస్తాడు" %}
+    {% set has_taken = "తీసాడు" %}
+    {% set has_started = "ప్రారంభించాడు" %}
 {%- else -%}
-    {{- set gender_pronoun_1 = "ఆమె" -}}
-    {{- set gender_pronoun_2 = "ఆమె" -}}
-    {{- set has_played = "ఆడింది" -}}
-    {{- set has_done = "చేసింది" -}}
-    {{- set wears = "ధరిస్తుంది" -}}
-    {{- set has_taken = "తీసింది" -}}
-    {{- set has_started = "ప్రారంభించింది" -}}
+    {% set gender_pronoun_1 = "ఆమె" %}
+    {% set gender_pronoun_2 = "ఆమె" %}
+    {% set has_played = "ఆడింది" %}
+    {% set has_done = "చేసింది" %}
+    {% set wears = "ధరిస్తుంది" %}
+    {% set has_taken = "తీసింది" %}
+    {% set has_started = "ప్రారంభించింది" %}
 {%- endif -%}
 
 
