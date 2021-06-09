@@ -1,0 +1,181 @@
+{#{%- if Gender == "Male" -%}
+    {{- gender_pronoun_1 = "అతడు" -}}
+    {{- set gender_pronoun_2 = "అతడి" -}}
+{%- else -%}
+    {{- set gender_pronoun_1 = "ఆమె" -}}
+    {{- set gender_pronoun_2 = "ఆమె" -}}
+{%- endif -%}#}
+
+{%- macro Infobox(Player_Name, Nationality, Full_Name, Born, Died, Age, Relations,career_span, Batting_Style, Bowling_Style, Height, Jersey_Number,Gender,Playing_Role,Teams,Test_Matches_debut, ODI_Matches_debut, T20I_Matches_debut, FC_Matches_debut, List_A_Matches_debut, T20_Matches_debut,Test_Matches_last_appearance, ODI_Matches_last_appearance, T20I_Matches_last_appearance, FC_Matches_last_appearance, List_A_Matches_last_appearance, T20_Matches_last_appearance) -%}
+    {{'{{Infobox '}}
+	|పేరు    		= {{Player_Name}}
+	|స్వదేశం 		= {{Nationality}}
+	|పూర్తి పేరు 	  = {{Full_Name}}
+    {%- if Born != 'nan' %}
+	|జననం        =  {{Born }}
+	{%- endif %}
+    {%- if Age != 'nan' %}
+	|వయస్సు       =  {{Age }}
+	{%- endif %}
+    {%- if Died != 'nan' %}
+	|మరణం       =  {{Died }}
+	{%- endif %}
+    |లింగం = {{Gender}}
+    {%- if career_span != "nan" %}
+	|క్రియాశీల సంవత్సరాలు       =  {{career_span }}
+	{%- endif %}
+    {%- if Batting_Style != 'nan' %}
+	|బ్యాటింగ్ శైలి      =  {{Batting_Style }}
+	{%- endif %}
+    {%- if Bowling_Style != 'nan' %}
+	|బౌలింగ్ శైలి       =  {{Bowling_Style }}
+	{%- endif %}
+    {%- if Height != 'nan' %}
+	|ఎత్తు     =  {{Height}}
+	{%- endif %}
+    {%- if Playing_Role != "nan" %}
+	|పాత్ర     =  {{Playing_Role}}
+	{%- endif %}
+    {%- if Jersey_Number != -1 %}
+	|జెర్సీ సంఖ్య	   =  {{Jersey_Number}}
+	{%- endif %}
+    {%- if Teams != 'nan' %}
+	|జట్లు     =  {{Teams}}
+	{%- endif %}
+    {%- if Test_Matches_debut != 'nan' %}
+	|టెస్ట్ క్రికెట్‌ కెరీర్‌లో తొలి మ్యాచ్	   =  {{Test_Matches_debut}}
+	{%- endif %}
+    {%- if ODI_Matches_debut != 'nan' %}
+	|వన్డే ఇంటర్నేషనల్‌ కెరీర్‌లో తొలి మ్యాచ్	   =  {{ODI_Matches_debut}}
+	{%- endif %}
+    {%- if T20I_Matches_debut != 'nan' %}
+	|టి20 అంతర్జాతీయ కెరీర్‌లో తొలి మ్యాచ్	   =  {{T20I_Matches_debut}}
+	{%- endif %}
+    {%- if T20_Matches_debut != 'nan' %}
+	|టీ20 లో తొలి మ్యాచ్	   =  {{T20_Matches_debut}}
+	{%- endif %}
+    {%- if List_A_Matches_debut != 'nan' %}
+	|లిస్ట్ ఏ కెరీర్ లో తొలి మ్యాచ్	   =  {{List_A_Matches_debut}}
+	{%- endif %}
+    {%- if FC_Matches_debut != 'nan' %}
+	|ఫస్ట్ క్లాస్ కెరీర్‌లో తొలి మ్యాచ్	   =  {{FC_Matches_debut}}
+	{%- endif %}
+    {%- if Test_Matches_last_appearance != 'nan' %}
+	|టెస్ట్ క్రికెట్‌ కెరీర్‌లో చివరి మ్యాచ్	   =  {{Test_Matches_last_appearance}}
+	{%- endif %}
+    {%- if ODI_Matches_last_appearance != 'nan' %}
+	|వన్డే ఇంటర్నేషనల్‌ కెరీర్‌లో చివరి మ్యాచ్	   =  {{ODI_Matches_last_appearance}}
+	{%- endif %}
+    {%- if T20I_Matches_last_appearance != 'nan' %}
+	|టి20 అంతర్జాతీయ కెరీర్‌లో చివరి మ్యాచ్		   =  {{T20I_Matches_last_appearance}}
+	{%- endif %}
+    {%- if T20_Matches_last_appearance != 'nan' %}
+	|టీ20 లో చివరి మ్యాచ్	   =  {{T20_Matches_last_appearance}}
+	{%- endif %}
+    {%- if List_A_Matches_last_appearance != 'nan' %}
+	|లిస్ట్ ఏ కెరీర్ లో చివరి మ్యాచ్	   =  {{List_A_Matches_last_appearance}}
+	{%- endif %}
+    {%- if FC_Matches_last_appearance != 'nan' %}
+	|ఫస్ట్ క్లాస్ కెరీర్‌లో చివరి మ్యాచ్	   =  {{FC_Matches_last_appearance}}
+	{%- endif %}
+    {%- if Relations != 'nan' %}
+	|బంధువులు	   =  {{Relations}}
+	{%- endif %}
+    {{'}}\n'}}
+{%- endmacro -%}
+
+{%- macro Overview(Gender,Full_Name,Born,Age,Nationality,career_span,Playing_Role,Batting_Style,Bowling_Style,Teams,Major_trophies,Records,AWARDS) -%}
+    ==పరిచయం==
+	{% if Gender == "Male" %}
+		{%- set gender_pronoun_1 = "అతడు" -%}
+		{%- set gender_pronoun_2 = "అతడి" -%}
+		{%- set gender_pronoun_3 = "ఆడాడు" -%}
+		{%- set gender_pronoun_4 = "పాల్గొన్నాడు" -%}
+		{%- set gender_pronoun_5 = "గెలుచుకున్నాడు" -%}
+
+	{%- else -%}
+		{%- set gender_pronoun_1 = "ఆమె" -%}
+		{%- set gender_pronoun_2 = "ఆమె" -%}
+		{%- set gender_pronoun_3 = "ఆడింది" -%}
+		{%- set gender_pronoun_4 = "పాల్గొనింది" -%}
+		{%- set gender_pronoun_5 = "గెలుచుకుంది" -%}
+	{%- endif -%}
+    {% if Born != 'nan' and Age != 'nan' -%}
+	{%-set line1 =  [Full_Name,'(జననం : ',Born,', వయసు: ',Age,')'] | join('')-%}
+        {{[line1] | random}}  
+    {%- elif Born != 'nan' -%}
+    {%-set line2 =  [Full_Name,'(జననం : ',Born,')'] | join('')-%}
+        {{[span_line2] | random}}
+    {%- elif Age != 'nan' -%}
+    {%-set line3 =  [Full_Name,'(వయసు: ',Age,')'] | join('')-%}
+        {{[line3] | random}}
+	(%- else -%})
+	{%-set line4 =  [Full_Name] | join('')-%}
+        {{[line4] | random}}
+    {%- endif -%}
+	 {{Nationality}} దేశానికి చెందిన క్రికెటర్. 
+    {%- if career_span != 'nan' -%}
+        {%- set span_line1=[' ',gender_pronoun_1,' కెరీర్ ',career_span, ' సంవత్సరాలలో విస్తరించింది. '] | join('')-%}
+		{%- set span_line2=[' ',career_span,' సంవత్సరాలలో ',gender_pronoun_2,' కెరీర్ విస్తరించింది. '] | join('')-%}
+		{{[span_line1,span_line2] | random}}
+	{%- endif -%}
+    {%- if Playing_Role != 'nan' -%}
+		{%- set span_role1=[gender_pronoun_1,' ',Playing_Role,'. '] | join('')-%}
+		{%- set span_role2=[Playing_Role,' ',gender_pronoun_2,' పాత్ర. '] | join('')-%}
+        {{[span_role1,span_role2] | random}}
+	{%- endif -%}
+    {%- if Batting_Style != 'nan' -%}
+    	{%-set line4 =  [gender_pronoun_2,' బాటింగ్ శైలి : ',Batting_Style,'. '] | join('')-%}
+        {{[line4] | random}}
+	{%- endif -%}
+    {%- if Bowling_Style != 'nan' -%}
+    {%-set line4 =  [gender_pronoun_2,' బౌలింగ్ శైలి : ',Bowling_Style,'. '] | join('')-%}
+        {{[line4] | random}}
+	{%- endif -%}
+    {%- if Teams != 'nan' -%}
+    	{%-set line4 =  [gender_pronoun_1,' '] | join('')-%}
+        {{[line4] | random}}
+	 	{%- for team in Teams -%}
+			{%-set line5 =  [team,', '] | join('')-%}
+			{{[line5] | random}}
+		{%- endfor -%}
+		{%-set line6 =  ['మొదలైన జట్టులలో ',gender_pronoun_3,'.'] | join('')-%}
+        {{[line6] | random}}
+	{%- endif -%}
+    {%- if Major_trophies != 'nan' -%}
+		{%- set line1 = [' ',gender_pronoun_1,' ' ] | join('') -%} 
+    {{[line1] | random}}
+{%- for key, value in Major_trophies.items() -%} 
+{%-set line5 =  [key,', '] | join('')-%}
+			{{[line5] | random}}
+			 {%- endfor -%}
+    	{%- set line2 = ['వంటి ఎన్నో ప్రసిద్ధి చెందిన ట్రోఫీలలో ', gender_pronoun_4, '. '] | join('') -%} 
+    {{[line2] | random}}
+	{%- endif -%}
+    {%- if Records != 'nan' -%}
+		{%- set line1 = [gender_pronoun_2,' పేరుకు '] | join('') -%}
+		{{[line1] | random}}
+		{%- for record in Records -%}
+			{%-set line5 =  [record,', '] | join('')-%}
+			{{[line5] | random}}
+		 {%- endfor -%}
+		 {%- set line2 = ['వంటి రికార్డులు ఉన్నాయి. '] | join('') -%}
+		{{[line2] | random}}
+	{%- endif -%}
+    {%- if AWARDS != 'nan' -%}
+		{{ AWARDS | first}} వంటి ఎన్నో అవార్డులు మరియు పురస్కారాలు {{gender_pronoun_5}}.	
+		{#{%- for award in AWARDS -%}
+			{%-set line5 =  [award,', '] | join('')-%}
+			{{[line5] | random}}
+				 {%- endfor -%}#} 
+	{%- endif -%}
+{%- endmacro -%}
+
+{# Function Calls Below#}
+
+{{- Infobox(Player_Name, Nationality, Full_Name, Born, Died, Age, Relations,career_span, Batting_Style, Bowling_Style, Height, Jersey_Number,Gender,Playing_Role,Teams,Test_Matches_debut, ODI_Matches_debut, T20I_Matches_debut, FC_Matches_debut, List_A_Matches_debut, T20_Matches_debut,Test_Matches_last_appearance, ODI_Matches_last_appearance, T20I_Matches_last_appearance, FC_Matches_last_appearance, List_A_Matches_last_appearance, T20_Matches_last_appearance) -}}
+
+{{- Overview(Gender,Full_Name,Born,Age,Nationality,career_span,Playing_Role,Batting_Style,Bowling_Style,Teams,Major_trophies,Records,AWARDS) -}}
+
+
+
