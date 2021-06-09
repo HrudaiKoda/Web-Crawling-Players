@@ -133,24 +133,41 @@
         {{[line4] | random}}
 	{%- endif -%}
     {%- if Teams != 'nan' -%}
-	 {{gender_pronoun_1}} {{Teams}} మొదలైన జట్టులలో {{gender_pronoun_3}}.
+    	{%-set line4 =  [gender_pronoun_1,' '] | join('')-%}
+        {{[line4] | random}}
+	 	{%- for team in Teams -%}
+			{%-set line5 =  [team,', '] | join('')-%}
+			{{[line5] | random}}
+		{%- endfor -%}
+		{%-set line6 =  ['మొదలైన జట్టులలో ',gender_pronoun_3,'.'] | join('')-%}
+        {{[line6] | random}}
 	{%- endif -%}
     {%- if Major_trophies != 'nan' -%}
-		{%- set line1 = [' ',gender_pronoun_1 ] | join('') -%} 
+		{%- set line1 = [' ',gender_pronoun_1,' ' ] | join('') -%} 
     {{[line1] | random}}
-{#{% for key, value in Major_trophies.items() %} {{key}} {% endfor %}#}
-    	{%- set line2 = [' వంటి ఎన్నో ప్రసిద్ధి చెందిన ట్రోఫీలలో ', gender_pronoun_4, '. '] | join('') -%} 
+{%- for key, value in Major_trophies.items() -%} 
+{%-set line5 =  [key,', '] | join('')-%}
+			{{[line5] | random}}
+			 {%- endfor -%}
+    	{%- set line2 = ['వంటి ఎన్నో ప్రసిద్ధి చెందిన ట్రోఫీలలో ', gender_pronoun_4, '. '] | join('') -%} 
     {{[line2] | random}}
 	{%- endif -%}
     {%- if Records != 'nan' -%}
-		{%- set line1 = [gender_pronoun_2,' పేరుకు ',Records,' వంటి రికార్డులు ఉన్నాయి. '] | join('') -%}
+		{%- set line1 = [gender_pronoun_2,' పేరుకు '] | join('') -%}
 		{{[line1] | random}}
+		{%- for record in Records -%}
+			{%-set line5 =  [record,', '] | join('')-%}
+			{{[line5] | random}}
+		 {%- endfor -%}
+		 {%- set line2 = ['వంటి రికార్డులు ఉన్నాయి. '] | join('') -%}
+		{{[line2] | random}}
 	{%- endif -%}
     {%- if AWARDS != 'nan' -%}
-		{{ AWARDS }} వంటి ఎన్నో అవార్డులు మరియు పురస్కారాలు {{gender_pronoun_5}}.
-		{%- for award in Awards -%}
-			 {{award}}
-		 {% endfor %}
+		{{ AWARDS | first}} వంటి ఎన్నో అవార్డులు మరియు పురస్కారాలు {{gender_pronoun_5}}.	
+		{#{%- for award in AWARDS -%}
+			{%-set line5 =  [award,', '] | join('')-%}
+			{{[line5] | random}}
+				 {%- endfor -%}#} 
 	{%- endif -%}
 {%- endmacro -%}
 
