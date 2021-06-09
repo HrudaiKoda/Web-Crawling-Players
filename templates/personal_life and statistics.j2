@@ -1,23 +1,23 @@
 {%- if gender == "Male" -%}
-    {{- set gender_pronoun_1 = "అతడు" -}}
-    {{- set gender_pronoun_2 = "అతడి" -}}
-    {{- set gender_pronoun_3 = "అతని" -}}
-    {{- set has_played = "ఆడాడు" -}}
-    {{- born = "జన్మించాడు" -}}
-    {{- has_done = "చేశాడు" -}}
-    {{- die = "మరణించాడు"-}}
-    {{- accomplish = "సాధించాడు" -}}
+    {% set gender_pronoun_1 = "అతడు" %}
+    {% set gender_pronoun_2 = "అతడి" %}
+    {% set gender_pronoun_3 = "అతని" %}
+    {% set has_played = "ఆడాడు" %}
+    {% set born = "జన్మించాడు" %}
+    {% set has_done = "చేశాడు" %}
+    {% set die = "మరణించాడు" %}
+    {% set accomplish = "సాధించాడు" %}
 
 
 {%- else -%}
-    {{- set gender_pronoun_1 = "ఆమె" -}}
-    {{- set gender_pronoun_2 = "ఆమె" -}}
-    {{- set gender_pronoun_3 = "ఆమె" -}}
-    {{- set has_played = "ఆడింది" -}}
-    {{- born = "జన్మించింది " -}}
-    {{- has_done = "చేసింది" -}}
-    {{- die = "మరణించింది"-}}
-    {{- accomplish = "సాధించింది" -}}
+    {% set gender_pronoun_1 = "ఆమె" %}
+    {% set gender_pronoun_2 = "ఆమె" %}
+    {% set gender_pronoun_3 = "ఆమె" %}
+    {% set has_played = "ఆడింది" %}
+    {% set born = "జన్మించింది " %}
+    {% set has_done = "చేసింది" %}
+    {% set die = "మరణించింది" %}
+    {% set accomplish = "సాధించింది" %}
 {%- endif -%}
 
 {% macro personal_life(Player_Name , birth_place , birth_date, Education ,Relations , death_date , deathplace )%}
@@ -171,4 +171,4 @@
 
 {{- personal_life(Player_Name , birth_place , birth_date, Education ,Relations , death_date , deathplace) -}}
 {{- statistical_analysis(HOME_Mat , AWAY_Mat ,NEUTRAL_Mat ,HOME_Avg , HOME_Runs,HOME_Wkts,AWAY_Avg , AWAY_Runs,AWAY_Wkts,NEUTRAL_Avg , NEUTRAL_Runs,NEUTRAL_Wkts) -}}
-{{- macro stat_table(Home_Span,AWAY_Span,NEUTRAL_Span,Home_Mat , AWAY_Mat , NEUTRAL_Mat,Home_Inns , AWAY_Inns , NEUTRAL_Inns,Home_Runs , AWAY_Runs , NEUTRAL_Runs,Home_NO , AWAY_NO , NEUTRAL_NO,Home_HS,AWAY_HS,NEUTRAL_HS,Home_Avg,AWAY_Avg,NEUTRAL_Avg,Home_SR,AWAY_SR,NEUTRAL_SR,Home_100s,AWAY_100s,NEUTRAL_100s,Home_50s,AWAY_50s,NEUTRAL_50s,Home_Wkts,AWAY_Wkts,NEUTRAL_Wkts,Home_BF,AWAY_BF,NEUTRAL_BF,Home_0s,AWAY_0s,NEUTRAL_0s,Home_4s,AWAY_4s,NEUTRAL_4s,Home_6s,AWAY_6s,NEUTRAL_6s) -}}
+{{- stat_table(Home_Span,AWAY_Span,NEUTRAL_Span,Home_Mat , AWAY_Mat , NEUTRAL_Mat,Home_Inns , AWAY_Inns , NEUTRAL_Inns,Home_Runs , AWAY_Runs , NEUTRAL_Runs,Home_NO , AWAY_NO , NEUTRAL_NO,Home_HS,AWAY_HS,NEUTRAL_HS,Home_Avg,AWAY_Avg,NEUTRAL_Avg,Home_SR,AWAY_SR,NEUTRAL_SR,Home_100s,AWAY_100s,NEUTRAL_100s,Home_50s,AWAY_50s,NEUTRAL_50s,Home_Wkts,AWAY_Wkts,NEUTRAL_Wkts,Home_BF,AWAY_BF,NEUTRAL_BF,Home_0s,AWAY_0s,NEUTRAL_0s,Home_4s,AWAY_4s,NEUTRAL_4s,Home_6s,AWAY_6s,NEUTRAL_6s) -}}
