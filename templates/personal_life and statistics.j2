@@ -1,29 +1,50 @@
+{%- if gender == "Male" -%}
+    {% set gender_pronoun_1 = "అతడు" %}
+    {% set gender_pronoun_2 = "అతడి" %}
+    {% set gender_pronoun_3 = "అతని" %}
+    {% set has_played = "ఆడాడు" %}
+    {% set born = "జన్మించాడు" %}
+    {% set has_done = "చేశాడు" %}
+    {% set die = "మరణించాడు" %}
+    {% set accomplish = "సాధించాడు" %}
+
+
+{%- else -%}
+    {% set gender_pronoun_1 = "ఆమె" %}
+    {% set gender_pronoun_2 = "ఆమె" %}
+    {% set gender_pronoun_3 = "ఆమె" %}
+    {% set has_played = "ఆడింది" %}
+    {% set born = "జన్మించింది " %}
+    {% set has_done = "చేసింది" %}
+    {% set die = "మరణించింది" %}
+    {% set accomplish = "సాధించింది" %}
+{%- endif -%}
 
 {% macro personal_life(Player_Name , birth_place , birth_date, Education ,Relations , death_date , deathplace )%}
     ==వ్యక్తిగత జీవితం== 
 
     {%- if birth_place != 'nan' and birth_date != 'nan'%}
-        {%- set line1 = [Player_Name, birth_place , "లో" ,birth_date,"న జన్మించాడు."] | join('')-%}
-        {%- set line2 = [Player_Name ,birth_date,"న",birth_place, "లో జన్మించాడు."] | join('')-%}
+        {%- set line1 = [Player_Name, birth_place , "లో" ,birth_date,"న ",born,"."] | join('')-%}
+        {%- set line2 = [Player_Name ,birth_date,"న",birth_place, "లో" ,born,"."] | join('')-%}
         {{[line1 , line2] | random}}
 
     {%- elif birth_date != 'nan' and birth_place == 'nan'%}
-        {%-set line1 =  [Player_Name ,birth_date,"న జన్మించాడు."] | join('')-%}
+        {%-set line1 =  [Player_Name ,birth_date,"న",born,"."] | join('')-%}
         {{[line1] | random}}
 
     {%- elif birth_date == 'nan' and birth_place != 'nan'%}
-        {%-set line1 =  [Player_Name ,birth_place, "లో జన్మించాడు."] | join('')-%}
+        {%-set line1 =  [Player_Name ,birth_place, "లో",born,"."] | join('')-%}
         {{[line1] | random}}
     {%- endif -%}
 
     {%- if Education != "nan"-%}
-        {%-set line1 = ["అతడు",Education, "లో విద్యను పూర్తి చేశాడు."] | join('')-%}
-        {%-set line2 = ["అతడు తన విద్యను",Education,"లో పూర్తి చేశాడు."] | join('')-%}
+        {%-set line1 = [gender_pronoun_1,Education, "లో విద్యను పూర్తి ",has_done,"."] | join('')-%}
+        {%-set line2 = [gender_pronoun_1," తన విద్యను",Education,"లో పూర్తి ",has_done,"."] | join('')-%}
         {{[line1 ,line2] | random}}
     {%- endif -%}
 
     {%- if Relations != "nan" -%}
-        {%-set line1 = ["అతని బంధువులు"] | join('')-%}
+        {%-set line1 = [gender_pronoun_2,"బంధువులు :"] | join('')-%}
         {{[line1] | random}}
             {%- for pair in Relations -%}
                 {{pair[0]+ ' - '}}
@@ -32,7 +53,7 @@
     {%-endif-%}
 
     {%-if death_date != 'nan'-%}
-        {%-set line1 = ["అతడు",death_date,"న",death_place,"లో మరణించాడు"] | join('')-%}
+        {%-set line1 = [gender_pronoun_1,death_date,"న",death_place,"లో",die] | join('')-%}
         {{[line1] | random}}
     {%- endif -%}
 {%endmacro%}
@@ -42,67 +63,67 @@
     ==గణాంక విశ్లేషణ==
 
     {%-if HOME_Mat != -1 -%}
-    {%-set line1 = ["అతని కెరీర్ మొత్తంలో",Player_Name,"తన సొంత దేశంలో",HOME_Mat,"ఆటలను ఆడాడు"] | join('') -%} 
-    {%-set line2 = [Player_Name,"తన కెరీర్ లో","తన సొంత దేశంలో",HOME_Mat,"ఆటలను ఆడాడు"] | join('') -%} 
+    {%-set line1 = [gender_pronoun_3," కెరీర్ మొత్తంలో",Player_Name,"తన సొంత దేశంలో",HOME_Mat,"ఆటలను",has_played] | join('') -%} 
+    {%-set line2 = [Player_Name,"తన కెరీర్ లో","తన సొంత దేశంలో",HOME_Mat,"ఆటలను",has_played] | join('') -%} 
     {{[line1 , line2] | random}}
     {%- endif-%}
 
     {%- if AWAY_Mat != -1-%}
-    {%-set line1 = ["ప్రత్యర్థి జట్టు దేశంలో",AWAY_Mat,"ఆటలను ఆడాడు"] | join('')-%}
-    {%-set line2 = ["మొత్తం",AWAY_Mat,"ఆటలను ప్రత్యర్థి దేశం జట్టులో ఆడాడు"] | join('')-%}
+    {%-set line1 = ["ప్రత్యర్థి జట్టు దేశంలో",AWAY_Mat,"ఆటలను",has_played] | join('')-%}
+    {%-set line2 = ["మొత్తం",AWAY_Mat,"ఆటలను ప్రత్యర్థి దేశం జట్టులో",has_played] | join('')-%}
     {{[line1,line2] | random}}
     {%- endif -%}
 
     {%- if NEUTRAL_Mat != -1-%}
-    {%-set line1 = ["మరియు ఆటలలో ఆడుతున్న రెండు జట్లకు తటస్థంగా ఉన్న దేశాలలో",NEUTRAL_Mat,"ఆటలను ఆడాడు"] | joim('')-%}
-    {%-set line1 = ["మరియు తటస్థంగా ఆడుతున్న రెండు దేశాల జట్లలో",NEUTRAL_Mat,"ఆటలను ఆడాడు"] | joim('')-%}
+    {%-set line1 = ["మరియు ఆటలలో ఆడుతున్న రెండు జట్లకు తటస్థంగా ఉన్న దేశాలలో",NEUTRAL_Mat,"ఆటలను",has_played] | joim('')-%}
+    {%-set line1 = ["మరియు తటస్థంగా ఆడుతున్న రెండు దేశాల జట్లలో",NEUTRAL_Mat,"ఆటలను",has_played] | joim('')-%}
     {{[line1,line2] | random}}
     {%- endif -%}
 
     {%-if HOME_Avg != -1 -%}
-    {%-set line1 = ["స్వదేశంలో ఆడిన ఆటలలో, అతడి బ్యాటింగ్ సగటు స్కోరు",HOME_Avg,","] | join('') -%}
-    {%-set line2 = ["తన దేశంలో ఆడిన ఆటలలో అతడి బ్యాటింగ్ సగటు స్కోరు",HOME_Avg,","] | join('') -%} 
+    {%-set line1 = ["స్వదేశంలో ఆడిన ఆటలలో, ",gender_pronoun_2,"బ్యాటింగ్ సగటు స్కోరు",HOME_Avg,","] | join('') -%}
+    {%-set line2 = ["తన దేశంలో ఆడిన ఆటలలో",gender_pronoun_2," బ్యాటింగ్ సగటు స్కోరు",HOME_Avg,","] | join('') -%} 
     {{[line1,line2] | random}}
     {%- endif-%}
 
     {%-if HOME_Runs != -1 -%}
-    {%-set line1 = ["మొత్తంగ ",HOME_Runs,"పరుగులు చేశాడు"] | join('') -%} 
+    {%-set line1 = ["మొత్తంగ ",HOME_Runs,"పరుగులు",has_done] | join('') -%} 
     {{[line1] | random}}
     {%- endif-%}
 
     {%-if HOME_Wkts != -1 -%}
-    {%-set line1 = ["మరియు బౌలింగ్ లో",HOME_Wkts," వికెట్లు సాధించాడు"] | join('') -%} 
+    {%-set line1 = ["మరియు బౌలింగ్ లో",HOME_Wkts," వికెట్లు ",accomplish] | join('') -%} 
     {{[line1] | random}}
     {%- endif-%}
 
     {%-if AWAY_Avg != -1 -%}
-    {%-set line1 = ["ప్రత్యర్థి జట్టు దేశంలో ఆడిన ఆటలలో, అతడు బ్యాటింగ్ సగటు స్కోరు",AWAY_Avg,","] | join('') -%} 
+    {%-set line1 = ["ప్రత్యర్థి జట్టు దేశంలో ఆడిన ఆటలలో,",gender_pronoun_2," బ్యాటింగ్ సగటు స్కోరు",AWAY_Avg,","] | join('') -%} 
     {{[line1,line2] | random}}
     {%- endif-%}
 
     {%-if AWAY_Runs != -1 -%}
-    {%-set line1 = ["మొత్తంగ ",AWAY_Runs,"పరుగులు చేశాడు"] | join('') -%} 
+    {%-set line1 = ["మొత్తంగ ",AWAY_Runs,"పరుగులు",has_done] | join('') -%} 
     {{[line1] | random}}
     {%- endif-%}
 
     {%-if AWAY_Wkts != -1 -%}
-    {%-set line1 = ["మరియు బౌలింగ్ లో",AWAY_Wkts,"వికెట్లు సాధించాడు."] | join('') -%} 
+    {%-set line1 = ["మరియు బౌలింగ్ లో",AWAY_Wkts,"వికెట్లు ",accomplish] | join('') -%} 
     {{[line1] | random}}
     {%- endif-%}
 
 
     {%-if NEUTRAL_Avg != -1 -%}
-    {%-set line1 = ["తటస్థ మైదానంలో ఆడిన ఆటలలో, అతడు యాటింగ్ సగటు స్కోరు",NEUTRAL_Avg,","] | join('') -%} 
+    {%-set line1 = ["తటస్థ మైదానంలో ఆడిన ఆటలలో, ",gender_pronoun_2," బ్యాటింగ్ సగటు స్కోరు",NEUTRAL_Avg,","] | join('') -%} 
     {{[line1] | random}}
     {%- endif-%}
 
     {%-if NEUTRAL_Runs != -1 -%}
-    {%-set line1 = ["మొత్తంగ",NEUTRAL_Runs ,"పరుగులు చేశాడు"] | join('') -%} 
+    {%-set line1 = ["మొత్తంగ",NEUTRAL_Runs ,"పరుగులు ",has_done] | join('') -%} 
     {{[line1] | random}}
     {%- endif-%}
 
     {%-if NEUTRAL_Wkts != -1 -%}
-    {%-set line1 = ["మరియు బౌలింగ్ లో",NEUTRAL_Wkts,"వికెట్లు సాధించాడు."] | join('') -%} 
+    {%-set line1 = ["మరియు బౌలింగ్ లో",NEUTRAL_Wkts,"వికెట్లు",accomplish] | join('') -%} 
     {{[line1] | random}}
     {%- endif-%}
 {%- endmacro -%}
@@ -150,4 +171,4 @@
 
 {{- personal_life(Player_Name , birth_place , birth_date, Education ,Relations , death_date , deathplace) -}}
 {{- statistical_analysis(HOME_Mat , AWAY_Mat ,NEUTRAL_Mat ,HOME_Avg , HOME_Runs,HOME_Wkts,AWAY_Avg , AWAY_Runs,AWAY_Wkts,NEUTRAL_Avg , NEUTRAL_Runs,NEUTRAL_Wkts) -}}
-{{- macro stat_table(Home_Span,AWAY_Span,NEUTRAL_Span,Home_Mat , AWAY_Mat , NEUTRAL_Mat,Home_Inns , AWAY_Inns , NEUTRAL_Inns,Home_Runs , AWAY_Runs , NEUTRAL_Runs,Home_NO , AWAY_NO , NEUTRAL_NO,Home_HS,AWAY_HS,NEUTRAL_HS,Home_Avg,AWAY_Avg,NEUTRAL_Avg,Home_SR,AWAY_SR,NEUTRAL_SR,Home_100s,AWAY_100s,NEUTRAL_100s,Home_50s,AWAY_50s,NEUTRAL_50s,Home_Wkts,AWAY_Wkts,NEUTRAL_Wkts,Home_BF,AWAY_BF,NEUTRAL_BF,Home_0s,AWAY_0s,NEUTRAL_0s,Home_4s,AWAY_4s,NEUTRAL_4s,Home_6s,AWAY_6s,NEUTRAL_6s) -}}
+{{- stat_table(Home_Span,AWAY_Span,NEUTRAL_Span,Home_Mat , AWAY_Mat , NEUTRAL_Mat,Home_Inns , AWAY_Inns , NEUTRAL_Inns,Home_Runs , AWAY_Runs , NEUTRAL_Runs,Home_NO , AWAY_NO , NEUTRAL_NO,Home_HS,AWAY_HS,NEUTRAL_HS,Home_Avg,AWAY_Avg,NEUTRAL_Avg,Home_SR,AWAY_SR,NEUTRAL_SR,Home_100s,AWAY_100s,NEUTRAL_100s,Home_50s,AWAY_50s,NEUTRAL_50s,Home_Wkts,AWAY_Wkts,NEUTRAL_Wkts,Home_BF,AWAY_BF,NEUTRAL_BF,Home_0s,AWAY_0s,NEUTRAL_0s,Home_4s,AWAY_4s,NEUTRAL_4s,Home_6s,AWAY_6s,NEUTRAL_6s) -}}
