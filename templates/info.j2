@@ -8,9 +8,9 @@
 
 {%- macro Infobox(Player_Name, Nationality, Full_Name, Born, Died, Age, Relations,career_span, Batting_Style, Bowling_Style, Height, Jersey_Number,Gender,Playing_Role,Teams,Test_Matches_debut, ODI_Matches_debut, T20I_Matches_debut, FC_Matches_debut, List_A_Matches_debut, T20_Matches_debut,Test_Matches_last_appearance, ODI_Matches_last_appearance, T20I_Matches_last_appearance, FC_Matches_last_appearance, List_A_Matches_last_appearance, T20_Matches_last_appearance) -%}
     {{'{{Infobox '}}
-    	|పేరు    		= {{Player_Name}}
-    	|స్వదేశం 		= {{Nationality}}
-    	|పూర్తి పేరు 	  = {{Full_Name}}
+	|పేరు    		= {{Player_Name}}
+	|స్వదేశం 		= {{Nationality}}
+	|పూర్తి పేరు 	  = {{Full_Name}}
     {%- if Born != 'nan' %}
 	|జననం        =  {{Born }}
 	{%- endif %}
@@ -20,8 +20,8 @@
     {%- if Died != 'nan' %}
 	|మరణం       =  {{Died }}
 	{%- endif %}
-    	|లింగం = {{Gender}}
-    {%- if career_span != 'nan' %}
+    |లింగం = {{Gender}}
+    {%- if career_span != "nan" %}
 	|క్రియాశీల సంవత్సరాలు       =  {{career_span }}
 	{%- endif %}
     {%- if Batting_Style != 'nan' %}
@@ -33,10 +33,10 @@
     {%- if Height != 'nan' %}
 	|ఎత్తు     =  {{Height}}
 	{%- endif %}
-    {%- if Playing_Role != 'nan' %}
+    {%- if Playing_Role != "nan" %}
 	|పాత్ర     =  {{Playing_Role}}
 	{%- endif %}
-    {%- if Jersey_Number != '-1' %}
+    {%- if Jersey_Number != -1 %}
 	|జెర్సీ సంఖ్య	   =  {{Jersey_Number}}
 	{%- endif %}
     {%- if Teams != 'nan' %}
@@ -84,49 +84,73 @@
     {{'}}\n'}}
 {%- endmacro -%}
 
-{%- macro Overview(Full_Name,Born,Age,Nationality,career_span,Playing_Role,Batting_Style,Bowling_Style,Teams,Major_trophies,Records,AWARDS) -%}
+{%- macro Overview(Gender,Full_Name,Born,Age,Nationality,career_span,Playing_Role,Batting_Style,Bowling_Style,Teams,Major_trophies,Records,AWARDS) -%}
     ==పరిచయం==
-    {{Full_Name}}
-    {%- if Born != 'nan' and Age != 'nan' %}
-    (జననం : {{Born}},వయసు: {{age}})
-    {% elif Born != 'nan' %}
-    (జననం : {{Born}})
-    {% elif Age != 'nan' %}
-    (వయసు: {{age}})
-    {% endif %}{{Nationality}} దేశానికి చెందిన క్రికెటర్.
-    {%- if career_span != 'nan' %}
-        {%- set span_line1=[gender_pronoun_1,career_span, 'సంవత్సరాలలో విస్తరించింది.'] | join('')-%}
-		{%- set span_line2=[career_span,' సంవత్సరాలలో ',gender_pronoun_2,' కెరీర్ విస్తరించింది.'] | join('')-%}
+	{% if Gender == "Male" %}
+		{%- set gender_pronoun_1 = "అతడు" -%}
+		{%- set gender_pronoun_2 = "అతడి" -%}
+		{%- set gender_pronoun_3 = "ఆడాడు" -%}
+		{%- set gender_pronoun_4 = "పాల్గొన్నాడు" -%}
+		{%- set gender_pronoun_5 = "గెలుచుకున్నాడు" -%}
+
+	{%- else -%}
+		{%- set gender_pronoun_1 = "ఆమె" -%}
+		{%- set gender_pronoun_2 = "ఆమె" -%}
+		{%- set gender_pronoun_3 = "ఆడింది" -%}
+		{%- set gender_pronoun_4 = "పాల్గొనింది" -%}
+		{%- set gender_pronoun_5 = "గెలుచుకుంది" -%}
+	{%- endif -%}
+    {% if Born != 'nan' and Age != 'nan' -%}
+	{%-set line1 =  [Full_Name,'(జననం : ',Born,', వయసు: ',Age,')'] | join('')-%}
+        {{[line1] | random}}  
+    {%- elif Born != 'nan' -%}
+    {%-set line2 =  [Full_Name,'(జననం : ',Born,')'] | join('')-%}
+        {{[span_line2] | random}}
+    {%- elif Age != 'nan' -%}
+    {%-set line3 =  [Full_Name,'(వయసు: ',Age,')'] | join('')-%}
+        {{[line3] | random}}
+	(%- else -%})
+	{%-set line4 =  [Full_Name] | join('')-%}
+        {{[line4] | random}}
+    {%- endif -%}
+	 {{Nationality}} దేశానికి చెందిన క్రికెటర్. 
+    {%- if career_span != 'nan' -%}
+        {%- set span_line1=[' ',gender_pronoun_1,' కెరీర్ ',career_span, ' సంవత్సరాలలో విస్తరించింది. '] | join('')-%}
+		{%- set span_line2=[' ',career_span,' సంవత్సరాలలో ',gender_pronoun_2,' కెరీర్ విస్తరించింది. '] | join('')-%}
 		{{[span_line1,span_line2] | random}}
-	{%- endif %}
-    {%- if Playing_Role != 'nan' %}
-		{%- set span_role1=[gender_pronoun_1,' ',Playing_Role,'.'] | join('')-%}
-		{%- set span_role2=[Playing_Role,' ',gender_pronoun_2,' పాత్ర.'] | join('')-%}
+	{%- endif -%}
+    {%- if Playing_Role != 'nan' -%}
+		{%- set span_role1=[gender_pronoun_1,' ',Playing_Role,'. '] | join('')-%}
+		{%- set span_role2=[Playing_Role,' ',gender_pronoun_2,' పాత్ర. '] | join('')-%}
         {{[span_role1,span_role2] | random}}
-	{%- endif %}
-    {%- if Batting_Style != 'nan' %}
-	{{gender_pronoun_2}} బాటింగ్ శైలి : {{Batting_Style}}.
-	{%- endif %}
-    {%- if Bowling_Style != 'nan' %}
-	{{gender_pronoun_2}} బౌలింగ్ శైలి : {{Bowling_Style}}.
-	{%- endif %}
-    {%- if Teams != 'nan' %}
-	{{gender_pronoun_2}} {{Teams}} మొదలైన జట్టులలో ఆడాడు/ఆడింది.
-	{%- endif %}
-    {%- if Major_trophies != 'nan' %}
-		{%-set line1 = ['అతడు/ఆమె',Major_trophies,' వంటి ఎన్నో ప్రసిద్ధి చెందిన ట్రోఫీలలో పాల్గొన్నాడు/పాల్గొనింది.'] | join('') -%} 
+	{%- endif -%}
+    {%- if Batting_Style != 'nan' -%}
+    	{%-set line4 =  [gender_pronoun_2,' బాటింగ్ శైలి : ',Batting_Style,'. '] | join('')-%}
+        {{[line4] | random}}
+	{%- endif -%}
+    {%- if Bowling_Style != 'nan' -%}
+    {%-set line4 =  [gender_pronoun_2,' బౌలింగ్ శైలి : ',Bowling_Style,'. '] | join('')-%}
+        {{[line4] | random}}
+	{%- endif -%}
+    {%- if Teams != 'nan' -%}
+	 {{gender_pronoun_1}} {{Teams}} మొదలైన జట్టులలో {{gender_pronoun_3}}.
+	{%- endif -%}
+    {%- if Major_trophies != 'nan' -%}
+		{%- set line1 = [' ',gender_pronoun_1 ] | join('') -%} 
     {{[line1] | random}}
-            {#{%- for key, value in Major_trophies.items() -%}
-                {{key}},
-            {%- endfor -%}
-        వంటి ఎన్నో ప్రసిద్ధి చెందిన ట్రోఫీలలో పాల్గొన్నాడు/పాల్గొనింది.#}
-	{%- endif %}
+{#{% for key, value in Major_trophies.items() %} {{key}} {% endfor %}#}
+    	{%- set line2 = [' వంటి ఎన్నో ప్రసిద్ధి చెందిన ట్రోఫీలలో ', gender_pronoun_4, '. '] | join('') -%} 
+    {{[line2] | random}}
+	{%- endif -%}
     {%- if Records != 'nan' -%}
-		{% set line1 = [gender_pronoun_2,' పేరుకు ' ,Records,' వంటి రికార్డులు ఉన్నాయి.'] | join('') %}
-	{{gender_pronoun_2}} పేరుకు  {{Records}} వంటి రికార్డులు ఉన్నాయి.
+		{%- set line1 = [gender_pronoun_2,' పేరుకు ',Records,' వంటి రికార్డులు ఉన్నాయి. '] | join('') -%}
+		{{[line1] | random}}
 	{%- endif -%}
     {%- if AWARDS != 'nan' -%}
-	{{ AWARDS | first }} వంటి ఎన్నో అవార్డులు మరియు పురస్కారాలు గెలుచుకున్నాడు/గెలుచుకుంది.
+		{{ AWARDS }} వంటి ఎన్నో అవార్డులు మరియు పురస్కారాలు {{gender_pronoun_5}}.
+		{%- for award in Awards -%}
+			 {{award}}
+		 {% endfor %}
 	{%- endif -%}
 {%- endmacro -%}
 
@@ -134,7 +158,7 @@
 
 {{- Infobox(Player_Name, Nationality, Full_Name, Born, Died, Age, Relations,career_span, Batting_Style, Bowling_Style, Height, Jersey_Number,Gender,Playing_Role,Teams,Test_Matches_debut, ODI_Matches_debut, T20I_Matches_debut, FC_Matches_debut, List_A_Matches_debut, T20_Matches_debut,Test_Matches_last_appearance, ODI_Matches_last_appearance, T20I_Matches_last_appearance, FC_Matches_last_appearance, List_A_Matches_last_appearance, T20_Matches_last_appearance) -}}
 
-{{- Overview(Full_Name,Born,Age,Nationality,career_span,Playing_Role,Batting_Style,Bowling_Style,Teams,Major_trophies,Records,AWARDS) -}}
+{{- Overview(Gender,Full_Name,Born,Age,Nationality,career_span,Playing_Role,Batting_Style,Bowling_Style,Teams,Major_trophies,Records,AWARDS) -}}
 
 
 

@@ -1,0 +1,94 @@
+<mediawiki xmlns="http://www.mediawiki.org/xml/export-0.10/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mediawiki.org/xml/export-0.10/ http://www.mediawiki.org/xml/export-0.10.xsd" version="0.10" xml:lang="te">
+	<siteinfo>
+		<sitename>tewiki</sitename>
+		<dbname>indicwiki</dbname>
+		<base>https://tewiki.iiit.ac.in/index.php/%E0%B0%AE%E0%B1%8A%E0%B0%A6%E0%B0%9F%E0%B0%BF_%E0%B0%AA%E0%B1%87%E0%B0%9C%E0%B1%80</base>
+		<generator>MediaWiki 1.34.0</generator>
+		<case>first-letter</case>
+		<namespaces>
+			<namespace key="-2" case="first-letter">మీడియా</namespace>
+			<namespace key="-1" case="first-letter">ప్రత్యేక</namespace>
+			<namespace key="0" case="first-letter" />
+			<namespace key="1" case="first-letter">చర్చ</namespace>
+			<namespace key="2" case="first-letter">వాడుకరి</namespace>
+			<namespace key="3" case="first-letter">వాడుకరి చర్చ</namespace>
+			<namespace key="4" case="first-letter">Project</namespace>
+			<namespace key="5" case="first-letter">Project చర్చ</namespace>
+			<namespace key="6" case="first-letter">దస్త్రం</namespace>
+			<namespace key="7" case="first-letter">దస్త్రంపై చర్చ</namespace>
+			<namespace key="8" case="first-letter">మీడియావికీ</namespace>
+			<namespace key="9" case="first-letter">మీడియావికీ చర్చ</namespace>
+			<namespace key="10" case="first-letter">మూస</namespace>
+			<namespace key="11" case="first-letter">మూస చర్చ</namespace>
+			<namespace key="12" case="first-letter">సహాయం</namespace>
+			<namespace key="13" case="first-letter">సహాయం చర్చ</namespace>
+			<namespace key="14" case="first-letter">వర్గం</namespace>
+			<namespace key="15" case="first-letter">వర్గం చర్చ</namespace>
+			<namespace key="828" case="first-letter">మాడ్యూల్</namespace>
+			<namespace key="829" case="first-letter">మాడ్యూల్ చర్చ</namespace>
+			<namespace key="2300" case="first-letter">Gadget</namespace>
+			<namespace key="2301" case="first-letter">Gadget talk</namespace>
+			<namespace key="2302" case="case-sensitive">Gadget definition</namespace>
+			<namespace key="2303" case="case-sensitive">Gadget definition talk</namespace>
+			<namespace key="2600" case="first-letter">Topic</namespace>
+		</namespaces>
+	</siteinfo>
+
+
+
+
+	<page>
+		<title>['NBC Denis Compton Award 2003, 2004, 2005, 2006', 'Young Cricketer of the Year 2005', 'Awarded the MBE in June 2011', 'Wisden Cricketer of the Year 2012', 'Knighted in 2018']</title>
+		<ns>0</ns>
+		<id>500000</id>
+		<revision>
+			<id>500000</id>
+			<timestamp>2021-06-09T19-13-56Z</timestamp>
+			<contributor>
+				<username>Harshapamidipalli</username>
+				<id>57</id>
+			</contributor>
+			<comment>xmlpage created</comment>
+			<model>wikitext</model>
+			<format>text/x-wiki</format>
+			<text xml:space="preserve" bytes="2965">
+			
+{{Infobox 
+	|పేరు    		= Alastair Cook
+	|స్వదేశం 		= England
+	|పూర్తి పేరు 	  = Alastair Nathan Cook
+	|జననం        =  December 25, 1984, Gloucester
+	|వయస్సు       =  36y 159d
+	|మరణం       =  nan
+    |లింగం = Male
+	|క్రియాశీల సంవత్సరాలు       =  2006 - 2018
+	|బ్యాటింగ్ శైలి      =  Left hand bat
+	|బౌలింగ్ శైలి       =  Right arm slow
+	|ఎత్తు     =  6ft 2in
+	|పాత్ర     =  Opening batter
+	|జెర్సీ సంఖ్య	   =  26
+	|జట్లు     =  ['England', 'Bedfordshire', 'England Lions', 'England Under-19s', 'Essex', 'Marylebone Cricket Club']
+	|టెస్ట్ క్రికెట్‌ కెరీర్‌లో తొలి మ్యాచ్	   =  England vs India at Nagpur - March 01 - 05, 2006
+	|వన్డే ఇంటర్నేషనల్‌ కెరీర్‌లో తొలి మ్యాచ్	   =  Sri Lanka vs England at Manchester - June 28, 2006
+	|టి20 అంతర్జాతీయ కెరీర్‌లో తొలి మ్యాచ్	   =  West Indies vs England at The Oval - June 28, 2007
+	|టీ20 లో తొలి మ్యాచ్	   =  Middlesex vs Essex at Southgate - July 01, 2005
+	|లిస్ట్ ఏ కెరీర్ లో తొలి మ్యాచ్	   =  Essex vs Essex CB at Chelmsford - May 07, 2003
+	|ఫస్ట్ క్లాస్ కెరీర్‌లో తొలి మ్యాచ్	   =  Notts vs Essex at Chelmsford - September 03 - 05, 2003
+	|టెస్ట్ క్రికెట్‌ కెరీర్‌లో చివరి మ్యాచ్	   =  England vs India at The Oval - September 07 - 11, 2018
+	|వన్డే ఇంటర్నేషనల్‌ కెరీర్‌లో చివరి మ్యాచ్	   =  Sri Lanka vs England at Colombo (RPS) - December 16, 2014
+	|టి20 అంతర్జాతీయ కెరీర్‌లో చివరి మ్యాచ్		   =  South Africa vs England at Centurion - November 15, 2009
+	|టీ20 లో చివరి మ్యాచ్	   =  Surrey vs Essex at The Oval - June 05, 2015
+	|లిస్ట్ ఏ కెరీర్ లో చివరి మ్యాచ్	   =  Essex vs Gloucs at Chelmsford - May 07, 2019
+	|ఫస్ట్ క్లాస్ కెరీర్‌లో చివరి మ్యాచ్	   =  Essex vs Durham at Chester-le-Street - May 27 - 29, 2021
+	|బంధువులు	   =  nan
+    }}
+==పరిచయం==
+	Alastair Nathan Cook(జననం : December 25, 1984, Gloucester, వయసు: 36y 159d)England దేశానికి చెందిన క్రికెటర్. 2006 - 2018 సంవత్సరాలలో అతడి కెరీర్ విస్తరించింది. అతడు Opening batter. అతడి బాటింగ్ శైలి : Left hand bat. అతడి బౌలింగ్ శైలి : Right arm slow. అతడు ['England', 'Bedfordshire', 'England Lions', 'England Under-19s', 'Essex', 'Marylebone Cricket Club'] మొదలైన జట్టులలో ఆడాడు. అతడు
+ వంటి ఎన్నో ప్రసిద్ధి చెందిన ట్రోఫీలలో పాల్గొన్నాడు. అతడి పేరుకు ['1st Most consecutive matches for a team (159)', '4th Most consecutive matches as captain of a team (57)', '5th Most runs in career (12472)', ' Hundred on debut (104*)', '10th Most hundreds in a career (33)', ' Hundred and a ninety in a match ', '6th Most fifties in career (90)', ' Hundred and a duck in a match ', '7th Most fours in career (1442)', ' Carrying bat through a completed innings (244*)', '6th Fastest to 12000 runs (275)', '4th Most catches in a series (13)', ' 5000 runs and 50 fielding dismissals ', '10th Fifties in consecutive innings (6)'] వంటి రికార్డులు ఉన్నాయి. ['NBC Denis Compton Award 2003, 2004, 2005, 2006', 'Young Cricketer of the Year 2005', 'Awarded the MBE in June 2011', 'Wisden Cricketer of the Year 2012', 'Knighted in 2018'] వంటి ఎన్నో అవార్డులు మరియు పురస్కారాలు గెలుచుకున్నాడు.
+			</text>
+			<sha1>2ke9ufdk35t2mxnx1mmblbkr69phqop</sha1>
+		</revision>
+	</page>
+	
+
+</mediawiki>
