@@ -93,6 +93,7 @@ def getData2(row):
 		'odi_records': ast.literal_eval(row.odi_records.values[0]),
 		't20i_records': ast.literal_eval(row.t20i_records.values[0]),
 		'awards':ast.literal_eval(row.awards.values[0]),
+		'gender': row.Gender.values[0],
 		'references': ast.literal_eval(row.References.values[0])
 	  }
 
