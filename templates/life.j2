@@ -162,13 +162,13 @@
                 'ఫీల్డర్‌గా ' ~ player_name ~ ' తన కెరీర్‌లో, ' ~ sum_dismissals |string ~ ' ఫీల్డింగ్ తొలగింపులకి కారణమయ్యాడు, ',
             ] |random -}}
         {%- if sum_catches == 0 -%}
-            {%- set line = ' ఇందులో ' ~ sum_stumpings |string ~ ' స్టంపింగ్స్ ఉన్నాయి' -%}
+            {%- set line = ' ఇందులో ' ~ sum_stumpings |string ~ ' స్టంపింగ్స్ ఉన్నాయి. ' -%}
         {%- elif sum_stumpings == 0 -%}
-            {%- set line = ' ఇందులో ' ~ sum_catches |string ~ ' క్యాచ్‌లు ఉన్నాయి' -%}
+            {%- set line = ' ఇందులో ' ~ sum_catches |string ~ ' క్యాచ్‌లు ఉన్నాయి. ' -%}
         {%- else -%}
             {%- set line = [
-                            'ఇందులో ' ~ sum_catches |string ~ ' క్యాచ్‌లు మరియు ' ~ sum_stumpings |string ~ ' స్టంపింగ్స్ ఉన్నాయి.',
-                            'వీటిలో ' ~ sum_stumpings |string ~ ' స్టంపింగ్స్ మరియు ' ~ sum_catches |string ~ ' క్యాచ్‌లు ఉన్నాయి.'
+                            'ఇందులో ' ~ sum_catches |string ~ ' క్యాచ్‌లు మరియు ' ~ sum_stumpings |string ~ ' స్టంపింగ్స్ ఉన్నాయి. ',
+                            'వీటిలో ' ~ sum_stumpings |string ~ ' స్టంపింగ్స్ మరియు ' ~ sum_catches |string ~ ' క్యాచ్‌లు ఉన్నాయి. '
                             ] |random -%}
         {%- endif -%}
         {{- line -}}
