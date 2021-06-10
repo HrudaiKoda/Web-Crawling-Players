@@ -128,22 +128,23 @@ def main():
 	# 	# text = template.render(getData(row))
 
 		# writePage(title, text, fobj)	
-	fobj = open('infoandoverview.xml', 'w', encoding='utf-8')
-	fobj.write(tewiki+'\n')	
-	row = moviesDF.head(12).tail(1)
-	text = template.render(getData(row))
-	player_name = row["Full Name"].values[0]
+	# fobj = open('infoandoverview.text', 'w', encoding='utf-8')
+	# fobj.write(tewiki+'\n')	
+	with open('infoandoverview.txt', 'w', encoding='utf-8') as fobj:
+		row = moviesDF.head(12).tail(1)
+		text = template.render(getData(row))
+		player_name = row["Full Name"].values[0]
 	# print(player_name)
 	# x = ast.literal_eval(player_name)
 	# print(type(x))
 	# print(x.keys())
 	# for key,vale in x.items():
 	# 	print(key)
-	writePage(player_name, text, fobj)
-	
+	# writePage(player_name, text, fobj)
+		fobj.write(template.render(getData(row)))
    
-	fobj.write('</mediawiki>')
-	fobj.close()
+	# fobj.write('</mediawiki>')
+	# fobj.close()
 
 if __name__ == '__main__':
 	main()
