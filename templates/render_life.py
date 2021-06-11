@@ -77,6 +77,12 @@ translated_names = {
     "List A": "లిస్ట్ ఏ"
 }
 
+def get_matches_ref(matches_ref, player_name):
+    required_ref = [r for r in matches_ref if "matches" in r]
+    if len(required_ref) == 0:
+        return ''
+    return "<ref>[" + required_ref[0] + " " + player_name + " matches]</ref>"
+    
 def stat_value(attribute_name, attribute_value):
     # print(attribute_name, attribute_value)
     if str(attribute_value) == "" or str(attribute_value) == "nan":
@@ -418,7 +424,7 @@ def getData(row):
     sum_batting_matches, sum_batting_innings, sum_batting_runs, sum_batting_100s, sum_batting_50s, sum_dismissals, sum_catches, sum_stumpings, sum_bowling_matches, sum_bowling_innings, sum_bowling_balls, sum_wickets = get_description_sums(row)
     data = {
         # {%- macro early_career(player_name, career_start_year, first_class_debut, listA_debut, T20_debut, T20I_debut, ODI_debut, test_debut) -%}
-        'player_name': getTranslatedDescription(row['Player_Name']),
+        'player_name': row['Player_Name'],
         'gender': row['Gender'],
         'career_start_year': get_start_year(row['career_span']),
         'first_class_debut': row['FC Matches_debut'],
@@ -494,7 +500,10 @@ def getData(row):
         # Trophy table
         'trophy_names': trophy_names,
         'trophy_stat_names': trophy_stat_names, 
-        'trophy_details': trophy_details
+        'trophy_details': trophy_details,
+        
+        # References
+        'matches_ref': ast.literal_eval(row['References'])
 	}
     
     return data
@@ -517,7 +526,8 @@ def main():
         "bowling_sent2": bowling_sent2,
         "print_names": print_names,
         "get_teams_string": get_teams_string,
-        "get_translation": get_translation
+        "get_translation": get_translation,
+        "get_matches_ref": get_matches_ref
     }
     template.globals.update(func_dict)
     

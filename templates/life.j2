@@ -17,13 +17,15 @@
 {%- endif -%}
 
 
-{%- macro early_career(player_name, career_start_year, first_class_debut, listA_debut, T20_debut, T20I_debut, ODI_debut, test_debut) -%}
+{%- macro early_career(player_name, career_start_year, first_class_debut, listA_debut, T20_debut, T20I_debut, ODI_debut, test_debut, matches_ref) -%}
     {%- if career_start_year > 0 -%}
         {{- [
-                player_name ~ ' క్రికెట్ కెరీర్ ' ~ career_start_year |string ~ ' సంవత్సరంలో ప్రారంభమైంది.' ~ "\n",
-                player_name ~ ' తన క్రికెట్ కెరీర్ని ' ~ career_start_year |string ~ ' సంవత్సరంలో ' ~ has_started ~ ". \n"
+                player_name ~ ' క్రికెట్ కెరీర్ ' ~ career_start_year |string ~ ' సంవత్సరంలో ప్రారంభమైంది. ',
+                player_name ~ ' తన క్రికెట్ కెరీర్ని ' ~ career_start_year |string ~ ' సంవత్సరంలో ' ~ has_started ~ ". "
             ] |random -}}
     {%- endif -%}
+    {{- get_matches_ref(matches_ref, player_name) -}}
+    {{- "\n" -}}
     {%- if is_valid_string(first_class_debut) -%}
         {{- '* ఫస్ట్ క్లాస్ కెరీర్‌లో ' ~ gender_pronoun_2 ~ ' తొలి మ్యాచ్: ' ~ first_class_debut ~ '.' ~ "\n" -}}
     {%- endif -%}
@@ -212,7 +214,7 @@
 
 {{ define_section("క్రీడా జీవితం") }}
 {{ define_sub_section("ప్రారంభ రోజులు") }}
-{{ early_career(player_name, career_start_year, first_class_debut, listA_debut, T20_debut, T20I_debut, ODI_debut, test_debut) }}
+{{ early_career(player_name, career_start_year, first_class_debut, listA_debut, T20_debut, T20I_debut, ODI_debut, test_debut, matches_ref) }}
 {{ define_sub_section("అంతర్జాతీయ, దేశీయ కెరీర్లు") }}
 {{ career_intro(player_name, player_role, nationality, teams, jersey_number, has_retired) }}
 
