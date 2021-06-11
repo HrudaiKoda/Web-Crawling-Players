@@ -91,7 +91,7 @@
     {{'}}\n'}}
 {%- endmacro -%}
 
-{%- macro Overview(Player_Name,matches_ref,Gender,Full_Name,Born,age,Nationality,career_span,Playing_Role,Batting_Style,Bowling_Style,Teams,Major_trophies,Records,AWARDS) -%}
+{%- macro Overview(Player_Name,profile_ref,Gender,Full_Name,Born,age,Nationality,career_span,Playing_Role,Batting_Style,Bowling_Style,Teams,Major_trophies,Records,AWARDS) -%}
     ==పరిచయం==
 	{% if Gender == "Male" %}
 		{%- set gender_pronoun_1 = "అతడు" -%}
@@ -108,7 +108,7 @@
 		{%- set gender_pronoun_5 = "గెలుచుకుంది" -%}
 	{%- endif -%}
 	{{- Full_Name -}}
-	{{- get_matches_ref(matches_ref,Player_Name) -}}
+	{{- get_profile_ref(profile_ref,Player_Name) -}}
     {% if Born != 'nan' and age != 'nan' -%}
 	{%-set line1 =  ['(జననం : ',Born,', వయసు: ',age,')'] | join('')-%}
         {{[line1] | random}}  
@@ -132,11 +132,11 @@
         {{[span_role1,span_role2] | random}}
 	{%- endif -%}
     {%- if Batting_Style != 'nan' -%}
-    	{%-set line4 =  [gender_pronoun_2,' బాటింగ్ శైలి : ',Batting_Style,'. '] | join('')-%}
+    	{%-set line4 =  [gender_pronoun_1,' ఒక ',Batting_Style,' వాటం బ్యాట్స్‌మన్, '] | join('')-%}
         {{[line4] | random}}
 	{%- endif -%}
     {%- if Bowling_Style != 'nan' -%}
-    {%-set line4 =  [gender_pronoun_2,' బౌలింగ్ శైలి : ',Bowling_Style,'. '] | join('')-%}
+    {%-set line4 =  [Bowling_Style,' బౌలర్. '] | join('')-%}
         {{[line4] | random}}
 	{%- endif -%}
     {%- if Teams != 'nan' -%}
@@ -175,7 +175,7 @@
 
 {{- Infobox(Player_Name, Nationality, Full_Name, Born, Died, age, Relations,career_span, Batting_Style, Bowling_Style, Height, Jersey_Number,Gender,Playing_Role,Teams,testdebutdate,testdebutyear,testdebutagainst,odidebutdate,odidebutyear,odidebutagainst,T20Idebutdate,T20Idebutyear,T20Idebutagainst,lasttestdate,lasttestyear,lasttestagainst,lastididate,lastodiyear,lastodiagainst,lastT20Idate,lastT20Iyear,lastT20Iagainst) -}}
 
-{{- Overview(Player_Name,matches_ref,Gender,Full_Name,Born,age,Nationality,career_span,Playing_Role,Batting_Style,Bowling_Style,Teams,Major_trophies,Records,AWARDS) -}}
+{{- Overview(Player_Name,profile_ref,Gender,Full_Name,Born,age,Nationality,career_span,Playing_Role,Batting_Style,Bowling_Style,Teams,Major_trophies,Records,AWARDS) -}}
 
 
 

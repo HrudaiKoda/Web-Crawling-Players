@@ -43,26 +43,23 @@ def spliting(row):
     li.append(against[-1])
 
     return li
-def get_matches_ref(matches_ref, player_name):
-    if len(matches_ref) == 0:
+def get_profile_ref(profile_ref, player_name):
+    if len(profile_ref) == 0:
         return ''
-    return "<ref>[" + matches_ref + " " + player_name + " Profile]</ref>"
+    return "<ref>[" + profile_ref + " " + player_name + " Profile]</ref>"
+
+def Batting_role(batting):
+    if batting == "Right hand bat":
+        return "కుడిచేతి"
+    elif batting == "Left hand bat":
+        return "ఎడమచేతి"
+    else:
+        return batting
 
 def getData(row):
-	# global translit
-	# # Translation and Transliteration
-	# try:
-	# 	title = row.title.values[0]
-	# 	# anu_title = telugu.anuvaad(row.title.values[0])
-	# 	deep = translit(title)[0]['pred']
-	# 	# if float(deep['prob']) >= 0.070:
-	# 	# 	title = deep['pred']
-	# 	# else:
-	# 	# 	title = anu_title		
-	# except:
-	# 	title =row.title.values[0]
+	
 
-	# Data dictionary 
+	batting = Batting_role(row['Batting Style'].values[0])
 	team = row['Teams'].values[0]
 	if team != 'nan':
 		team = ast.literal_eval(row['Teams'].values[0])
@@ -88,7 +85,7 @@ def getData(row):
 	# FC_Matches_last_appearance = spliting(row['FC Matches_last_appearance'].values[0])
 	# List_A_Matches_last_appearance = spliting(row['List A Matches_last_appearance'].values[0])
 	# T20_Matches_last_appearance = spliting(row['T20 Matches_last_appearance'].values[0])
-	matches_ref = ast.literal_eval(row['References'].values[0])
+	profile_ref = ast.literal_eval(row['References'].values[0])
 	data = {
 		#{%- macro info(title, id, year, genre, actors, duration, country, original_title) -%}
 		'Full_Name':row['Full Name'].values[0],
@@ -99,7 +96,7 @@ def getData(row):
 		'age':row['Age'].values[0],
 		'Relations':row['Relations'].values[0],
 		'career_span':row['career_span'].values[0],
-		'Batting_Style':row['Batting Style'].values[0],
+		'Batting_Style':batting,
 		'Bowling_Style':row['Bowling Style'].values[0],
 		'Height':row['Height'].values[0],
 		'Jersey_Number':row['Jersey_Number'].values[0],
@@ -127,7 +124,7 @@ def getData(row):
 		'Major_trophies':tropies,
 		'Records':records,
 		"AWARDS" :AWARDS,
-		'matches_ref':matches_ref[0]
+		'profile_ref':profile_ref[0]
 
 
 	}
@@ -139,9 +136,9 @@ def main():
 	env = Environment(loader=file_loader)
 	template = env.get_template('template.j2')
 	
-	glob = {'get_matches_ref':get_matches_ref }
+	glob = {'get_profile_ref':get_profile_ref }
 	# func_dict = {
-    #     "get_matches_ref": get_matches_ref
+    #     "get_profile_ref": get_profile_ref
     # }
 	template.globals.update(glob)
     # template.globals.update(func_dict)
