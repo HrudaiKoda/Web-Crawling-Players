@@ -97,6 +97,7 @@ def getData(row):
 		'Relations':row['Relations'].values[0],
 		'career_span':row['career_span'].values[0],
 		'Batting_Style':batting,
+		'info_batting_style':row['Batting Style'].values[0],
 		'Bowling_Style':row['Bowling Style'].values[0],
 		'Height':row['Height'].values[0],
 		'Jersey_Number':row['Jersey_Number'].values[0],

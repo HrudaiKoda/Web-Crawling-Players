@@ -1,5 +1,5 @@
 
-{%- macro Infobox(Player_Name, Nationality, Full_Name, Born, Died, age, Relations,career_span, Batting_Style, Bowling_Style, Height, Jersey_Number,Gender,Playing_Role,Teams,testdebutdate,testdebutyear,testdebutagainst,odidebutdate,odidebutyear,odidebutagainst,T20Idebutdate,T20Idebutyear,T20Idebutagainst,lasttestdate,lasttestyear,lasttestagainst,lastididate,lastodiyear,lastodiagainst,lastT20Idate,lastT20Iyear,lastT20Iagainst) -%}
+{%- macro Infobox(Player_Name, Nationality, Full_Name, Born, Died, age, Relations,career_span, info_batting_style, Bowling_Style, Height, Jersey_Number,Gender,Playing_Role,Teams,testdebutdate,testdebutyear,testdebutagainst,odidebutdate,odidebutyear,odidebutagainst,T20Idebutdate,T20Idebutyear,T20Idebutagainst,lasttestdate,lasttestyear,lasttestagainst,lastididate,lastodiyear,lastodiagainst,lastT20Idate,lastT20Iyear,lastT20Iagainst) -%}
     {{'{{Infobox Cricketer'}}
 	|name    		= {{Player_Name}}
 	|country 		= {{Nationality}}
@@ -16,8 +16,8 @@
     {#{%- if career_span != "nan" %}
 	|క్రియాశీల సంవత్సరాలు       =  {{career_span }}
 	{%- endif %}#}
-    {%- if Batting_Style != 'nan' %}
-	|batting     =  {{Batting_Style }}
+    {%- if info_batting_style != 'nan' %}
+	|batting     =  {{info_batting_style }}
 	{%- endif %}
     {%- if Bowling_Style != 'nan' %}
 	|bowling       =  {{Bowling_Style }}
@@ -164,16 +164,16 @@
 	{%- endif -%}
     {%- if AWARDS != 'nan' -%}
 		{%- if AWARDS|length > 1 -%}
-			{{ AWARDS[0]}},{{ AWARDS[1]}} వంటి ఎన్నో అవార్డులు మరియు పురస్కారాలు {{gender_pronoun_5}}.
+			{{ AWARDS[0]}},{{ AWARDS[1]}} వంటి ఎన్నో అవార్డులు, పురస్కారాలు {{gender_pronoun_5}}.
 		{%- else -%}
-			{{ AWARDS[0]}} వంటి ఎన్నో అవార్డులు మరియు పురస్కారాలు {{gender_pronoun_5}}.
+			{{ AWARDS[0]}} వంటి ఎన్నో అవార్డులు, పురస్కారాలు {{gender_pronoun_5}}.
 		{%- endif -%}
 	{%- endif -%}
 {%- endmacro -%}
 
 {# Function Calls are Below #}
 
-{{- Infobox(Player_Name, Nationality, Full_Name, Born, Died, age, Relations,career_span, Batting_Style, Bowling_Style, Height, Jersey_Number,Gender,Playing_Role,Teams,testdebutdate,testdebutyear,testdebutagainst,odidebutdate,odidebutyear,odidebutagainst,T20Idebutdate,T20Idebutyear,T20Idebutagainst,lasttestdate,lasttestyear,lasttestagainst,lastididate,lastodiyear,lastodiagainst,lastT20Idate,lastT20Iyear,lastT20Iagainst) -}}
+{{- Infobox(Player_Name, Nationality, Full_Name, Born, Died, age, Relations,career_span, info_batting_style, Bowling_Style, Height, Jersey_Number,Gender,Playing_Role,Teams,testdebutdate,testdebutyear,testdebutagainst,odidebutdate,odidebutyear,odidebutagainst,T20Idebutdate,T20Idebutyear,T20Idebutagainst,lasttestdate,lasttestyear,lasttestagainst,lastididate,lastodiyear,lastodiagainst,lastT20Idate,lastT20Iyear,lastT20Iagainst) -}}
 
 {{- Overview(Player_Name,profile_ref,Gender,Full_Name,Born,age,Nationality,career_span,Playing_Role,Batting_Style,Bowling_Style,Teams,Major_trophies,Records,AWARDS) -}}
 
