@@ -51,28 +51,28 @@ translated_names = {
     "HS": "అత్యధిక స్కోరు",
     "Ave": "సగటు బ్యాటింగ్ స్కోరు",
     "Avg": "సగటు బ్యాటింగ్ స్కోరు",
-    "100s": "శతాబ్దాలు",
-    "50s": "అర్ధ శతాబ్దాలు",
+    "100s": "శతకాలు",
+    "50s": "అర్ధ శతకాలు",
     "Ct": "క్యాచ్‌లు",
     "St": "స్టంపింగ్స్",
     "BF": "ఎదురుకున్న బంతులు",
     "SR": "స్ట్రైక్ రేట్",
-    "0s": "0 లు",
-    "4s": "4 లు",
-    "6s": "6 లు",
+    "0s": "జీరోలు",
+    "4s": "ఫోర్లు",
+    "6s": "సిక్సలు",
     "Balls": "బంతులు",
     "Wkts": "వికెట్లు",
     "BBI": "ఉత్తమ బౌలింగ్ ఇన్నింగ్స్",
     "BBM": "ఉత్తమ బౌలింగ్ మ్యాచ్",
     "Econ": "ఎకానమీ",
-    "4w": "4 వికెట్ మ్యాచ్‌లు",
-    "5w": "5 వికెట్ మ్యాచ్‌లు",
-    "10w": "10 వికెట్ మ్యాచ్‌లు",
+    "4w": "నాలుగు వికెట్ మ్యాచ్‌లు",
+    "5w": "ఐదు వికెట్ మ్యాచ్‌లు",
+    "10w": "పది వికెట్ మ్యాచ్‌లు",
     "Span": "వ్యవధి",
     "Test": "టెస్ట్",
     "ODI": "వన్డే ఇంటర్నేషనల్‌",
-    "T20": "టి 20",
-    "T20I": "అంతర్జాతీయ టి 20",
+    "T20": "టీ20",
+    "T20I": "అంతర్జాతీయ టీ20",
     "FC": "ఫస్ట్ క్లాస్",
     "List A": "లిస్ట్ ఏ"
 }
@@ -133,7 +133,7 @@ def batting_description_func(first_word, gender_pronoun_2, num1, num2):
     if num1 <= 0 and num2 <= 0:
         return ''
     if num1 > 0 and num2 > 0:
-        return (first_word + ' ' + gender_pronoun_2 + ' సగటు స్కోరు ' + str(num1) + ' మరియు స్ట్రైక్ రేట్ ' + str(num2) + '. ')
+        return (first_word + ' ' + gender_pronoun_2 + ' సగటు స్కోరు ' + str(num1) + ', స్ట్రైక్ రేట్ ' + str(num2) + '. ')
     elif num1 > 0:
         return (first_word + ' ' + gender_pronoun_2 + ' సగటు స్కోరు ' + str(num1) + '. ')
     return (first_word + ' ' + gender_pronoun_2 + ' స్ట్రైక్ రేట్ ' + str(num2) + '. ')
@@ -143,7 +143,7 @@ def bowling_description_func(first_word, gender_pronoun_2, num1, num2):
     if num1 <= 0 and num2 <= 0:
         return ''
     if num1 > 0 and num2 > 0:
-        return (first_word + ' ' + gender_pronoun_2 + ' సగటు బౌలింగ్ స్కోరు ' + str(num1) + ' మరియు ఎకానమీ రేట్ ' + str(num2) + '. ')
+        return (first_word + ' ' + gender_pronoun_2 + ' సగటు బౌలింగ్ స్కోరు ' + str(num1) + ', ఎకానమీ రేట్ ' + str(num2) + '. ')
     elif num1 > 0:
         return (first_word + ' ' + gender_pronoun_2 + ' సగటు బౌలింగ్ స్కోరు ' + str(num1) + '. ')
     return (first_word + ' ' + gender_pronoun_2 + ' ఎకానమీ రేట్ ' + str(num2) + '. ')
@@ -163,27 +163,27 @@ def batting_sent1(gender_pronoun_1, sum_batting_100s, sum_batting_50s, has_done)
     if sum_batting_100s <= 0 and sum_batting_50s <= 0:
         return ''
     if sum_batting_100s > 0 and sum_batting_50s > 0:
-        return ('అన్ని ఫార్మాట్లు కలిపి ' + gender_pronoun_1 + ' ' + str(sum_batting_100s) + ' సెంచరీలు మరియు ' + str(sum_batting_50s) + ' హాఫ్ సెంచరీలు ' + has_done + '. ')
+        return ('అన్ని ఫార్మాట్లు కలిపి ' + gender_pronoun_1 + ' ' + str(sum_batting_100s) + ' శతకాలు, ' + str(sum_batting_50s) + ' అర్ధ శతకాలు ' + has_done + '. ')
     elif sum_batting_100s > 0:
-        return ('అన్ని ఫార్మాట్లు కలిపి ' + gender_pronoun_1 + ' ' + str(sum_batting_100s) + ' సెంచరీలు ' + has_done + '. ')
-    return ('అన్ని ఫార్మాట్లు కలిపి ' + gender_pronoun_1 + ' ' + str(sum_batting_50s) + ' హాఫ్ సెంచరీలు ' + has_done + '. ')
+        return ('అన్ని ఫార్మాట్లు కలిపి ' + gender_pronoun_1 + ' ' + str(sum_batting_100s) + ' శతకాలు ' + has_done + '. ')
+    return ('అన్ని ఫార్మాట్లు కలిపి ' + gender_pronoun_1 + ' ' + str(sum_batting_50s) + ' అర్ధ శతకాలు ' + has_done + '. ')
 
 
 def bowling_sent1(gender_pronoun_1, sum_bowling_balls, has_done, sum_wickets, has_taken):
     if sum_bowling_balls <= 0 and sum_wickets <= 0:
         return ''
     if sum_bowling_balls > 0 and sum_wickets > 0:
-        return ('తన కెరీర్ మొత్తంలో, ' + gender_pronoun_1 + ' మొత్తం ' + str(sum_bowling_balls) + ' బంతులు (' + str(sum_bowling_balls//6) + ' ఓవర్లు) బౌలింగ్ ' + has_done + ' మరియు ' + str(sum_wickets) + ' వికెట్లు ' + has_taken + '. ')
+        return ('తన కెరీర్ లో, ' + gender_pronoun_1 + ' మొత్తం ' + str(sum_bowling_balls) + ' బంతులు (' + str(sum_bowling_balls//6) + ' ఓవర్లు) బౌలింగ్ చేసి, ' + str(sum_wickets) + ' వికెట్లు ' + has_taken + '. ')
     elif sum_bowling_balls > 0:
-        return ('తన కెరీర్ మొత్తంలో, ' + gender_pronoun_1 + ' మొత్తం ' + str(sum_bowling_balls) + ' బంతులు (' + str(sum_bowling_balls//6) + ' ఓవర్లు) బౌలింగ్ ' + has_done + '. ')
-    return ('తన కెరీర్ మొత్తంలో ' + str(sum_wickets) + ' వికెట్లు ' + has_taken + '. ')
+        return ('తన కెరీర్ లో, ' + gender_pronoun_1 + ' మొత్తం ' + str(sum_bowling_balls) + ' బంతులు (' + str(sum_bowling_balls//6) + ' ఓవర్లు) బౌలింగ్ ' + has_done + '. ')
+    return ('తన కెరీర్ లో ' + str(sum_wickets) + ' వికెట్లు ' + has_taken + '. ')
 
 
 def bowling_sent2(gender_pronoun_2, gender_pronoun_1, bowling_10w_test, bowling_10w_FC, has_taken):
     if bowling_10w_test <= 0 and bowling_10w_FC <= 0:
         return ''
     if bowling_10w_test > 0 and bowling_10w_FC > 0:
-        return (gender_pronoun_2 + ' కెరీర్లో, ' + gender_pronoun_1 + ' ' + str(bowling_10w_test) + ' టెస్ట్ మ్యాచ్లలో మరియు ' + str(bowling_10w_FC) + ' ఫస్ట్ క్లాస్ మ్యాచ్లలో 10 వికెట్లు ' + has_taken + '. ')
+        return (gender_pronoun_2 + ' కెరీర్లో, ' + gender_pronoun_1 + ' ' + str(bowling_10w_test) + ' టెస్ట్ మ్యాచ్లలో, ' + str(bowling_10w_FC) + ' ఫస్ట్ క్లాస్ మ్యాచ్లలో 10 వికెట్లు ' + has_taken + '. ')
     elif bowling_10w_test > 0:
         return (gender_pronoun_2 + ' కెరీర్లో, ' + gender_pronoun_1 + ' ' + str(bowling_10w_test) + ' టెస్ట్ మ్యాచ్లలో 10 వికెట్లు ' + has_taken + '. ')
     return (gender_pronoun_2 + ' కెరీర్లో, ' + gender_pronoun_1 + ' ' + str(bowling_10w_FC) + ' ఫస్ట్ క్లాస్ మ్యాచ్లలో 10 వికెట్లు ' + has_taken + '. ')

@@ -33,10 +33,10 @@
         {{- '* లిస్ట్ ఏ కెరీర్ లో ' ~ gender_pronoun_2 ~ ' తొలి మ్యాచ్: ' ~ listA_debut ~ '.' ~ "\n" -}}
     {%- endif -%}
     {%- if is_valid_string(T20_debut) -%}
-        {{- '* టీ 20 లో ' ~ gender_pronoun_2 ~ ' తొలి మ్యాచ్: ' ~ T20_debut ~ '.' ~ "\n" -}}
+        {{- '* టీ20 లో ' ~ gender_pronoun_2 ~ ' తొలి మ్యాచ్: ' ~ T20_debut ~ '.' ~ "\n" -}}
     {%- endif -%}
     {%- if is_valid_string(T20I_debut) -%}
-        {{- '* టి 20 అంతర్జాతీయ మ్యాచ్‌ల్లో ' ~ gender_pronoun_2 ~ ' తొలి మ్యాచ్: ' ~ T20I_debut ~ '.' ~ "\n" -}}
+        {{- '* టీ20 అంతర్జాతీయ మ్యాచ్‌ల్లో ' ~ gender_pronoun_2 ~ ' తొలి మ్యాచ్: ' ~ T20I_debut ~ '.' ~ "\n" -}}
     {%- endif -%}
     {%- if is_valid_string(ODI_debut) -%}
         {{- '* వన్డే ఇంటర్నేషనల్‌లో ' ~ gender_pronoun_2 ~ ' తొలి మ్యాచ్: ' ~ ODI_debut ~ '.' ~ "\n" -}}
@@ -91,12 +91,12 @@
     {{- "\n" -}}
     {{- opening_sentence('బ్యాట్స్‌మన్‌గా', player_name, sum_batting_matches, sum_batting_innings, has_played) -}}
     {%- if sum_batting_runs > 0 -%}
-        {{- gender_pronoun_1 ~ ' తన కెరీర్ మొత్తంలో మొత్తం ' ~ sum_batting_runs |string ~ ' పరుగులు ' ~ has_done ~ '. ' -}}
+        {{- gender_pronoun_1 ~ ' తన కెరీర్ లో మొత్తం ' ~ sum_batting_runs |string ~ ' పరుగులు ' ~ has_done ~ '. ' -}}
     {%- endif -%}
     {{- batting_sent1(gender_pronoun_1, sum_batting_100s, sum_batting_50s, has_done) -}}
     {%- set line1 = batting_description_func('టెస్ట్ క్రికెట్లో', gender_pronoun_2, test_batting_average, test_batting_strike_rate) -%}
     {%- set line2 = batting_description_func('వన్డే ఇంటర్నేషనల్‌లో', gender_pronoun_2, ODI_batting_average, ODI_batting_strike_rate) -%}
-    {%- set line3 = batting_description_func('టి 20 అంతర్జాతీయ మ్యాచ్‌ల్లో', gender_pronoun_2, T20I_batting_average, T20I_batting_strike_rate) -%}
+    {%- set line3 = batting_description_func('టీ20 అంతర్జాతీయ మ్యాచ్‌ల్లో', gender_pronoun_2, T20I_batting_average, T20I_batting_strike_rate) -%}
     {%- set details = shuffle_list([line1, line2, line3]) -%}
     {%- for elem in details -%}
         {{- elem -}}
@@ -109,7 +109,7 @@
         {%- if not is_trophy_table -%}
             {{- first_word ~ ' ' ~ gender_pronoun_2 ~ ' కెరీర్‌కు సంబంధించిన మరిన్ని వివరాలు క్రింద ఇవ్వబడ్డాయి: ' -}}
         {%- else -%}
-            {{- 'వీటి గురించి మరిన్ని వివరాలు క్రింద చూడవచ్చు: ' -}}
+            {{- 'అతడు ఆడిన కొన్ని ట్రోఫీల గురించి మరిన్ని వివరాలు క్రింద చూడవచ్చు: ' -}}
         {%- endif -%} 
         {{- "\n" -}}
         {{- "\n" -}}
@@ -169,8 +169,8 @@
             {%- set line = ' ఇందులో ' ~ sum_catches |string ~ ' క్యాచ్‌లు ఉన్నాయి. ' -%}
         {%- else -%}
             {%- set line = [
-                            'ఇందులో ' ~ sum_catches |string ~ ' క్యాచ్‌లు మరియు ' ~ sum_stumpings |string ~ ' స్టంపింగ్స్ ఉన్నాయి. ',
-                            'వీటిలో ' ~ sum_stumpings |string ~ ' స్టంపింగ్స్ మరియు ' ~ sum_catches |string ~ ' క్యాచ్‌లు ఉన్నాయి. '
+                            'ఇందులో ' ~ sum_catches |string ~ ' క్యాచ్‌లు, ' ~ sum_stumpings |string ~ ' స్టంపింగ్స్ ఉన్నాయి. ',
+                            'వీటిలో ' ~ sum_stumpings |string ~ ' స్టంపింగ్స్, ' ~ sum_catches |string ~ ' క్యాచ్‌లు ఉన్నాయి. '
                             ] |random -%}
         {%- endif -%}
         {{- line -}}
@@ -186,7 +186,7 @@
     {{- bowling_sent1(gender_pronoun_1, sum_bowling_balls, has_done, sum_wickets, has_taken) -}}
     {%- set line1 = bowling_description_func('టెస్ట్ క్రికెట్లో', gender_pronoun_2, test_bowling_average, test_bowling_economy) -%}
     {%- set line2 = bowling_description_func('వన్డే ఇంటర్నేషనల్‌లో', gender_pronoun_2, ODI_bowling_average, ODI_bowling_economy) -%}
-    {%- set line3 = bowling_description_func('టి 20 అంతర్జాతీయ మ్యాచ్‌ల్లో', gender_pronoun_2, T20I_bowling_average, T20I_bowling_economy) -%}
+    {%- set line3 = bowling_description_func('టీ20 అంతర్జాతీయ మ్యాచ్‌ల్లో', gender_pronoun_2, T20I_bowling_average, T20I_bowling_economy) -%}
     {%- set details = shuffle_list([line1, line2, line3]) -%}
     {%- for elem in details -%}
         {{- elem -}}
@@ -198,8 +198,8 @@
 {%- macro trophy_description(player_name, major_trophy_and_championship_names) -%}
     {%- if major_trophy_and_championship_names |length > 0 -%}   
         {{- [
-                player_name ~ ' ' ~ major_trophy_and_championship_names|join(', ') ~ ' వంటి ప్రధాన క్రికెట్ ట్రోఫీలు మరియు ఛాంపియన్‌షిప్‌లలో కూడా ' ~ has_played ~ '.' ~ "\n",
-                'తన కెరీర్ మొత్తంలో ' ~ player_name ~ ' ' ~ major_trophy_and_championship_names|join(', ') ~ ' వంటి ప్రధాన క్రికెట్ ట్రోఫీల్లో కూడా ' ~ has_played ~ '.' ~ "\n"
+                player_name ~ ' ' ~ major_trophy_and_championship_names|join(', ') ~ ' వంటి ప్రధాన క్రికెట్ ట్రోఫీలు, ఛాంపియన్‌షిప్‌లలో కూడా ' ~ has_played ~ '.' ~ "\n",
+                'తన కెరీర్ లో ' ~ player_name ~ ' ' ~ major_trophy_and_championship_names|join(', ') ~ ' వంటి ప్రధాన క్రికెట్ ట్రోఫీల్లో కూడా ' ~ has_played ~ '.' ~ "\n"
             ] |random -}}
     {%- endif -%}
 {%- endmacro -%}
