@@ -15,6 +15,24 @@ from genXML import tewiki, writePage
 
 import ast
 
+def teams(tea,Nationality):
+    Iteam = []
+    NonIteam = []
+    li = []
+    for i in tea:
+        if Nationality in i:
+            Iteam.append(i)
+        else:
+            NonIteam.append(i)
+    if len(Iteam) < 6:
+        li = Iteam + NonIteam
+    else:
+        li = Iteam[:6]
+    if len(li) < 6:
+        return li
+    else:
+        return li[:6]
+
 def spliting(row):
     li =[]
     date = row.split(",")
@@ -25,7 +43,10 @@ def spliting(row):
     li.append(against[-1])
 
     return li
-
+def get_matches_ref(matches_ref, player_name):
+    if len(matches_ref) == 0:
+        return ''
+    return "<ref>[" + matches_ref + " " + player_name + " Profile]</ref>"
 
 def getData(row):
 	# global translit
@@ -42,6 +63,10 @@ def getData(row):
 	# 	title =row.title.values[0]
 
 	# Data dictionary 
+	team = row['Teams'].values[0]
+	if team != 'nan':
+		team = ast.literal_eval(row['Teams'].values[0])
+	teams_of_player = teams(team,row['Nationality'].values[0])
 	tropies = row["Major trophies"].values[0]
 	if tropies != 'nan':
 		tropies = ast.literal_eval(row["Major trophies"].values[0])
@@ -63,7 +88,7 @@ def getData(row):
 	# FC_Matches_last_appearance = spliting(row['FC Matches_last_appearance'].values[0])
 	# List_A_Matches_last_appearance = spliting(row['List A Matches_last_appearance'].values[0])
 	# T20_Matches_last_appearance = spliting(row['T20 Matches_last_appearance'].values[0])
-	print(row['Relations'].values[0])
+	matches_ref = ast.literal_eval(row['References'].values[0])
 	data = {
 		#{%- macro info(title, id, year, genre, actors, duration, country, original_title) -%}
 		'Full_Name':row['Full Name'].values[0],
@@ -80,7 +105,7 @@ def getData(row):
 		'Jersey_Number':row['Jersey_Number'].values[0],
 		'Gender':row['Gender'].values[0],
 		'Playing_Role':row['Playing Role'].values[0],
-		'Teams':ast.literal_eval(row['Teams'].values[0]),
+		'Teams':teams_of_player,
 		'testdebutdate':Test_Matches_debut[1],
 		'testdebutyear':Test_Matches_debut[0],
 		'testdebutagainst':Test_Matches_debut[-1],
@@ -101,7 +126,8 @@ def getData(row):
 		'lastT20Iagainst':T20I_Matches_last_appearance[-1],
 		'Major_trophies':tropies,
 		'Records':records,
-		"AWARDS" :AWARDS
+		"AWARDS" :AWARDS,
+		'matches_ref':matches_ref[0]
 
 
 	}
@@ -112,7 +138,13 @@ def main():
 	file_loader = FileSystemLoader('./template')
 	env = Environment(loader=file_loader)
 	template = env.get_template('template.j2')
-
+	
+	glob = {'get_matches_ref':get_matches_ref }
+	# func_dict = {
+    #     "get_matches_ref": get_matches_ref
+    # }
+	template.globals.update(glob)
+    # template.globals.update(func_dict)
 	moviesDF =pickle.load(open('./data/cricket_players_DF.pkl', 'rb'))
 	moviesDF.fillna(value="nan", inplace=True)
 	# ids = moviesDF.Cricinfo_id.tolist()
@@ -131,7 +163,8 @@ def main():
 	# fobj = open('infoandoverview.text', 'w', encoding='utf-8')
 	# fobj.write(tewiki+'\n')	
 	with open('infoandoverview.txt', 'w', encoding='utf-8') as fobj:
-		row = moviesDF.head(12).tail(1)
+		# row = moviesDF.head(12).tail(1)
+		row = moviesDF.loc[moviesDF['Cricinfo_id']==253802]
 		text = template.render(getData(row))
 		player_name = row["Full Name"].values[0]
 	# print(player_name)
