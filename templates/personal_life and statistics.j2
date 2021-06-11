@@ -89,7 +89,7 @@
     {%- endif -%}
 {{'\n'}}
     {%-if HOME_Avg != -1 -%}
-    {%-set line1 = ["స్వదేశంలో ఆడిన ఆటలలో, ",gender_pronoun_2," బ్యాటింగ్ సగటు స్కోరు ",HOME_Avg,","] | join('') -%}
+    {%-set line1 = ["స్వదేశంలో ఆడిన ఆటలలో, ",gender_pronoun_2," సగటు బ్యాటింగ్ స్కోరు ",HOME_Avg,","] | join('') -%}
     {%-set line2 = ["తన దేశంలో ఆడిన ఆటలలో ",gender_pronoun_2," బ్యాటింగ్ సగటు స్కోరు ",HOME_Avg,","] | join('') -%} 
     {{[line1,line2] | random}}
     {%- endif-%}
@@ -105,7 +105,7 @@
     {%- endif-%}
 {{'\n'}}
     {%-if AWAY_Avg != -1 -%}
-    {%-set line1 = ["ప్రత్యర్థి జట్టు దేశంలో ఆడిన ఆటలలో,",gender_pronoun_2," బ్యాటింగ్ సగటు స్కోరు ",AWAY_Avg,","] | join('') -%} 
+    {%-set line1 = ["ప్రత్యర్థి జట్టు దేశంలో ఆడిన ఆటలలో,",gender_pronoun_2," సగటు బ్యాటింగ్ స్కోరు ",AWAY_Avg,","] | join('') -%} 
     {{[line1,line2] | random}}
     {%- endif-%}
 
@@ -121,7 +121,7 @@
 {{'\n'}}
 
     {%-if NEUTRAL_Avg != -1 -%}
-    {%-set line1 = ["తటస్థ మైదానంలో ఆడిన ఆటలలో, ",gender_pronoun_2," బ్యాటింగ్ సగటు స్కోరు ",NEUTRAL_Avg,","] | join('') -%} 
+    {%-set line1 = ["తటస్థ మైదానంలో ఆడిన ఆటలలో, ",gender_pronoun_2," సగటు బ్యాటింగ్ స్కోరు ",NEUTRAL_Avg,","] | join('') -%} 
     {{[line1] | random}}
     {%- endif-%}
 
