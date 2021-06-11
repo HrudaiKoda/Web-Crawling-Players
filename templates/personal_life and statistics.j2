@@ -76,10 +76,9 @@
     {%-set line2 = [Player_Name," తన కెరీర్ లో","తన సొంత దేశంలో ",HOME_Mat," ఆటలను ",has_played,"."] | join('') -%} 
     {{[line1 , line2] | random}}
     {%- endif-%}
-    <br>
     {%- if AWAY_Mat != -1-%}
-    {%-set line1 = ["ప్రత్యర్థి జట్టు దేశంలో ",AWAY_Mat," ఆటలను ",has_played,"."] | join('')-%}
-    {%-set line2 = ["మొత్తం ",AWAY_Mat," ఆటలను ప్రత్యర్థి దేశం జట్టులో ",has_played,"."] | join('')-%}
+    {%-set line1 = [" ప్రత్యర్థి జట్టు దేశంలో ",AWAY_Mat," ఆటలను ",has_played,"."] | join('')-%}
+    {%-set line2 = [" మొత్తం ",AWAY_Mat," ఆటలను ప్రత్యర్థి దేశం జట్టులో ",has_played,"."] | join('')-%}
     {{[line1,line2] | random}}
     {%- endif -%}
 
