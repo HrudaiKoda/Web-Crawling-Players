@@ -71,7 +71,7 @@
 ఫీల్డర్‌గా విరాట్ కోహ్లి తన కెరీర్‌లో, 666 ఫీల్డింగ్ తొలగింపులకి కారణమయ్యాడు,  ఇందులో 666 క్యాచ్‌లు ఉన్నాయి. 
 ఫీల్డర్‌గా అతడి కెరీర్‌కు సంబంధించిన మరిన్ని వివరాలు క్రింద ఇవ్వబడ్డాయి: 
 
-{| class="wikitable sortable" style="width: 85%; margin-left: auto; margin-right: auto; border: none;"
+{| class="wikitable sortable" style="width: 85%; margin-left: auto; margin-right: auto; border: none; text-align: center;"
 |+ ఫీల్డింగ్ కెరీర్ గణాంకాలు
 |-
 ! ఫార్మాట్

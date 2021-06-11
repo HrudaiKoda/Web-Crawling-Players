@@ -10,7 +10,7 @@ Virat Kohli Delhi లో November 05,  1988 న జన్మించాడు.
 ప్రత్యర్థి జట్టు దేశంలో ఆడిన ఆటలలో, అతడి బ్యాటింగ్ సగటు స్కోరు 44.23, మొత్తంగ 3760 పరుగులు చేశాడు. <ref>[https://www.espncricinfo.com/player/virat-kohli-253802/bowling-batting-stats Virat Kohli batting, bowling, fielding stats overview]</ref>
 
 
-{| class="wikitable sortable" style="width: 85%; margin-left: auto; margin-right: auto; border: none;"
+{| class="wikitable sortable" style="width: 85%; margin-left: auto; margin-right: auto; border: none; text-align: center;"
 |+ స్టేడియం స్థానం ఆధారంగా గణాంక విశ్లేషణ
 |-
 ! శీర్షిక !! స్వదేశీ మైదానాలు !! ప్రత్యర్థి దేశ మైదానాలు 
