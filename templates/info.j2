@@ -127,7 +127,7 @@
 		{{[span_line1,span_line2] | random}}
 	{%- endif -%}
     {%- if Playing_Role != 'nan' -%}
-		{%- set span_role1=[gender_pronoun_1,' ',Playing_Role,'. '] | join('')-%}
+		{%- set span_role1=[gender_pronoun_1,' ఒక ',Playing_Role,'. '] | join('')-%}
 		{%- set span_role2=[Playing_Role,' ',gender_pronoun_2,' పాత్ర. '] | join('')-%}
         {{[span_role1,span_role2] | random}}
 	{%- endif -%}

@@ -46,7 +46,7 @@ def spliting(row):
 def get_profile_ref(profile_ref, player_name):
     if len(profile_ref) == 0:
         return ''
-    return "<ref>[" + profile_ref + " " + player_name + " Profile]</ref>"
+    return " <ref>[" + profile_ref + " " + player_name + " Profile]</ref> "
 
 def Batting_role(batting):
     if batting == "Right hand bat":
