@@ -91,14 +91,14 @@ def getData(row):
 def getData2(row):
 	data = {
 		
-		'player_name':row.Player_Name.values[0],
-		'all_records': ast.literal_eval(row.records.values[0]), 
-		'test_records': ast.literal_eval(row.test_records.values[0]), 
-		'odi_records': ast.literal_eval(row.odi_records.values[0]),
-		't20i_records': ast.literal_eval(row.t20i_records.values[0]),
-		'awards':ast.literal_eval(row.awards.values[0]),
-		'gender': row.Gender.values[0],
-		'references': ast.literal_eval(row.References.values[0])
+		'player_name':row['Player_Name'],
+		'all_records': ast.literal_eval(row['Records']), 
+		'test_records': ast.literal_eval(row['Test Records']), 
+		'odi_records': ast.literal_eval(row['ODI Records']),
+		't20i_records': ast.literal_eval(row['T20I Records']),
+		'awards':ast.literal_eval(row["AWARDS"]),
+		'gender': row["Gender"],
+		'references': ast.literal_eval(row['References'])
 	  }
 
 	return data
@@ -131,11 +131,11 @@ def main():
 	# Initiate the file object
 	fobj = open('recordsAwards.xml', 'w', encoding='utf-8')
 	fobj.write(tewiki+'\n')
-
+	text = ""
 	#row = cricketDF.head(12).tail(1)
 	row = cricketDF.loc[cricketDF['Cricinfo_id'] == 253802]
-
-	text = template.render(getData2(row))
+	for j, ro in row.iterrows():
+		text = template.render(getData2(ro))
 	player_name = row.Player_Name.values[0]	
 	writePage(player_name, text, fobj)
 	
