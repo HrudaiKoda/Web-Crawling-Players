@@ -14,7 +14,7 @@ from jinja2 import Environment, FileSystemLoader
 from genXML import tewiki, writePage
 
 import ast
-
+countries = []
 def teams(tea,Nationality):
     Iteam = []
     NonIteam = []
@@ -43,6 +43,9 @@ def spliting(row):
     li.append(against[-1])
 
     return li
+def get_source(profile_ref,player_name):
+    return profile_ref + " " + player_name + " Profile"
+
 def get_profile_ref(profile_ref, player_name):
     if len(profile_ref) == 0:
         return ''
@@ -55,6 +58,19 @@ def Batting_role(batting):
         return "ఎడమచేతి"
     else:
         return batting
+def interLinks_for_Birthplace(birth_place,countries):
+    date = birth_place.split(", ")
+    for i in date:
+        if i in countries:
+            date.remove(i)
+    print(len(date))
+    if len(date) == 1:
+        return "[["+date[0]+"]]"
+    elif len(date) == 0:
+        return "nan"
+    else:
+        li = ']],[['.join(date)
+        return "[["+li+"]]"
 
 def getData(row):
 	
@@ -137,7 +153,7 @@ def main():
 	env = Environment(loader=file_loader)
 	template = env.get_template('template.j2')
 	
-	glob = {'get_profile_ref':get_profile_ref }
+	glob = {'get_profile_ref':get_profile_ref,'get_source':get_source }
 	# func_dict = {
     #     "get_profile_ref": get_profile_ref
     # }
@@ -146,6 +162,9 @@ def main():
 	moviesDF =pickle.load(open('./data/cricket_players_DF.pkl', 'rb'))
 	moviesDF.fillna(value="nan", inplace=True)
 	# ids = moviesDF.Cricinfo_id.tolist()
+	nations = list(set(moviesDF.Nationality.tolist()))
+	countries = nations
+	print(countries)
 	# ids =ids[3:4] #remove this to generate articles for all movies
 
 	# Initiate the file object

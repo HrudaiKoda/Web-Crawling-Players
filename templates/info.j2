@@ -1,6 +1,6 @@
 
 {%- macro Infobox(Player_Name, Nationality, Full_Name, Born, Died, age, Relations,career_span, info_batting_style, Bowling_Style, Height, Jersey_Number,Gender,Playing_Role,Teams,testdebutdate,testdebutyear,testdebutagainst,odidebutdate,odidebutyear,odidebutagainst,T20Idebutdate,T20Idebutyear,T20Idebutagainst,lasttestdate,lasttestyear,lasttestagainst,lastididate,lastodiyear,lastodiagainst,lastT20Idate,lastT20Iyear,lastT20Iagainst) -%}
-    {{'{{Infobox Cricketer'}}
+    {{'{{Infobox cricketer'}}
 	|name    		= {{Player_Name}}
 	|country 		= {{Nationality}}
 	|fullname  	  = {{Full_Name}}
@@ -88,6 +88,7 @@
     {%- if FC_Matches_last_appearance != 'nan' %}
 	|ఫస్ట్ క్లాస్ కెరీర్‌లో చివరి మ్యాచ్	   =  {{FC_Matches_last_appearance}}
 	{%- endif %}#}
+	| source = {{- get_source(profile_ref,Player_Name) -}}
     {{'}}\n'}}
 {%- endmacro -%}
 
@@ -131,12 +132,14 @@
 		{%- set span_role2=[Playing_Role,' ',gender_pronoun_2,' పాత్ర. '] | join('')-%}
         {{[span_role1,span_role2] | random}}
 	{%- endif -%}
-    {%- if Batting_Style != 'nan' -%}
-    	{%-set line4 =  [gender_pronoun_1,' ఒక ',Batting_Style,' వాటం బ్యాట్స్‌మన్, '] | join('')-%}
+	{%- if Batting_Style != 'nan' and Bowling_Style != 'nan' -%}
+    	{%-set line4 =  [gender_pronoun_1,' ఒక ',Batting_Style,' వాటం బ్యాట్స్‌మన్, ',Bowling_Style,' బౌలర్. '] | join('')-%}
         {{[line4] | random}}
-	{%- endif -%}
-    {%- if Bowling_Style != 'nan' -%}
-    {%-set line4 =  [Bowling_Style,' బౌలర్. '] | join('')-%}
+	{%- elif Batting_Style != 'nan' -%}
+	{%-set line4 =  [gender_pronoun_1,' ఒక ',Batting_Style,' వాటం బ్యాట్స్‌మన్. '] | join('')-%}
+        {{[line4] | random}}
+	{%- elif Bowling_Style != 'nan' -%}
+	{%-set line4 =  [gender_pronoun_1,' ఒక ',Bowling_Style,' బౌలర్. '] | join('')-%}
         {{[line4] | random}}
 	{%- endif -%}
     {%- if Teams != 'nan' -%}
