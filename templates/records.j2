@@ -1,180 +1,150 @@
+import pickle
+from jinja2 import Environment, FileSystemLoader
+#from google.transliteration import transliterate_text
+#from indic_transliteration import sanscript
+#from indic_transliteration.sanscript import transliterate
+#import translators as ts
+#from deep_translator import GoogleTranslator
+#from translation import google, ConnectError
 
-{%- if gender == 'Male' -%}
-		{%- set word1 = 'సాధించాడు' -%}  
-		{%- set word2 = 'సొంతం చేసుకున్నాడు' -%} 
-		{%- set word3 = 'దక్కించుకున్నాడు' -%}
-		{%- set word4 = 'అందుకున్నాడు' -%}
 
-{%- else -%}
-		{%- set word1 = 'సాధించింది' -%}
-		{%- set word2 = 'సొంతం చేసుకుంది' -%}
-		{%- set word3 = 'దక్కించుకుంది' -%}
-		{%- set word4 = 'అందుకుంది' -%}
+from genXML import tewiki, writePage
+
+import ast
+
+def getData(row):
+	# Translation and Transliteration
+	try:
+		player_name = transliterate_text(row.Player_Name.values[0].strip('[]'), lang_code='te')
+	except:
+		player_name = transliterate(row.Player_Name.values[0].lower(), sanscript.HK, sanscript.TELUGU)
+
+	#print(transliterate_text("Blanche Bayliss, William Courtenay, Chauncey Depew", lang_code='te'))
+	#print(transliterate_text("Blanche Bayliss, William Courtenay, Chauncey Depet", lang_code='te'))
+
 	
-{%- endif -%}
-
-
-
-{%- macro allRecords(player_name, all_records)  -%}
- 
-	{%- if all_records != None -%}
-
-	== రికార్డులు ==
-
- {%- set line1 = [player_name,' ఈ క్రింది రికార్డులు ',word1] |join('') %}
- {%- set line2 = ['ఈ క్రింది రికార్డులు ',player_name,' ',word2] |join('') %}
- {%- set line3 = [player_name,' సాధించిన రికార్డులు'] |join('') %}
-
-{{ [line1, line2, line3] | random }}
-
-{% for record in all_records -%}
-			 
-{{- loop.index}}. {{ record.strip() }}
-
-{% endfor %}
-
-	{%- endif -%}
-	 
-
-{%- endmacro -%}
-
-
-{%- macro testRecords(player_name, test_records)  -%}
- 
-	{%- if test_records != None -%}
-
-	== టెస్ట్ రికార్డులు ==
-
-		 {%- set line1 = [player_name,' టెస్ట్ క్రికెట్‌లో ఈ క్రింది రికార్డులు ',word1] |join('') %}
-		 {%- set line2 = ['టెస్ట్ క్రికెట్‌లో ఈ క్రింది రికార్డులు ',player_name,' ',word4] |join('') %}
-		 {%- set line3 = [player_name,' టెస్ట్ క్రికెట్‌లో అందుకున్న రికార్డులు'] |join('') %}
-
-{{ [line1, line2, line3] | random }}
-
-{% for record in test_records -%}			 
-
-{{-loop.index}}. {{ record.strip() }}
-
-{% endfor %}
-
-	{%- endif -%}
-	 
-
-{%- endmacro -%}
-
-
-
-{%- macro odiRecords(player_name, odi_records)  -%}
- 
-		{%- if odi_records != None -%}
-
-		== వన్డే రికార్డులు ==
-
-			{%- set line1 = [player_name,' వన్డే ఇంటర్నేషనల్‌లో ఈ క్రింది రికార్డులు ',word1] |join('') %}
-			{%- set line2 = ['వన్డే ఇంటర్నేషనల్‌లో ఈ క్రింది రికార్డులు ',player_name,' ',word2] |join('') %}
-			{%- set line3 = [player_name,' వన్డే ఇంటర్నేషనల్‌లో అందుకున్న రికార్డులు'] |join('') %}
-
-{{ [line1, line2, line3] | random }}
-	 
-{% for record in odi_records -%}
-
-{{-loop.index}}. {{ record.strip() }}
-
-{% endfor %}
-
-	{%- endif -%}
-	 
-
-{%- endmacro -%}
-
-
-
-{%- macro t20iRecords(player_name, t20i_records)  -%}
- 
-	{%- if t20i_records != None -%}
-
-	== టీ20 రికార్డులు ==
-	 
-		 {%- set line1 = [player_name,' టి 20 లలో ఈ క్రింది రికార్డులు ',word2] |join('') %}
-		 {%- set line2 = ['టి 20 లలో ఈ క్రింది రికార్డులు ',player_name,' ',word4] |join('') %}
-		 {%- set line3 = [player_name,' టి 20 లలో అందుకున్న రికార్డులు '] |join('') %}
-
-{{ [line1, line2, line3] | random }}    
-
-{% for record in t20i_records -%}
-			 
-{{-loop.index}}. {{ record.strip() }}
-
-{% endfor %}
-
-	{%- endif -%}
-	 
-
-{%- endmacro -%}
-
-
-
-{%- macro function_awards(player_name, awards)  -%}
- 
-	{%- if awards != None %}
-	 		
-== పురస్కారాలు,  క్రీడా గౌరవాలు ==  
+	try:	
+		all_records = ts.google(row.records.values[0].strip('[]'), from_language='en', to_language='te')
+		all_records = all_records.split(',')
+		all_records = list(map((lambda x: x.strip("'")), all_records))
+	except:
+		all_records = google(row.records.values[0].strip('[]'), dst = 'te', proxies = {'http': '127.0.0.1:1080'})
+		all_records = all_records.split(',')
+		all_records = list(map((lambda x: x.strip("'")), all_records))
 	
-		 {%- set line1 = [player_name,' ఈ క్రింది అవార్డులు ',word3] |join('') %}
-		 {%- set line2 = ['ఈ క్రింది అవార్డులు ',player_name,' ',word4] |join('') %}
-		 {%- set line3 = [player_name,' దక్కించుకున్న అవార్డులు'] |join('') %}
+		
 
-{{ [line1, line2, line3] | random }}
+	try:
+		test_records = ts.google(row.test_records.values[0].strip('[]'), from_language='en', to_language='te')
+		test_records = test_records.split(',')
+		test_records = list(map((lambda x: x.strip("'")), test_records))
+	except:
+		test_records = GoogleTranslator(source='auto', target='de', proxies=proxies_example).translate(row.test_records.values[0].strip('[]'))
+		test_records = test_records.split(',')
+		test_records = list(map((lambda x: x.strip("'")), test_records))
 
-{% for award in awards -%}
-			 
-{{-loop.index}}. {{ award.strip() }}
+	try:
+		odi_records = ts.google(row.odi_records.values[0].strip('[]'), from_language='en', to_language='te')
+		odi_records = odi_records.split(',')
+		odi_records = list(map((lambda x: x.strip("'")), odi_records))
+	except:
+		odi_records = ast.literal_eval(row.odi_records.values[0])
 
-{% endfor %}
-
-	{%- endif -%}
-	 
-
-{%- endmacro -%}
-
-
-
-{%- macro function_references(references)  -%}
- 
-	{%- if references != None %}
-== మూలాలు ==
-
-{% for reference in references -%}
-			 
-{{-loop.index}}. {{ reference.strip() }}
-
-{% endfor %}
-
-	{%- endif -%}
-	 
-
-{%- endmacro -%}
+	try:
+		t20i_records = ts.google(row.t20i_records.values[0].strip('[]'), from_language='en', to_language='te')
+		t20i_records = t20i_records.split(',')
+		t20i_records = list(map((lambda x: x.strip("'")), t20i_records))
+	except:
+		t20i_records = ast.literal_eval(row.t20i_records.values[0])
 
 
+	try:
+		awards = ts.google(row.awards.values[0].strip('[]'), from_language='en', to_language='te')
+		awards = awards.split(',')
+		awards = list(map((lambda x: x.strip("'")), awards))
+	except:
+		awards = ast.literal_eval(row.awards.values[0])
 
+
+	gender = row.Gender.values[0]
 
 
 
-{# Function Calls Below#}
+
+	# Data dictionary 
+	data = {
+		
+		'player_name':player_name,
+		'all_records': all_records, 
+		'test_records': test_records, 
+		'odi_records': odi_records,
+		't20i_records': t20i_records,
+		'awards': awards,
+		'gender': gender,
+		'references': ast.literal_eval(row.References.values[0])
+	  }
+
+	return data
 
 
-{{- allRecords(player_name, all_records) -}}
 
-{{- testRecords(player_name, test_records) -}}
+def getData2(row):
+	data = {
+		
+		'player_name':row.Player_Name.values[0],
+		'all_records': ast.literal_eval(row.records.values[0]), 
+		'test_records': ast.literal_eval(row.test_records.values[0]), 
+		'odi_records': ast.literal_eval(row.odi_records.values[0]),
+		't20i_records': ast.literal_eval(row.t20i_records.values[0]),
+		'awards':ast.literal_eval(row.awards.values[0]),
+		'gender': row.Gender.values[0],
+		'references': ast.literal_eval(row.References.values[0])
+	  }
 
-{{- odiRecords(player_name, odi_records) -}}
-
-{{- t20iRecords(player_name, t20i_records) -}}
-
-{{- function_awards(player_name, awards) -}}
-
-{{- function_references(references) -}}
+	return data
 
 
 
- 
+def get_matches_ref(matches_ref, player_name):
+	required_ref = [r for r in matches_ref if "records" in r]
+	if len(required_ref) == 0:
+		return ''
+	return "<ref>[" + required_ref[0] + " " + player_name + " records]</ref>"
+
+
+
+def main():
+	file_loader = FileSystemLoader('./templates')
+	env = Environment(loader=file_loader)
+	template = env.get_template('records.j2')
+
+	cricketDF =pickle.load(open('./data/cricket_players.pkl', 'rb'))
+
+
+	func_dict = {
+		"get_matches_ref": get_matches_ref
+	}
+	template.globals.update(func_dict)
+	
+	#cricketDF.rename(columns={'Records' : 'records'}, inplace=True)
+	
+	# Initiate the file object
+	fobj = open('recordsAwards.xml', 'w', encoding='utf-8')
+	fobj.write(tewiki+'\n')
+
+	#row = cricketDF.head(12).tail(1)
+	row = cricketDF.loc[cricketDF['Cricinfo_id'] == 253802]
+
+	text = template.render(getData2(row))
+	player_name = row.Player_Name.values[0]	
+	writePage(player_name, text, fobj)
+	
+	fobj.write('</mediawiki>')
+
+	fobj = open('recordsAwards.txt', 'w', encoding='utf-8')
+	fobj.write(text)
+   
+	fobj.close()
+
+if __name__ == '__main__':
+	main()
