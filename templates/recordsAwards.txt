@@ -307,4 +307,4 @@ Virat Kohli తన కెరీర్‌లో గెలుచుకున్న
 
 == మూలాలు ==
 
-['https://www.espncricinfo.com/player/virat-kohli-253802', 'https://www.espncricinfo.com/player/virat-kohli-253802/tests-odi-t20-records', 'https://www.espncricinfo.com/player/virat-kohli-253802/matches', 'https://www.espncricinfo.com/player/virat-kohli-253802/bowling-batting-stats']
+{{reflist}}
