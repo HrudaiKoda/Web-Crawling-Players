@@ -66,6 +66,9 @@ def getData(row):
 		awards = ast.literal_eval(row.awards.values[0])
 
 
+	gender = row.Gender.values[0]
+
+
 
 
 	# Data dictionary 
@@ -77,6 +80,7 @@ def getData(row):
 		'odi_records': odi_records,
 		't20i_records': t20i_records,
 		'awards': awards,
+		'gender': gender,
 		'references': ast.literal_eval(row.References.values[0])
 	  }
 
@@ -101,6 +105,13 @@ def getData2(row):
 
 
 
+def get_matches_ref(matches_ref, player_name):
+	required_ref = [r for r in matches_ref if "records" in r]
+	if len(required_ref) == 0:
+		return ''
+	return "<ref>[" + required_ref[0] + " " + player_name + " records]</ref>"
+
+
 
 def main():
 	file_loader = FileSystemLoader('./templates')
@@ -108,6 +119,12 @@ def main():
 	template = env.get_template('records.j2')
 
 	cricketDF =pickle.load(open('./data/cricket_players.pkl', 'rb'))
+
+
+	func_dict = {
+		"get_matches_ref": get_matches_ref
+	}
+	template.globals.update(func_dict)
 	
 	#cricketDF.rename(columns={'Records' : 'records'}, inplace=True)
 	
@@ -122,10 +139,11 @@ def main():
 	player_name = row.Player_Name.values[0]	
 	writePage(player_name, text, fobj)
 	
+	fobj.write('</mediawiki>')
+
 	#fobj = open('recordsAwards.txt', 'w', encoding='utf-8')
 	#fobj.write(text)
    
-	fobj.write('</mediawiki>')
 	fobj.close()
 
 if __name__ == '__main__':
