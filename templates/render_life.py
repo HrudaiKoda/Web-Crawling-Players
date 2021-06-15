@@ -7,7 +7,11 @@ import pandas as pd
 from deeptranslit import DeepTranslit
 from functools import cmp_to_key
 from deep_translator import GoogleTranslator
+from google_trans_new import google_translator
+from google.transliteration import transliterate_word, transliterate_text
 
+
+translator = google_translator()
 trans = DeepTranslit('telugu').transliterate
 all_attributes = []
 
@@ -89,6 +93,9 @@ translated_names = {
     "List A": "లిస్ట్ ఏ"
 }    
 
+def is_valid_string(attribute_value):
+    return not (attribute_value == None or pd.isnull(attribute_value) or str(attribute_value) == "" or str(attribute_value) == "nan")
+
 def getTransliteratedDescription(description):
     try:
         current_attribute_value = description
@@ -96,18 +103,59 @@ def getTransliteratedDescription(description):
         deep = trans(current_attribute_value)[0]
         description = deep['pred']
     except:
-        pass
+        try:
+            return transliterate_text(test_text, lang_code='te')
+        except:
+            pass
     return description
 
 def getTranslatedDescription(description):
-    # return ts.google(query_text=description, from_language='en', to_language='te')
-    return GoogleTranslator(source='en', target='te').translate(text=description)
+    global translator
+    if not is_valid_string(description):
+        return description
+    try:
+        return translator.translate(description, lang_src='en', lang_tgt='te')
+    except:
+        try:
+            return ts.google(query_text=description, from_language='en', to_language='te')
+        except:
+            try:
+                return GoogleTranslator(source='en', target='te').translate(text=description)
+            except:
+                return description
+
+def get_trophy_name(description):
+    trophy_translations = {
+        "Basil D'Oliveira": "బాసిల్ డి'ఒలివెరా", 
+        'World Cup': 'ప్రపంచ కప్', 
+        'ICC World Test Champ': 'ఐసిసి ప్రపంచ టెస్ట్ ఛాంపియన్‌షిప్', 
+        'Frank Worrell Trophy': 'ఫ్రాంక్ వొరెల్ ట్రోఫీ', 
+        'Border-Gavaskar': 'బోర్డర్-గవాస్కర్ ట్రోఫీ', 
+        "Men's T20 World Cup": 'టీ20 ప్రపంచ కప్', 
+        'The Ashes': 'ది యాషెస్', 
+        'World Cup Qualifier': 'ప్రపంచ కప్ క్వాలిఫైయర్', 
+        'Chappell-Hadlee': 'చాపెల్-హాడ్లీ', 
+        'Trans-Tasman Trophy': 'ట్రాన్స్-టాస్మాన్ ట్రోఫీ', 
+        'WCL Championship': 'ప్రపంచ క్రికెట్ లీగ్ ఛాంపియన్‌షిప్', 
+        'ICC Champions Trophy': 'ఐసిసి ఛాంపియన్స్ ట్రోఫీ', 
+        'The Wisden Trophy': 'ది విస్డెన్ ట్రోఫీ', 
+        'Asia Cup': 'ఆసియా కప్'       
+    }
+    if not description in trophy_translations.keys():
+        return getTransliteratedDescription(description)
+    return trophy_translations[description]
+
+def get_trophy_names_list(given_trophy_list):
+    trophy_list = list(given_trophy_list)
+    for i in range(len(trophy_list)):
+        trophy_list[i] = get_trophy_name(trophy_list[i])
+    return ', '.join(trophy_list)
 
 def get_matches_ref(matches_ref, player_name):
     required_ref = [r for r in matches_ref if "matches" in r]
     if len(required_ref) == 0:
         return ''
-    return "<ref>[" + required_ref[0] + " " + player_name + " మ్యాచ్‌లు]</ref>"
+    return "<ref>[" + required_ref[0] + " " + player_name.strip() + " మ్యాచ్‌లు]</ref>"
     
 def stat_value(attribute_name, attribute_value):
     # print(attribute_name, attribute_value)
@@ -143,9 +191,6 @@ def print_names(li):
 def get_teams_string(teams_list):
     actual_list = ast.literal_eval(teams_list)
     return getTransliteratedDescription(', '.join(actual_list))
-    
-def is_valid_string(attribute_value):
-    return not (pd.isnull(attribute_value) or str(attribute_value) == "" or str(attribute_value) == "nan")
 
 def get_role(role):
     role_map = {
@@ -440,10 +485,26 @@ def did_retire(span):
         return False
     
 def get_debut_string(deb):
-    if not " at" in deb:
-        return getTranslatedDescription(deb)
-    occ = deb.find(" at")
-    return getTranslatedDescription(deb[:occ] + ',' + deb[occ:])
+    # print(deb)
+    deb = deb.replace("vs", "versus")
+    deb = deb.replace("Vs", "versus")
+    deb = deb.replace("vS", "versus")
+    deb = deb.replace("VS", "versus")
+    occ = deb.find(" at ")
+    if occ == -1:
+        return getTransliteratedDescription(deb)
+    deb = deb[:occ] + ', ' + deb[occ:]
+    occ = deb.find(" at ")
+    occ2 = deb.find("-")
+    if occ2 == -1:
+        occ2 = len(deb)
+    curr_sub = deb[occ:occ2]
+    # print(curr_sub)
+    tokens = curr_sub.split(' ')
+    tokens.append('lo ')
+    deb = deb.replace(curr_sub, ' '.join(tokens[2:]))
+    # print(deb)
+    return getTransliteratedDescription(deb)
 
 
 def getData(row):
@@ -454,7 +515,7 @@ def getData(row):
     sum_batting_matches, sum_batting_innings, sum_batting_runs, sum_batting_100s, sum_batting_50s, sum_dismissals, sum_catches, sum_stumpings, sum_bowling_matches, sum_bowling_innings, sum_bowling_balls, sum_wickets = get_description_sums(row)
     data = {
         # {%- macro early_career(player_name, career_start_year, first_class_debut, listA_debut, T20_debut, T20I_debut, ODI_debut, test_debut) -%}
-        'player_name': getTranslatedDescription(row['Player_Name']),
+        'player_name': getTranslatedDescription(row['Player_Name']).strip(),
         'gender': row['Gender'],
         'career_start_year': get_start_year(row['career_span']),
         'first_class_debut': row['FC Matches_debut'],
@@ -466,7 +527,7 @@ def getData(row):
         
         # {%- macro career_intro(player_name, player_role, nationality, teams, jersey_number, has_retired) -%}
         'player_role': row['Playing Role'],
-        'nationality': getTranslatedDescription(row['Nationality']),
+        'nationality': getTranslatedDescription(row['Nationality']).strip(),
         'teams': row['Teams'],
         'jersey_number': row['Jersey_Number'],
         'has_retired': did_retire(row['career_span']),
@@ -560,11 +621,13 @@ def main():
         "get_matches_ref": get_matches_ref,
         "getTransliteratedDescription": getTransliteratedDescription,
         "get_role": get_role,
-        "get_debut_string": get_debut_string
+        "get_debut_string": get_debut_string,
+        "get_trophy_name": get_trophy_name,
+        "get_trophy_names_list": get_trophy_names_list
     }
     template.globals.update(func_dict)
     
-    with open('../data_collection/data/final_cricket_players_DF.pkl', 'rb') as f:
+    with open('final_cricket_players_DF.pkl', 'rb') as f:
         cricket_players_DF = pickle.load(f)
         cricket_players_DF.fillna(value="nan", inplace=True)
         ids = cricket_players_DF.Cricinfo_id.tolist()

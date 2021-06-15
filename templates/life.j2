@@ -65,8 +65,8 @@
     {%- endif -%}
     {%- if is_valid_string(nationality) -%}
         {{- [
-                gender_pronoun_1 ~ ' అంతర్జాతీయ క్రికెట్‌లో ' ~ nationality ~ ' దేశం తరఫున ' ~ play ~ '. ',
-                gender_pronoun_1 ~ ' అంతర్జాతీయ క్రికెట్‌లో ' ~ nationality ~ ' దేశానికి ప్రాతినిధ్యం ' ~ play2 ~ '. '
+                gender_pronoun_1 ~ ' అంతర్జాతీయ క్రికెట్‌లో ' ~ nationality ~ ' తరఫున ' ~ play ~ '. ',
+                gender_pronoun_1 ~ ' అంతర్జాతీయ క్రికెట్‌లో ' ~ nationality ~ ' కి ప్రాతినిధ్యం ' ~ play2 ~ '. '
             ] |random -}}
     {%- endif -%}
     {%- if teams |length > 0 -%}   
@@ -123,7 +123,7 @@
         {{- '\n' -}}
         {%- for horizontal_heading in horizontal_headings -%}
             {%- if is_trophy_table -%}
-                {{- '! {}'.format(getTransliteratedDescription(horizontal_heading)) -}}
+                {{- '! {}'.format(get_trophy_name(horizontal_heading)) -}}
             {%- else -%}
                 {{- '! {}'.format(get_translation(horizontal_heading, prefix_string)) -}}
             {%- endif -%}      
@@ -164,9 +164,9 @@
                 'ఫీల్డర్‌గా ' ~ player_name ~ ' తన కెరీర్‌లో, ' ~ sum_dismissals |string ~ ' ఫీల్డింగ్ తొలగింపులకి కారణమయ్యాడు, ',
             ] |random -}}
         {%- if sum_catches == 0 -%}
-            {%- set line = ' ఇందులో ' ~ sum_stumpings |string ~ ' స్టంపింగ్స్ ఉన్నాయి. ' -%}
+            {%- set line = 'ఇందులో ' ~ sum_stumpings |string ~ ' స్టంపింగ్స్ ఉన్నాయి. ' -%}
         {%- elif sum_stumpings == 0 -%}
-            {%- set line = ' ఇందులో ' ~ sum_catches |string ~ ' క్యాచ్‌లు ఉన్నాయి. ' -%}
+            {%- set line = 'ఇందులో ' ~ sum_catches |string ~ ' క్యాచ్‌లు ఉన్నాయి. ' -%}
         {%- else -%}
             {%- set line = [
                             'ఇందులో ' ~ sum_catches |string ~ ' క్యాచ్‌లు, ' ~ sum_stumpings |string ~ ' స్టంపింగ్స్ ఉన్నాయి. ',
@@ -196,10 +196,11 @@
 {%- endmacro -%}
 
 {%- macro trophy_description(player_name, major_trophy_and_championship_names) -%}
-    {%- if major_trophy_and_championship_names |length > 0 -%}   
+    {%- if major_trophy_and_championship_names |length > 0 -%}
+        {{- "\n" -}}
         {{- [
-                player_name ~ ' ' ~ getTransliteratedDescription(major_trophy_and_championship_names|join(', ')) ~ ' వంటి ప్రధాన క్రికెట్ ట్రోఫీలు, ఛాంపియన్‌షిప్‌లలో కూడా ' ~ has_played ~ '.' ~ "\n",
-                'తన కెరీర్ లో ' ~ player_name ~ ' ' ~ major_trophy_and_championship_names|join(', ') ~ ' వంటి ప్రధాన క్రికెట్ ట్రోఫీల్లో కూడా ' ~ has_played ~ '.' ~ "\n"
+                player_name ~ ' ' ~ get_trophy_names_list(major_trophy_and_championship_names) ~ ' వంటి ప్రధాన క్రికెట్ ట్రోఫీలు, ఛాంపియన్‌షిప్‌లలో కూడా ' ~ has_played ~ '.' ~ "\n",
+                'తన కెరీర్ లో ' ~ player_name ~ ' ' ~ get_trophy_names_list(major_trophy_and_championship_names) ~ ' వంటి ప్రధాన క్రికెట్ ట్రోఫీల్లో కూడా ' ~ has_played ~ '.' ~ "\n"
             ] |random -}}
     {%- endif -%}
 {%- endmacro -%}
