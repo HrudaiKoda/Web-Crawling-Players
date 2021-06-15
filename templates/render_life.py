@@ -6,6 +6,7 @@ import translators as ts
 import pandas as pd
 from deeptranslit import DeepTranslit
 from functools import cmp_to_key
+from deep_translator import GoogleTranslator
 
 trans = DeepTranslit('telugu').transliterate
 all_attributes = []
@@ -44,6 +45,17 @@ bowl_stat_order = {
 }
 
 translated_names = {
+    'rn': "పరుగులు",
+    'bta': "సగటు బ్యాటింగ్ స్కోరు", 
+    'st': "స్టంపింగ్స్", 
+    'fw': "ఐదు వికెట్ మ్యాచ్‌లు", 
+    'mt': "మ్యాచ్‌లు", 
+    'bbi': "ఉత్తమ బౌలింగ్ ఇన్నింగ్స్", 
+    'hs': "అత్యధిక స్కోరు", 
+    'wk': "వికెట్లు", 
+    'ct': "క్యాచ్‌లు", 
+    'bwa': "సగటు బౌలింగ్ స్కోరు", 
+    'sp': "వ్యవధి", 
     "Mat": "మ్యాచ్‌లు",
     "Inns": "ఇన్నింగ్స్",
     "NO": "నాట్-అవుట్స్",
@@ -75,19 +87,33 @@ translated_names = {
     "T20I": "అంతర్జాతీయ టీ20",
     "FC": "ఫస్ట్ క్లాస్",
     "List A": "లిస్ట్ ఏ"
-}
+}    
+
+def getTransliteratedDescription(description):
+    try:
+        current_attribute_value = description
+        # anu_title = telugu.anuvaad(row.title.values[0])
+        deep = trans(current_attribute_value)[0]
+        description = deep['pred']
+    except:
+        pass
+    return description
+
+def getTranslatedDescription(description):
+    # return ts.google(query_text=description, from_language='en', to_language='te')
+    return GoogleTranslator(source='en', target='te').translate(text=description)
 
 def get_matches_ref(matches_ref, player_name):
     required_ref = [r for r in matches_ref if "matches" in r]
     if len(required_ref) == 0:
         return ''
-    return "<ref>[" + required_ref[0] + " " + player_name + " matches]</ref>"
+    return "<ref>[" + required_ref[0] + " " + player_name + " మ్యాచ్‌లు]</ref>"
     
 def stat_value(attribute_name, attribute_value):
     # print(attribute_name, attribute_value)
-    if str(attribute_value) == "" or str(attribute_value) == "nan":
+    if str(attribute_value) == "" or str(attribute_value) == "nan" or attribute_value == None:
         return "-"
-    if "HS" in attribute_name or "BBI" in attribute_name or "BBM" in attribute_name or "span" in attribute_name.lower():
+    if "hs" in attribute_name.lower() or "bbi" in attribute_name.lower() or "BBM" in attribute_name or "span" in attribute_name.lower() or attribute_name == 'sp':
         return attribute_value
     if int(float(attribute_value)) < 0:
         return "-"
@@ -111,18 +137,33 @@ def bowl_comparator(a, b):
 def get_bowl_atts_sorted(bowl_stats_list):
     return sorted(bowl_stats_list, key=cmp_to_key(bowl_comparator))   
     
-    
 def print_names(li):
     return (li)
 
 def get_teams_string(teams_list):
     actual_list = ast.literal_eval(teams_list)
-    return ', '.join(actual_list)
+    return getTransliteratedDescription(', '.join(actual_list))
     
 def is_valid_string(attribute_value):
     return not (pd.isnull(attribute_value) or str(attribute_value) == "" or str(attribute_value) == "nan")
 
-
+def get_role(role):
+    role_map = {
+        "Bowler": "బౌలర్",
+        "Allrounder": "ఆల్ రౌండర్",
+        "Batter": "బ్యాట్స్‌మన్‌",
+        "Opening batter": "ఓపెనింగ్ బ్యాట్స్‌మన్‌",
+        "Wicketkeeper batter": "వికెట్ కీపర్ బ్యాట్స్‌మన్‌",
+        "Top order batter": "టాప్ ఆర్డర్ బ్యాట్స్‌మన్‌",
+        "Middle order batter": "మిడిల్ ఆర్డర్ బ్యాట్స్‌మన్",
+        "Wicketkeeper": "వికెట్ కీపర్",
+        "Bowling allrounder": "బౌలింగ్ ఆల్ రౌండర్",
+        "Batting allrounder": "బ్యాటింగ్ ఆల్ రౌండర్"
+    }
+    if not role in role_map.keys():
+        return role
+    return role_map[role]
+    
 def shuffle_list(given_list):
     result = list(given_list)
     random.shuffle(result)
@@ -187,26 +228,6 @@ def bowling_sent2(gender_pronoun_2, gender_pronoun_1, bowling_10w_test, bowling_
     elif bowling_10w_test > 0:
         return (gender_pronoun_2 + ' కెరీర్లో, ' + gender_pronoun_1 + ' ' + str(bowling_10w_test) + ' టెస్ట్ మ్యాచ్లలో 10 వికెట్లు ' + has_taken + '. ')
     return (gender_pronoun_2 + ' కెరీర్లో, ' + gender_pronoun_1 + ' ' + str(bowling_10w_FC) + ' ఫస్ట్ క్లాస్ మ్యాచ్లలో 10 వికెట్లు ' + has_taken + '. ')
-
-# def translateAndTransliterateInfo(row):
-# 	# Translation and Transliteration
-# 	attribute_list = [
-# 		row.title.values[0], row.genre.values[0], row.actors.values[0],
-# 		row.country.values[0], row.director.values[0], row.language.values[0],
-# 		row.writer.values[0], row.production_company.values[0]
-# 	]
-# 	for i in range(len(attribute_list)):
-# 		try:
-# 			current_attribute_value = attribute_list[i]
-# 			# anu_title = telugu.anuvaad(row.title.values[0])
-# 			deep = trans(current_attribute_value)[0]
-# 			attribute_list[i] = deep['pred']
-# 		except:
-# 			continue
-# 	return tuple(attribute_list)
-
-def getTranslatedDescription(description):
-    return ts.google(query_text=description, from_language='en', to_language='te')
 
 def get_translation(word, prefix_string):
     global translated_names
@@ -311,7 +332,7 @@ def can_consider_trophy_stat(stat_name, all_trophies):
 
 def get_trophy_info(row):
     global all_attributes
-    all_trophies = ast.literal_eval(row['Major trophies'])
+    all_trophies = ast.literal_eval(row['Major_Trophies'])
     if len(all_trophies) == 0:
         return [], [], {}
     trophy_names = [name for name in all_trophies.keys()
@@ -331,6 +352,9 @@ def get_trophy_info(row):
         for key2 in all_trophies[key1].keys():
             if key2 in trophy_stat_names:
                 trophy_details[key1][key2] = all_trophies[key1][key2]
+    # for i in range(len(trophy_names)):
+    #     trophy_names[i] = getTransliteratedDescription(trophy_names[i])
+    trophy_stat_names = [t_stat for t_stat in trophy_stat_names if not t_stat in ['tt', 'pr', 'hn', 'bbad']]
     return trophy_names, trophy_stat_names, trophy_details
 
 
@@ -414,6 +438,12 @@ def did_retire(span):
         return int(break_up[1]) < 2021
     except:
         return False
+    
+def get_debut_string(deb):
+    if not " at" in deb:
+        return getTranslatedDescription(deb)
+    occ = deb.find(" at")
+    return getTranslatedDescription(deb[:occ] + ',' + deb[occ:])
 
 
 def getData(row):
@@ -424,7 +454,7 @@ def getData(row):
     sum_batting_matches, sum_batting_innings, sum_batting_runs, sum_batting_100s, sum_batting_50s, sum_dismissals, sum_catches, sum_stumpings, sum_bowling_matches, sum_bowling_innings, sum_bowling_balls, sum_wickets = get_description_sums(row)
     data = {
         # {%- macro early_career(player_name, career_start_year, first_class_debut, listA_debut, T20_debut, T20I_debut, ODI_debut, test_debut) -%}
-        'player_name': row['Player_Name'],
+        'player_name': getTranslatedDescription(row['Player_Name']),
         'gender': row['Gender'],
         'career_start_year': get_start_year(row['career_span']),
         'first_class_debut': row['FC Matches_debut'],
@@ -436,7 +466,7 @@ def getData(row):
         
         # {%- macro career_intro(player_name, player_role, nationality, teams, jersey_number, has_retired) -%}
         'player_role': row['Playing Role'],
-        'nationality': row['Nationality'],
+        'nationality': getTranslatedDescription(row['Nationality']),
         'teams': row['Teams'],
         'jersey_number': row['Jersey_Number'],
         'has_retired': did_retire(row['career_span']),
@@ -527,11 +557,14 @@ def main():
         "print_names": print_names,
         "get_teams_string": get_teams_string,
         "get_translation": get_translation,
-        "get_matches_ref": get_matches_ref
+        "get_matches_ref": get_matches_ref,
+        "getTransliteratedDescription": getTransliteratedDescription,
+        "get_role": get_role,
+        "get_debut_string": get_debut_string
     }
     template.globals.update(func_dict)
     
-    with open('cricket_players_DF.pkl', 'rb') as f:
+    with open('final_cricket_players_DF.pkl', 'rb') as f:
         cricket_players_DF = pickle.load(f)
         cricket_players_DF.fillna(value="nan", inplace=True)
         ids = cricket_players_DF.Cricinfo_id.tolist()
@@ -542,7 +575,8 @@ def main():
                 required_player = cricket_players_DF.loc[cricket_players_DF['Cricinfo_id']==cricketer_id]
                 for j, row in required_player.iterrows():
                     # print(row)
-                    fobj.write(template.render(getData(row)))
+                    va = template.render(getData(row))
+                    fobj.write(va)
                 # fobj.write(text)
 				# writePage(title, text, fobj)		
 				# print(i, title)
