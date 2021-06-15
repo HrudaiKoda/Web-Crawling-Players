@@ -564,7 +564,7 @@ def main():
     }
     template.globals.update(func_dict)
     
-    with open('final_cricket_players_DF.pkl', 'rb') as f:
+    with open('../data_collection/data/final_cricket_players_DF.pkl', 'rb') as f:
         cricket_players_DF = pickle.load(f)
         cricket_players_DF.fillna(value="nan", inplace=True)
         ids = cricket_players_DF.Cricinfo_id.tolist()
