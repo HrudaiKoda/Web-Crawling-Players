@@ -1,20 +1,90 @@
 import pickle
 from jinja2 import Environment, FileSystemLoader
-# from google.transliteration import transliterate_text
-# from indic_transliteration import sanscript
-# from indic_transliteration.sanscript import transliterate
-# import translators as ts
-# from deep_translator import GoogleTranslator
-# from translation import google, ConnectError
+from google.transliteration import transliterate_text
+from googletrans import Translator
+from google_trans_new import google_translator  
+# from translate import Translator
+translator = Translator()
+translit = google_translator()
+
 # from anuvaad import Anuvaad
 # telugu = Anuvaad('english-telugu')
-# from deeptranslit import DeepTranslit
-# translit = DeepTranslit('telugu').transliterate
+from deeptranslit import DeepTranslit
+trans = DeepTranslit('telugu').transliterate
 
 from genXML import tewiki, writePage
 
 import ast
 countries = []
+
+def concate_birth(date):
+    if len(date) == 1:
+        return date[0]
+    elif len(date) == 0:
+        return "nan"
+    else:
+        li = ','.join(date)
+        return li.rstrip()
+def get_role(role):
+    role_map = {
+        "Bowler": "బౌలర్",
+        "Allrounder": "ఆల్ రౌండర్",
+        "Batter": "బ్యాట్స్‌మన్‌",
+        "Opening batter": "ఓపెనింగ్ బ్యాట్స్‌మన్‌",
+        "Wicketkeeper batter": "వికెట్ కీపర్ బ్యాట్స్‌మన్‌",
+        "Top order batter": "టాప్ ఆర్డర్ బ్యాట్స్‌మన్‌",
+        "Middle order batter": "మిడిల్ ఆర్డర్ బ్యాట్స్‌మన్",
+        "Wicketkeeper": "వికెట్ కీపర్",
+        "Bowling allrounder": "బౌలింగ్ ఆల్ రౌండర్",
+        "Batting allrounder": "బ్యాటింగ్ ఆల్ రౌండర్"
+    }
+    if not role in role_map.keys():
+        return role
+    return role_map[role]
+
+def get_trophy_name(description):
+    trophy_translations = {
+        "Basil D'Oliveira": "బాసిల్ డి'ఒలివెరా", 
+        'World Cup': 'ప్రపంచ కప్', 
+        'ICC World Test Champ': 'ఐసిసి ప్రపంచ టెస్ట్ ఛాంపియన్‌షిప్', 
+        'Frank Worrell Trophy': 'ఫ్రాంక్ వొరెల్ ట్రోఫీ', 
+        'Border-Gavaskar': 'బోర్డర్-గవాస్కర్ ట్రోఫీ', 
+        "Men's T20 World Cup": 'టీ20 ప్రపంచ కప్', 
+        'The Ashes': 'ది యాషెస్', 
+        'World Cup Qualifier': 'ప్రపంచ కప్ క్వాలిఫైయర్', 
+        'Chappell-Hadlee': 'చాపెల్-హాడ్లీ', 
+        'Trans-Tasman Trophy': 'ట్రాన్స్-టాస్మాన్ ట్రోఫీ', 
+        'WCL Championship': 'ప్రపంచ క్రికెట్ లీగ్ ఛాంపియన్‌షిప్', 
+        'ICC Champions Trophy': 'ఐసిసి ఛాంపియన్స్ ట్రోఫీ', 
+        'The Wisden Trophy': 'ది విస్డెన్ ట్రోఫీ', 
+        'Asia Cup': 'ఆసియా కప్'       
+    }
+    if not description in trophy_translations.keys():
+        return getTransliteratedDescription(description)
+    return trophy_translations[description]
+
+def get_trophy_names_list(given_trophy_list):
+    trophy_list = list(given_trophy_list)
+    for i in range(len(trophy_list)):
+        trophy_list[i] = get_trophy_name(trophy_list[i])
+    return ', '.join(trophy_list)
+
+def get_transleration_description(description):
+    try:
+        current_attribute_value = description
+        # anu_title = telugu.anuvaad(row.title.values[0])
+        deep = trans(current_attribute_value)[0]
+        description = deep['pred']
+    except:
+        try:
+            return transliterate_text(test_text, lang_code='te')
+        except:
+            pass
+    return description
+
+def get_translation_description(description):
+	return translit.translate(description,lang_tgt='te')
+
 def teams(tea,Nationality):
     Iteam = []
     NonIteam = []
@@ -29,9 +99,9 @@ def teams(tea,Nationality):
     else:
         li = Iteam[:6]
     if len(li) < 6:
-        return li
+        return get_transleration_description(li)
     else:
-        return li[:6]
+        return get_transleration_description(li[:6])
 
 def spliting(row):
     li =[]
@@ -44,18 +114,19 @@ def spliting(row):
 
     return li
 def get_source(profile_ref,player_name):
-    return profile_ref + " " + player_name + " Profile"
+    return profile_ref + " " + player_name + " ప్రొఫైల్"
 
 def get_profile_ref(profile_ref, player_name):
     if len(profile_ref) == 0:
         return ''
-    return " <ref>[" + profile_ref + " " + player_name + " Profile]</ref> "
+    return " <ref>[" + profile_ref + " " + player_name + " ప్రొఫైల్]</ref> "
+
 
 def Batting_role(batting):
     if batting == "Right hand bat":
-        return "కుడిచేతి"
+        return "కుడి చేతి వాటం"
     elif batting == "Left hand bat":
-        return "ఎడమచేతి"
+        return "ఎడమ చేతి వాటం"
     else:
         return batting
 def interLinks_for_Birthplace(birth_place,countries):
@@ -71,74 +142,107 @@ def interLinks_for_Birthplace(birth_place,countries):
     else:
         li = ']],[['.join(date)
         return "[["+li+"]]"
+def Age_translation(age):
+    if (age.find('y') != -1 and age.find('d') != -1):
+        age = age.replace('y'," సంవత్సరాల")
+        age = age.replace('d'," రోజులు")
+    elif (age.find('y') != -1):
+        age = age.replace('y'," సంవత్సరాలు")
+    return age
 
+def Team_translator(teams_of_player):
+	li = []
+	for i in teams_of_player:
+		li.append(get_transleration_description(i))
+	return li
+
+def check_nulls_for_translation(word):
+	if word != 'nan':
+		return get_translation_description(word)
+	else:
+		return 'nan'
 def getData(row):
 	
+# transliteration and translation
+	
+	birth_date = row['Birth_Date'].values[0]
+	if birth_date != 'nan':
+		birth_date = ast.literal_eval(row['Birth_Date'].values[0])
+		birth_date = concate_birth(birth_date)
 
-	batting = Batting_role(row['Batting Style'].values[0])
 	team = row['Teams'].values[0]
 	if team != 'nan':
 		team = ast.literal_eval(row['Teams'].values[0])
-	teams_of_player = teams(team,row['Nationality'].values[0])
+		teams_of_player = teams(team,row['Nationality'].values[0])
+		teams_of_player = Team_translator(teams_of_player)
+	
 	tropies = row["Major trophies"].values[0]
 	if tropies != 'nan':
 		tropies = ast.literal_eval(row["Major trophies"].values[0])
+		tropiess = get_transleration_description(tropies)
 	AWARDS = row["AWARDS"].values[0]
 	if AWARDS != 'nan':
 		AWARDS = ast.literal_eval(row["AWARDS"].values[0])
+		print(AWARDS)
+		AWARDS = Team_translator(AWARDS)
+
 	records = row["Records"].values[0]
 	if records != 'nan':
 		records = ast.literal_eval(row["Records"].values[0])
+
+		records = Team_translator(records)
+
 	Test_Matches_debut = spliting(row['Test Matches_debut'].values[0])
 	ODI_Matches_debut= spliting(row['ODI Matches_debut'].values[0])
 	T20I_Matches_debut = spliting(row['T20I Matches_debut'].values[0])
-	# FC_Matches_debut = spliting(row['FC Matches_debut'].values[0])
-	# List_A_Matches_debut = spliting(row['List A Matches_debut'].values[0])
-	# T20_Matches_debut = spliting(row['T20 Matches_debut'].values[0])
 	Test_Matches_last_appearance = spliting(row['Test Matches_last_appearance'].values[0])
 	ODI_Matches_last_appearance = spliting(row['ODI Matches_last_appearance'].values[0])
 	T20I_Matches_last_appearance = spliting(row['T20I Matches_last_appearance'].values[0])
-	# FC_Matches_last_appearance = spliting(row['FC Matches_last_appearance'].values[0])
-	# List_A_Matches_last_appearance = spliting(row['List A Matches_last_appearance'].values[0])
-	# T20_Matches_last_appearance = spliting(row['T20 Matches_last_appearance'].values[0])
 	profile_ref = ast.literal_eval(row['References'].values[0])
+# ##############################
+# transliteration and translation
+# natinality (translation)
+	
+# bathing in overview
+	batting = Batting_role(row['Batting Style'].values[0])
+# debuts
 	data = {
 		#{%- macro info(title, id, year, genre, actors, duration, country, original_title) -%}
-		'Full_Name':row['Full Name'].values[0],
-		'Player_Name':row['Player_Name'].values[0],
-		'Nationality':row['Nationality'].values[0],
-		'Born':row['Born'].values[0],
-		'Died':row['Died'].values[0],
-		'age':row['Age'].values[0],
+		'Full_Name':get_transleration_description(row['Full Name'].values[0]),
+		'Player_Name':get_transleration_description(row['Player_Name'].values[0]),
+		'Nationality':get_translation_description(row['Nationality'].values[0]),
+		'Born':check_nulls_for_translation(birth_date),
+		'age':Age_translation(row['Age'].values[0]),
+		'Died':check_nulls_for_translation(row['Died'].values[0]),
 		'Relations':row['Relations'].values[0],
 		'career_span':row['career_span'].values[0],
 		'Batting_Style':batting,
-		'info_batting_style':row['Batting Style'].values[0],
+		# 'info_batting_style':row['Batting Style'].values[0],
 		'Bowling_Style':row['Bowling Style'].values[0],
 		'Height':row['Height'].values[0],
 		'Jersey_Number':row['Jersey_Number'].values[0],
 		'Gender':row['Gender'].values[0],
-		'Playing_Role':row['Playing Role'].values[0],
+		'Playing_Role':get_role(row['Playing Role'].values[0]),
 		'Teams':teams_of_player,
-		'testdebutdate':Test_Matches_debut[1],
+		'testdebutdate':check_nulls_for_translation(Test_Matches_debut[1]),
 		'testdebutyear':Test_Matches_debut[0],
-		'testdebutagainst':Test_Matches_debut[-1],
-		'odidebutdate':ODI_Matches_debut[1],
+		'testdebutagainst':check_nulls_for_translation(Test_Matches_debut[-1]),
+		'odidebutdate':check_nulls_for_translation(ODI_Matches_debut[1]),
 		'odidebutyear':ODI_Matches_debut[0],
-		'odidebutagainst':ODI_Matches_debut[-1],
-		'T20Idebutdate':T20I_Matches_debut[1],
+		'odidebutagainst':check_nulls_for_translation(ODI_Matches_debut[-1]),
+		'T20Idebutdate':check_nulls_for_translation(T20I_Matches_debut[1]),
 		'T20Idebutyear':T20I_Matches_debut[0],
-		'T20Idebutagainst':T20I_Matches_debut[-1],
-		'lasttestdate':Test_Matches_last_appearance[1],
+		'T20Idebutagainst':check_nulls_for_translation(T20I_Matches_debut[-1]),
+		'lasttestdate':check_nulls_for_translation(Test_Matches_last_appearance[1]),
 		'lasttestyear':Test_Matches_last_appearance[0],
-		'lasttestagainst':Test_Matches_last_appearance[-1],
-		'lastodidate':ODI_Matches_last_appearance[1],
+		'lasttestagainst':check_nulls_for_translation(Test_Matches_last_appearance[-1]),
+		'lastodidate':check_nulls_for_translation(ODI_Matches_last_appearance[1]),
 		'lastodiyear':ODI_Matches_last_appearance[0],
-		'lastodiagainst':ODI_Matches_last_appearance[-1],
-		'lastT20Idate':T20I_Matches_last_appearance[1],
+		'lastodiagainst':check_nulls_for_translation(ODI_Matches_last_appearance[-1]),
+		'lastT20Idate':check_nulls_for_translation(T20I_Matches_last_appearance[1]),
 		'lastT20Iyear':T20I_Matches_last_appearance[0],
-		'lastT20Iagainst':T20I_Matches_last_appearance[-1],
-		'Major_trophies':tropies,
+		'lastT20Iagainst':check_nulls_for_translation(T20I_Matches_last_appearance[-1]),
+		'Major_trophies':tropiess,
 		'Records':records,
 		"AWARDS" :AWARDS,
 		'profile_ref':profile_ref[0]
@@ -153,24 +257,26 @@ def main():
 	env = Environment(loader=file_loader)
 	template = env.get_template('template.j2')
 	
-	glob = {'get_profile_ref':get_profile_ref,'get_source':get_source }
+	glob = {'get_profile_ref':get_profile_ref,'get_source':get_source,'get_trophy_names_list':get_trophy_names_list,'get_trophy_name':get_trophy_name }
 	# func_dict = {
     #     "get_profile_ref": get_profile_ref
     # }
 	template.globals.update(glob)
     # template.globals.update(func_dict)
-	moviesDF =pickle.load(open('./data/cricket_players_DF.pkl', 'rb'))
+	moviesDF =pickle.load(open('./final_cricket_players_DF.pkl', 'rb'))
 	moviesDF.fillna(value="nan", inplace=True)
 	# ids = moviesDF.Cricinfo_id.tolist()
 	nations = list(set(moviesDF.Nationality.tolist()))
 	countries = nations
-	print(countries)
+	# print(countries)
 	# ids =ids[3:4] #remove this to generate articles for all movies
-
+	
 	# Initiate the file object
 	# fobj = open('movies.xml', 'w',encoding="utf-8")
 	# fobj.write(tewiki+'\n')
-
+	# primary_text = 'నవంబర్ 05, 1988'
+	# x = gs.translate(primary_text, 'te')
+	# print(x)
 	# for i, movieId in enumerate(ids):
 	# 	row = moviesDF.loc[moviesDF['Cricinfo_id']==movieId]
 	# 	title = row['AWARDS'].values[0]
@@ -191,7 +297,7 @@ def main():
 	# for key,vale in x.items():
 	# 	print(key)
 	# writePage(player_name, text, fobj)
-		fobj.write(template.render(getData(row)))
+		fobj.write(text)
    
 	# fobj.write('</mediawiki>')
 	# fobj.close()

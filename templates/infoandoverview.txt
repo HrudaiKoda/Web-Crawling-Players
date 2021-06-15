@@ -1,35 +1,34 @@
 {{Infobox cricketer
-	|name    		= Virat Kohli
-	|country 		= India
-	|fullname  	  = Virat Kohli
-	|birth_place        =  November 05, 1988, Delhi
+	|name    		= విరాట్ కొహ్లి
+	|country 		= భారతదేశం 
+	|fullname  	  = విరాట్ కొహ్లి
+	|birth_place        =  నవంబర్ 05, 1988 
     
     
-	|batting     =  Right hand bat
+	|batting     =  కుడి చేతి వాటం
 	|bowling       =  Right arm medium
-	|role     =  Top order batter
+	|role     =  టాప్ ఆర్డర్ బ్యాట్స్‌మన్‌
     
 	| international      = true
-	|testdebutdate	   =   Kingston - June 20 - 23
+	|testdebutdate	   =  కింగ్స్టన్ - జూన్ 20 - 23 
 	|testdebutyear	   =   2011
-	|testdebutagainst	   =   West Indies 
-	|odidebutdate	   =   Dambulla - August 18
+	|testdebutagainst	   =  వెస్ట్ ఇండీస్ 
+	|odidebutdate	   =  డాంబల్లా - ఆగష్టు 18 
 	|odidebutyear	   =   2008
-	|odidebutagainst	   =   Sri Lanka 
-	|T20Idebutdate	   =   Harare - June 12
+	|odidebutagainst	   =  శ్రీలంక 
+	|T20Idebutdate	   =  హరారే - జూన్ 12 
 	|T20Idebutyear	   =   2010
-	|T20Idebutagainst	   =   India 
+	|T20Idebutagainst	   =  భారతదేశం 
     
-	|lasttestdate	   =   Ahmedabad - March 04 - 06
+	|lasttestdate	   =  అహ్మదాబాద్ - మార్చి 04 - 06 
 	|lasttestyear	   =   2021
-	|lasttestagainst	   =   India 
-	|lastodidate	   =   Pune - March 28
+	|lasttestagainst	   =  భారతదేశం 
+	|lastodidate	   =  పూణే - మార్చి 28 
 	|lastodiyear	   =   2021
-	|lastodiagainst	   =   England 
-	|lastT20Idate	   =   Ahmedabad - March 20
+	|lastodiagainst	   =  ఇంగ్లాండ్ 
+	|lastT20Idate	   =  అహ్మదాబాద్ - మార్చి 20 
 	|lastT20Iyear	   =   2021
-	|lastT20Iagainst	   =   England 
+	|lastT20Iagainst	   =  ఇంగ్లాండ్ 
     
-	| source =https://www.espncricinfo.com/player/virat-kohli-253802 Virat Kohli Profile}}
-==పరిచయం==
-	Virat Kohli <ref>[https://www.espncricinfo.com/player/virat-kohli-253802 Virat Kohli Profile]</ref> (జననం : November 05, 1988, Delhi, వయసు: 32y 209d) India దేశానికి చెందిన క్రికెటర్. 2008 - 2021 సంవత్సరాలలో అతడి కెరీర్ విస్తరించింది. అతడు ఒక Top order batter. అతడు ఒక కుడిచేతి వాటం బ్యాట్స్‌మన్, Right arm medium బౌలర్. అతడు India, India A, India Blue, India Emerging Players, India Red, India Under-19s మొదలైన జట్టులలో ఆడాడు. అతడు Border-Gavaskar, ICC World Test Champ వంటి ఎన్నో ప్రసిద్ధి చెందిన ట్రోఫీలలో పాల్గొన్నాడు. అతడి పేరుకు 6th Most matches as captain (60), 7th Most runs in a match on the losing side (256),  Hundred in each innings of a match వంటి రికార్డులు ఉన్నాయి. ICC ODI Cricketer of the Year 2012 వంటి ఎన్నో అవార్డులు, పురస్కారాలు గెలుచుకున్నాడు.
+	| source =https://www.espncricinfo.com/player/virat-kohli-253802 విరాట్ కొహ్లి ప్రొఫైల్}}
+విరాట్ కొహ్లి <ref>[https://www.espncricinfo.com/player/virat-kohli-253802 విరాట్ కొహ్లి ప్రొఫైల్]</ref> (జననం : నవంబర్ 05, 1988 , వయసు: 32 సంవత్సరాల 209 రోజులు) భారతదేశం దేశానికి చెందిన క్రికెటర్. 2008 - 2021 సంవత్సరాలలో అతడి కెరీర్ విస్తరించింది. అతడు ఒక టాప్ ఆర్డర్ బ్యాట్స్‌మన్‌. అతడు ఒక కుడి చేతి వాటం బ్యాట్స్‌మన్, Right arm medium బౌలర్. అతడు ఇండియా, ఇండియా అ, ఇండియా బ్లూ, ఇండియా ఎమర్జింగ్ ప్లయెర్స్, ఇండియా రీడ్, ఇండియా ఉందర్-19స్ మొదలైన జట్టులలో ఆడాడు. అతడు బోర్డర్-గవాస్కర్ ట్రోఫీ, ఐసిసి ప్రపంచ టెస్ట్ ఛాంపియన్‌షిప్ వంటి ఎన్నో ప్రసిద్ధి చెందిన ట్రోఫీలలో పాల్గొన్నాడు. అతడి పేరుకు 6త్ మాస్ట్ మాచ్చెస్ అస్ క్యాప్టెన్ (60), 7త్ మాస్ట్ రూన్స్ ఇన్ అ మాచ్ ఓన్ తె లోజింగ్ సైడ్ (256), హంద్రేడ్ ఇన్ ఈచ్ ఇన్నింగ్స్ ఆఫ్ అ మాచ్వంటి రికార్డులు ఉన్నాయి. ఇక్స్ ఓడి క్రికెటర్ ఆఫ్ తె ఏర్ 2012 వంటి ఎన్నో అవార్డులు, పురస్కారాలు గెలుచుకున్నాడు.
