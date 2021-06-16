@@ -65,8 +65,8 @@
     {%- endif -%}
     {%- if is_valid_string(nationality) -%}
         {{- [
-                gender_pronoun_1 ~ ' అంతర్జాతీయ క్రికెట్‌లో ' ~ nationality ~ ' తరఫున ' ~ play ~ '. ',
-                gender_pronoun_1 ~ ' అంతర్జాతీయ క్రికెట్‌లో ' ~ nationality ~ ' కి ప్రాతినిధ్యం ' ~ play2 ~ '. '
+                gender_pronoun_1 ~ ' అంతర్జాతీయ క్రికెట్‌లో ' ~ '[[' ~ nationality ~ ']] తరఫున ' ~ play ~ '. ',
+                gender_pronoun_1 ~ ' అంతర్జాతీయ క్రికెట్‌లో ' ~ '[[' ~ nationality ~ ']] కి ప్రాతినిధ్యం ' ~ play2 ~ '. '
             ] |random -}}
     {%- endif -%}
     {%- if teams |length > 0 -%}   

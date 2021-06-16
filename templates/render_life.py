@@ -148,7 +148,7 @@ def get_trophy_name(description):
 def get_trophy_names_list(given_trophy_list):
     trophy_list = list(given_trophy_list)
     for i in range(len(trophy_list)):
-        trophy_list[i] = get_trophy_name(trophy_list[i])
+        trophy_list[i] = '[[' + get_trophy_name(trophy_list[i]) + ']]'
     return ', '.join(trophy_list)
 
 def get_matches_ref(matches_ref, player_name):
@@ -190,7 +190,9 @@ def print_names(li):
 
 def get_teams_string(teams_list):
     actual_list = ast.literal_eval(teams_list)
-    return getTransliteratedDescription(', '.join(actual_list))
+    for i in range(len(actual_list)):
+        actual_list[i] = '[[' + getTransliteratedDescription(actual_list[i]) + ']]'
+    return ', '.join(actual_list)
 
 def get_role(role):
     role_map = {
