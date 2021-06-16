@@ -161,6 +161,11 @@ def check_nulls_for_translation(word):
 		return get_translation_description(word)
 	else:
 		return 'nan'
+def check_nulls_for_transliteration(word):
+	if word != 'nan':
+		return get_transleration_description(word)
+	else:
+		return 'nan'
 def getData(row):
 	
 # transliteration and translation
@@ -180,17 +185,17 @@ def getData(row):
 	if tropies != 'nan':
 		tropies = ast.literal_eval(row["Major trophies"].values[0])
 		tropiess = get_transleration_description(tropies)
-	AWARDS = row["AWARDS"].values[0]
+	AWARDS = row["Awards_telugu"].values[0]
 	if AWARDS != 'nan':
-		AWARDS = ast.literal_eval(row["AWARDS"].values[0])
+		AWARDS = ast.literal_eval(row["Awards_telugu"].values[0])
 		print(AWARDS)
-		AWARDS = Team_translator(AWARDS)
+		# AWARDS = Team_translator(AWARDS)
 
-	records = row["Records"].values[0]
+	records = row["Records_telugu"].values[0]
 	if records != 'nan':
-		records = ast.literal_eval(row["Records"].values[0])
-
-		records = Team_translator(records)
+		records = ast.literal_eval(row["Records_telugu"].values[0])
+		# print(recordss)
+	# 	# records = Team_translator(records)
 
 	Test_Matches_debut = spliting(row['Test Matches_debut'].values[0])
 	ODI_Matches_debut= spliting(row['ODI Matches_debut'].values[0])
@@ -218,7 +223,7 @@ def getData(row):
 		'career_span':row['career_span'].values[0],
 		'Batting_Style':batting,
 		# 'info_batting_style':row['Batting Style'].values[0],
-		'Bowling_Style':row['Bowling Style'].values[0],
+		'Bowling_Style':check_nulls_for_transliteration(row['Bowling Style'].values[0]),
 		'Height':row['Height'].values[0],
 		'Jersey_Number':row['Jersey_Number'].values[0],
 		'Gender':row['Gender'].values[0],
@@ -263,7 +268,7 @@ def main():
     # }
 	template.globals.update(glob)
     # template.globals.update(func_dict)
-	moviesDF =pickle.load(open('./final_cricket_players_DF.pkl', 'rb'))
+	moviesDF =pickle.load(open('./data/pickle.pkl', 'rb'))
 	moviesDF.fillna(value="nan", inplace=True)
 	# ids = moviesDF.Cricinfo_id.tolist()
 	nations = list(set(moviesDF.Nationality.tolist()))

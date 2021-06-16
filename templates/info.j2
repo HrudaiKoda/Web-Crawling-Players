@@ -152,7 +152,7 @@
 	{%- endif -%}
     {%- if Records != 'nan' -%}
 		{%- if Records|length > 2 -%}
-			{%- set line1 = [gender_pronoun_2,' పేరుకు ',Records[0],', ',Records[1],', ',Records[2],'వంటి రికార్డులు ఉన్నాయి. '] | join('') -%}
+			{%- set line1 = [gender_pronoun_2,' పేరుకు ',Records[0],', ',Records[1],', ',Records[2],' వంటి రికార్డులు ఉన్నాయి. '] | join('') -%}
 			{{[line1] | random}}
 		{%- else -%}
 			{%- set line1 = [gender_pronoun_2,' పేరుకు ',Records[0],' వంటి రికార్డులు ఉన్నాయి. '] | join('') -%}
