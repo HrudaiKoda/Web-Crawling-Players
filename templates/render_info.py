@@ -69,7 +69,7 @@ def get_trophy_names_list(given_trophy_list):
         trophy_list[i] = get_trophy_name(trophy_list[i])
     return ', '.join(trophy_list)
 
-def get_transleration_description(description):
+def get_transliteration_description(description):
     try:
         current_attribute_value = description
         # anu_title = telugu.anuvaad(row.title.values[0])
@@ -99,20 +99,22 @@ def teams(tea,Nationality):
     else:
         li = Iteam[:6]
     if len(li) < 6:
-        return get_transleration_description(li)
+        return li
     else:
-        return get_transleration_description(li[:6])
+        return li[:6]
 
 def spliting(row):
     li =[]
+    final = []
     date = row.split(",")
     li.append(date[-1])
     year = date[0].split("at")
     li.append(year[-1])
     against = year[0].split("vs")
     li.append(against[-1])
-
-    return li
+    for i in li:
+        final.append(i.strip())
+    return final
 def get_source(profile_ref,player_name):
     return profile_ref + " " + player_name + " ప్రొఫైల్"
 
@@ -129,17 +131,22 @@ def Batting_role(batting):
         return "ఎడమ చేతి వాటం"
     else:
         return batting
-def interLinks_for_Birthplace(birth_place,countries):
-    date = birth_place.split(", ")
+def interLinks_for_place(birth_place,countries):
+    date = []
+    for i in birth_place:
+        date.append(i.lstrip())
     for i in date:
         if i in countries:
             date.remove(i)
-    print(len(date))
-    if len(date) == 1:
-        return "[["+date[0]+"]]"
-    elif len(date) == 0:
+    if len(date) == 0:
         return "nan"
+    elif len(date) == 1:
+        date = get_translation_description(date)
+        date = ast.literal_eval(date)
+        return "[["+date[0]+"]]"
     else:
+        date = get_translation_description(date)
+        date = ast.literal_eval(date)
         li = ']],[['.join(date)
         return "[["+li+"]]"
 def Age_translation(age):
@@ -150,10 +157,18 @@ def Age_translation(age):
         age = age.replace('y'," సంవత్సరాలు")
     return age
 
+def translate_height(height):
+    if (height.find('ft') != -1 and height.find('in') != -1):
+        height = height.replace('ft'," అ.")
+        height = height.replace('in'," అం.")
+    elif (height.find('ft') != -1):
+        height = height.replace('ft'," అడుగులు")
+    return height
+
 def Team_translator(teams_of_player):
 	li = []
 	for i in teams_of_player:
-		li.append(get_transleration_description(i))
+		li.append(get_translation_description(i))
 	return li
 
 def check_nulls_for_translation(word):
@@ -163,10 +178,10 @@ def check_nulls_for_translation(word):
 		return 'nan'
 def check_nulls_for_transliteration(word):
 	if word != 'nan':
-		return get_transleration_description(word)
+		return get_transliteration_description(word)
 	else:
 		return 'nan'
-def getData(row):
+def getData(row,countries):
 	
 # transliteration and translation
 	
@@ -174,21 +189,35 @@ def getData(row):
 	if birth_date != 'nan':
 		birth_date = ast.literal_eval(row['Birth_Date'].values[0])
 		birth_date = concate_birth(birth_date)
+	birth_date = check_nulls_for_translation(birth_date)
+	bith_overview = birth_date.split(",")
+	if (bith_overview[0].find('0') != -1):
+		bith_overview[0] = bith_overview[0].replace('0','')
 
+
+	Birth_Place = row['Birth_Place'].values[0]
+	if Birth_Place != 'nan':
+		Birth_Place = ast.literal_eval(row['Birth_Place'].values[0])
+		Birth_Place = interLinks_for_place(Birth_Place,countries)
+		# if Birth_Place != 'nan':
+		# 	Birth_Place = get_translation_description(Birth_Place)
+		# 	Birth_Place = ast.literal_eval(Birth_Place)
+	
 	team = row['Teams'].values[0]
 	if team != 'nan':
 		team = ast.literal_eval(row['Teams'].values[0])
 		teams_of_player = teams(team,row['Nationality'].values[0])
-		teams_of_player = Team_translator(teams_of_player)
+		teams_of_player = get_translation_description(teams_of_player)
+		teams_of_player = ast.literal_eval(teams_of_player)
+		
 	
 	tropies = row["Major trophies"].values[0]
 	if tropies != 'nan':
 		tropies = ast.literal_eval(row["Major trophies"].values[0])
-		tropiess = get_transleration_description(tropies)
 	AWARDS = row["Awards_telugu"].values[0]
 	if AWARDS != 'nan':
 		AWARDS = ast.literal_eval(row["Awards_telugu"].values[0])
-		print(AWARDS)
+		
 		# AWARDS = Team_translator(AWARDS)
 
 	records = row["Records_telugu"].values[0]
@@ -213,10 +242,12 @@ def getData(row):
 # debuts
 	data = {
 		#{%- macro info(title, id, year, genre, actors, duration, country, original_title) -%}
-		'Full_Name':get_transleration_description(row['Full Name'].values[0]),
-		'Player_Name':get_transleration_description(row['Player_Name'].values[0]),
-		'Nationality':get_translation_description(row['Nationality'].values[0]),
+		'Full_Name':get_transliteration_description(row['Full Name'].values[0]),
+		'Player_Name':get_transliteration_description(row['Player_Name'].values[0]),
+		'Nationality':get_translation_description(row['Nationality'].values[0]).strip(),
 		'Born':check_nulls_for_translation(birth_date),
+		'Birth_place':Birth_Place,
+		'Born_ov':bith_overview,
 		'age':Age_translation(row['Age'].values[0]),
 		'Died':check_nulls_for_translation(row['Died'].values[0]),
 		'Relations':row['Relations'].values[0],
@@ -224,7 +255,7 @@ def getData(row):
 		'Batting_Style':batting,
 		# 'info_batting_style':row['Batting Style'].values[0],
 		'Bowling_Style':check_nulls_for_transliteration(row['Bowling Style'].values[0]),
-		'Height':row['Height'].values[0],
+		'Height':Age_translation(row['Height'].values[0]),
 		'Jersey_Number':row['Jersey_Number'].values[0],
 		'Gender':row['Gender'].values[0],
 		'Playing_Role':get_role(row['Playing Role'].values[0]),
@@ -247,7 +278,7 @@ def getData(row):
 		'lastT20Idate':check_nulls_for_translation(T20I_Matches_last_appearance[1]),
 		'lastT20Iyear':T20I_Matches_last_appearance[0],
 		'lastT20Iagainst':check_nulls_for_translation(T20I_Matches_last_appearance[-1]),
-		'Major_trophies':tropiess,
+		'Major_trophies':tropies,
 		'Records':records,
 		"AWARDS" :AWARDS,
 		'profile_ref':profile_ref[0]
@@ -273,6 +304,7 @@ def main():
 	# ids = moviesDF.Cricinfo_id.tolist()
 	nations = list(set(moviesDF.Nationality.tolist()))
 	countries = nations
+	
 	# print(countries)
 	# ids =ids[3:4] #remove this to generate articles for all movies
 	
@@ -293,7 +325,7 @@ def main():
 	with open('infoandoverview.txt', 'w', encoding='utf-8') as fobj:
 		# row = moviesDF.head(12).tail(1)
 		row = moviesDF.loc[moviesDF['Cricinfo_id']==253802]
-		text = template.render(getData(row))
+		text = template.render(getData(row,countries))
 		player_name = row["Full Name"].values[0]
 	# print(player_name)
 	# x = ast.literal_eval(player_name)

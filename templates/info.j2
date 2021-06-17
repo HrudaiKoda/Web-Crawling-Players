@@ -1,11 +1,14 @@
 
-{%- macro Infobox(Player_Name, Nationality, Full_Name, Born, Died, age, Relations,career_span, Batting_Style, Bowling_Style, Height, Jersey_Number,Gender,Playing_Role,Teams,testdebutdate,testdebutyear,testdebutagainst,odidebutdate,odidebutyear,odidebutagainst,T20Idebutdate,T20Idebutyear,T20Idebutagainst,lasttestdate,lasttestyear,lasttestagainst,lastididate,lastodiyear,lastodiagainst,lastT20Idate,lastT20Iyear,lastT20Iagainst) -%}
+{%- macro Infobox(Player_Name, Nationality, Full_Name, Born,Birth_place, Died, age, Relations,career_span, Batting_Style, Bowling_Style, Height, Jersey_Number,Gender,Playing_Role,Teams,testdebutdate,testdebutyear,testdebutagainst,odidebutdate,odidebutyear,odidebutagainst,T20Idebutdate,T20Idebutyear,T20Idebutagainst,lasttestdate,lasttestyear,lasttestagainst,lastididate,lastodiyear,lastodiagainst,lastT20Idate,lastT20Iyear,lastT20Iagainst) -%}
     {{'{{Infobox cricketer'}}
 	|name    		= {{Player_Name}}
 	|country 		= {{Nationality}}
 	|fullname  	  = {{Full_Name}}
     {%- if Born != 'nan' %}
-	|birth_place        =  {{Born}}
+	|birth_date        =  {{Born}}
+	{%- endif %}
+	{%- if Birth_place != 'nan' %}
+	|birth_place        =  {{Birth_place}}
 	{%- endif %}
     {#{%- if age != 'nan' %}
 	|వయస్సు       =  {{age }}
@@ -88,11 +91,13 @@
     {%- if FC_Matches_last_appearance != 'nan' %}
 	|ఫస్ట్ క్లాస్ కెరీర్‌లో చివరి మ్యాచ్	   =  {{FC_Matches_last_appearance}}
 	{%- endif %}#}
+	|date = 15 జూన్
+	|year = 2021
 	|source = {{- get_source(profile_ref,Player_Name) -}}
     {{'}}\n'}}
 {%- endmacro -%}
 
-{%- macro Overview(Player_Name,profile_ref,Gender,Full_Name,Born,age,Nationality,career_span,Playing_Role,Batting_Style,Bowling_Style,Teams,Major_trophies,Records,AWARDS) -%}
+{%- macro Overview(Player_Name,profile_ref,Gender,Full_Name,Born_ov,age,Nationality,career_span,Playing_Role,Batting_Style,Bowling_Style,Teams,Major_trophies,Records,AWARDS) -%}
 	{% if Gender == "Male" %}
 		{%- set gender_pronoun_1 = "అతడు" -%}
 		{%- set gender_pronoun_2 = "అతడి" -%}
@@ -109,17 +114,19 @@
 	{%- endif -%}
 	{{- Full_Name -}}
 	{{- get_profile_ref(profile_ref,Player_Name) -}}
-    {% if Born != 'nan' and age != 'nan' -%}
-	{%-set line1 =  ['(జననం : ',Born,', వయసు: ',age,')'] | join('')-%}
+    {%- if Born_ov != 'nan' and age != 'nan' -%}
+		{%- if Born_ov|length == 2 -%}
+			{%-set line1 =  ['(జననం : [[',Born_ov[0],']],[[',Born_ov[1],']] , వయసు: ',age,')'] | join('')-%}
         {{[line1] | random}}  
-    {%- elif Born != 'nan' -%}
-    {%-set line2 =  ['(జననం : ',Born,')'] | join('')-%}
+	{%- endif -%}
+    {%- elif Born_ov != 'nan' -%}
+    {%-set line2 =  ['(జననం : ',Born_ov,')'] | join('')-%}
         {{[span_line2] | random}}
     {%- elif age != 'nan' -%}
     {%-set line3 =  ['(వయసు: ',age,')'] | join('')-%}
         {{[line3] | random}}
     {%- endif -%}
-	{%- set country1=[' ',Nationality,'దేశానికి చెందిన క్రికెటర్.'] | join('')-%}
+	{%- set country1=[' [[',Nationality,']]కి చెందిన క్రికెటర్.'] | join('')-%}
 	{{[country1] | random}}
     {%- if career_span != 'nan' -%}
         {%- set span_line1=[' ',gender_pronoun_1,' కెరీర్ ',career_span, ' సంవత్సరాలలో విస్తరించింది. '] | join('')-%}
@@ -170,9 +177,9 @@
 
 {# Function Calls are Below #}
 
-{{- Infobox(Player_Name, Nationality, Full_Name, Born, Died, age, Relations,career_span, Batting_Style, Bowling_Style, Height, Jersey_Number,Gender,Playing_Role,Teams,testdebutdate,testdebutyear,testdebutagainst,odidebutdate,odidebutyear,odidebutagainst,T20Idebutdate,T20Idebutyear,T20Idebutagainst,lasttestdate,lasttestyear,lasttestagainst,lastididate,lastodiyear,lastodiagainst,lastT20Idate,lastT20Iyear,lastT20Iagainst) -}}
+{{- Infobox(Player_Name, Nationality, Full_Name, Born,Birth_place, Died, age, Relations,career_span, Batting_Style, Bowling_Style, Height, Jersey_Number,Gender,Playing_Role,Teams,testdebutdate,testdebutyear,testdebutagainst,odidebutdate,odidebutyear,odidebutagainst,T20Idebutdate,T20Idebutyear,T20Idebutagainst,lasttestdate,lasttestyear,lasttestagainst,lastididate,lastodiyear,lastodiagainst,lastT20Idate,lastT20Iyear,lastT20Iagainst) -}}
 
-{{- Overview(Player_Name,profile_ref,Gender,Full_Name,Born,age,Nationality,career_span,Playing_Role,Batting_Style,Bowling_Style,Teams,Major_trophies,Records,AWARDS) -}}
+{{- Overview(Player_Name,profile_ref,Gender,Full_Name,Born_ov,age,Nationality,career_span,Playing_Role,Batting_Style,Bowling_Style,Teams,Major_trophies,Records,AWARDS) -}}
 
 
 
