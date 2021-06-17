@@ -94,6 +94,8 @@ translated_names = {
 }    
 
 def is_valid_string(attribute_value):
+    if not isinstance(attribute_value, str):
+        return True
     return not (attribute_value == None or pd.isnull(attribute_value) or str(attribute_value) == "" or str(attribute_value) == "nan")
 
 def getTransliteratedDescription(description):
@@ -114,17 +116,22 @@ def getTranslatedDescription(description):
     if isinstance(description, str) and not is_valid_string(description):
         return description
     try:
+        # print('1')
         return translator.translate(description, lang_src='en', lang_tgt='te')
     except:
         try:
+            # print('2')
             return ts.google(query_text=description, from_language='en', to_language='te')
         except:
             try:
+                # print('3')
                 return GoogleTranslator(source='en', target='te').translate(text=description)
             except:
                 return description
 
 def get_trophy_name(description):
+    if not is_valid_string(description):
+        return ''
     trophy_translations = {
         "Basil D'Oliveira": "బాసిల్ డి'ఒలివెరా", 
         'World Cup': 'ప్రపంచ కప్', 
@@ -146,6 +153,8 @@ def get_trophy_name(description):
     return trophy_translations[description]
 
 def get_trophy_names_list(given_trophy_list):
+    if not is_valid_string(given_trophy_list):
+        return ''
     trophy_list = list(given_trophy_list)
     for i in range(len(trophy_list)):
         if trophy_list[i] == 'World Cup':
@@ -155,6 +164,8 @@ def get_trophy_names_list(given_trophy_list):
     return ', '.join(trophy_list)
 
 def get_matches_ref(matches_ref, player_name):
+    if not is_valid_string(matches_ref):
+        return ''
     required_ref = [r for r in matches_ref if "matches" in r]
     if len(required_ref) == 0:
         return ''
@@ -163,10 +174,12 @@ def get_matches_ref(matches_ref, player_name):
 def stat_value(attribute_name, attribute_value):
     # print(attribute_name, attribute_value)
     if str(attribute_value) == "" or str(attribute_value) == "nan" or attribute_value == None:
+        # print(attribute_name, attribute_value, '1')
         return "-"
     if "hs" in attribute_name.lower() or "bbi" in attribute_name.lower() or "BBM" in attribute_name or "span" in attribute_name.lower() or attribute_name == 'sp':
         return attribute_value
     if int(float(attribute_value)) < 0:
+        # print(attribute_name, attribute_value, '2')
         return "-"
     return attribute_value
 
@@ -192,12 +205,19 @@ def print_names(li):
     return (li)
 
 def get_teams_string(teams_list):
+    if not is_valid_string(teams_list):
+        return ''
     actual_list = ast.literal_eval(teams_list)
     # capitals = {
     #     'A': 'ఏ', 'P': 'పి', 'B': 'బీ', 
     #     'S': 'ఎస్', 'D': 'డీ', 'C': 'సీ'
     # }
-    actual_list = ast.literal_eval(getTranslatedDescription(actual_list))
+    # print(actual_list)
+    translated_output = getTranslatedDescription(actual_list)
+    if ']]' in translated_output:
+        translated_output = translated_output.replace(']]', ']')
+    # print(translated_output)
+    actual_list = list(set(ast.literal_eval(translated_output)))
     # for j in range(len(actual_list)):
     #     team_name_split = actual_list[j].split()
     #     for i in range(len(team_name_split)):
@@ -207,6 +227,8 @@ def get_teams_string(teams_list):
     return ', '.join(actual_list)
 
 def get_role(role):
+    if not is_valid_string(role):
+        return ''
     role_map = {
         "Bowler": "బౌలర్",
         "Allrounder": "ఆల్ రౌండర్",
@@ -290,6 +312,8 @@ def bowling_sent2(gender_pronoun_2, gender_pronoun_1, bowling_10w_test, bowling_
 
 def get_translation(word, prefix_string):
     global translated_names
+    if not is_valid_string(word):
+        return ''
     if not word in translated_names.keys():
         return getTranslatedDescription(word)
     if word == "SR":
@@ -302,9 +326,28 @@ def get_translation(word, prefix_string):
         return "సగటు బౌలింగ్ స్కోరు"
     return translated_names[word]
 
-def can_be_considered(attributes, prop_name, row, curr_att):
-    req_attrs = [a for a in attributes if prop_name in a]
-    valids_count = len([a for a in req_attrs if (isinstance(row[a], str) and is_valid_string(row[a])) or ((not isinstance(row[a], str)) and row[a] >= 0)])
+def null_check(given_list, given_att):
+    for element in given_list:
+        if '_' + element + '_' in given_att:
+            return True
+    return False
+
+def can_be_considered_1(attributes, prop_name, row, curr_att):
+    req_attrs = [a for a in attributes if '_' + prop_name + '_' in a]
+    req_list = [a for a in req_attrs if (isinstance(row[a], str) and is_valid_string(row[a])) or ((not isinstance(row[a], str)) and stat_value(a, row[a]) != "-")]
+    valids_count = len(req_list)
+    # print(valids_count, prop_name)
+    if prop_name == "T20":
+        print(req_list)
+        print(valids_count)
+        print([row[a] for a in req_list])
+    return valids_count != 0
+
+def can_be_considered_2(attributes, prop_name, row, curr_att, other_list):
+    req_attrs = [a for a in attributes if prop_name in a and null_check(other_list, a)]
+    req_list = [a for a in req_attrs if (isinstance(row[a], str) and is_valid_string(row[a])) or ((not isinstance(row[a], str)) and stat_value(a, row[a]) != "-")]
+    valids_count = len(req_list)
+    # print(valids_count, prop_name)
     return valids_count != 0
 
 
@@ -315,13 +358,17 @@ def get_batting_info(row):
     batting_format_names = []
     batting_stat_names = []
     batting_details = {}
-
+    # print(row['Batting_T20_Mat'])
+    
     for att in bat_attributes:
         curr_att = att.split('_')
         # print(curr_att)
-        if can_be_considered(bat_attributes, curr_att[1], row, curr_att):
+        if can_be_considered_1(bat_attributes, curr_att[1], row, curr_att):
             batting_format_names.append(curr_att[1])
-        if can_be_considered(bat_attributes, curr_att[2], row, curr_att):
+    for att in bat_attributes:
+        curr_att = att.split('_')
+        # print(curr_att)
+        if can_be_considered_2(bat_attributes, curr_att[2], row, curr_att, batting_format_names):
             batting_stat_names.append(curr_att[2])
 
     batting_format_names = list(set(batting_format_names))
@@ -343,9 +390,11 @@ def get_bowling_info(row):
 
     for att in bowl_attributes:
         curr_att = att.split('_')
-        if can_be_considered(bowl_attributes, curr_att[1], row, curr_att):
+        if can_be_considered_1(bowl_attributes, curr_att[1], row, curr_att):
             bowling_format_names.append(curr_att[1])
-        if can_be_considered(bowl_attributes, curr_att[2], row, curr_att):
+    for att in bowl_attributes:
+        curr_att = att.split('_')            
+        if can_be_considered_2(bowl_attributes, curr_att[2], row, curr_att, bowling_format_names):
             bowling_stat_names.append(curr_att[2])
 
     bowling_format_names = list(set(bowling_format_names))
@@ -370,9 +419,11 @@ def get_fielding_info(row):
 
     for att in field_attributes:
         curr_att = att.split('_')
-        if can_be_considered(field_attributes, curr_att[1], row, curr_att):
+        if can_be_considered_1(field_attributes, curr_att[1], row, curr_att):
             fielding_format_names.append(curr_att[1])
-        if can_be_considered(field_attributes, curr_att[2], row, curr_att):
+    for att in field_attributes:
+        curr_att = att.split('_')            
+        if can_be_considered_2(field_attributes, curr_att[2], row, curr_att, fielding_format_names):
             fielding_stat_names.append(curr_att[2])
 
     fielding_format_names = list(set(fielding_format_names))
@@ -391,6 +442,8 @@ def can_consider_trophy_stat(stat_name, all_trophies):
 
 def get_trophy_info(row):
     global all_attributes
+    if not is_valid_string(row['Major_Trophies']):
+        return [], [], {}
     all_trophies = ast.literal_eval(row['Major_Trophies'])
     if len(all_trophies) == 0:
         return [], [], {}
@@ -419,8 +472,6 @@ def get_trophy_info(row):
 
 def get_description_sums(row):
     global all_attributes
-    sum_batting_matches, sum_batting_innings, sum_batting_runs, sum_batting_100s, sum_batting_50s, sum_dismissals, sum_catches, sum_stumpings, sum_bowling_matches, sum_bowling_innings, sum_bowling_balls, sum_wickets = (
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
     bat_match_attrs = [
         att for att in all_attributes if "Batting_" in att and "Mat" in att]
@@ -500,6 +551,8 @@ def did_retire(span):
     
 def get_debut_string(deb):
     # print(deb)
+    if not is_valid_string(deb):
+        return ''
     deb = deb.replace("vs", "versus")
     deb = deb.replace("Vs", "versus")
     deb = deb.replace("vS", "versus")
@@ -530,7 +583,7 @@ def getData(row):
     sum_batting_matches, sum_batting_innings, sum_batting_runs, sum_batting_100s, sum_batting_50s, sum_dismissals, sum_catches, sum_stumpings, sum_bowling_matches, sum_bowling_innings, sum_bowling_balls, sum_wickets = get_description_sums(row)
     data = {
         # {%- macro early_career(player_name, career_start_year, first_class_debut, listA_debut, T20_debut, T20I_debut, ODI_debut, test_debut) -%}
-        'player_name': getTranslatedDescription(row['Player_Name']).strip(),
+        'player_name': getTransliteratedDescription(row['Player_Name']).strip(),
         'gender': row['Gender'],
         'career_start_year': get_start_year(row['career_span']),
         'first_class_debut': row['FC Matches_debut'],
@@ -647,7 +700,7 @@ def main():
         cricket_players_DF.fillna(value="nan", inplace=True)
         ids = cricket_players_DF.Cricinfo_id.tolist()
         all_attributes = cricket_players_DF.columns.tolist()
-        ids = [253802]
+        ids = [54950]
         with open('life.txt', 'w') as fobj:
             for i, cricketer_id in enumerate(ids):
                 required_player = cricket_players_DF.loc[cricket_players_DF['Cricinfo_id']==cricketer_id]
