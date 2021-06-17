@@ -2,13 +2,49 @@ from jinja2 import Environment, FileSystemLoader
 import pandas as pd
 import numpy as np
 import ast 
+#from deeptranslit import DeepTranslit
+#trans = DeepTranslit('telugu')
+from google.transliteration import transliterate_word , transliterate_text
+from google_trans_new import google_translator
+translator = google_translator()
 
+
+def translate(var):
+    res = list()
+    for i in range(len(var)):
+        if(var[i] != "nan"):
+            if(i == 1):
+                re = transliterate_text(list_str(var[i],0),lang_code="te")
+                
+            elif(i == 4):
+                relation =str()
+                rel = conv(var[i])
+                for i in range(len(rel)):
+                    try:
+                        relation = relation + str(rel[i][0]) + str(rel[i][1])
+                    except:
+                        relation = relation + str(rel[i][0])
+                re = translator.translate(relation,lang_tgt="te",lang_src="en")
+            else:
+                re = translator.translate(var[i],lang_tgt="te",lang_src="en")
+            
+            res.append(re)
+        else:
+            res.append(var[i])
+    return res
 def conv(t):
-    return ast.literal_eval(t)
-def list_str(val):
+    literal = ast.literal_eval(t)
+    return literal
+def list_str(val,check_year):
     pr = str(val)
-    p = pr[1:-1]
+    
+    p = pr.replace("[","")
+    p = p.replace("]","")
     p = p.replace("'","")
+    if(check_year == 1):
+        p = p.replace("Y"," సంవత్సరాల")
+        p = p.replace("D"," రోజులు")
+        print(p)
     return p
 def nan_check(x):
     if(x == -1 or x == "nan"):
@@ -16,13 +52,10 @@ def nan_check(x):
     else:
         return x
 def drop_row(dataset,e):
-    print(dataset)
-    print(e)
     row_drop = list()
     for i in range(15):
         d = dataset[e*i:e*i+e]
         p = set(d)
-        print(d)
         if(len(p) == 1 and "-" in p):
             row_drop.append(i)
     return row_drop
@@ -33,6 +66,43 @@ def head_filter(l_1 , l_2):
         if(j not in l_1):
             fin_l.append(l_2[j])
     return fin_l
+def change_abbr(h):
+    alpha= {
+    "A":"ఏ",      
+    "B":"బీ",
+    "C":"సీ",  
+    "D":"డి",
+    "E":"ఇ",
+    "F":"ఎఫ్",
+    "G":"జీ",
+    "H":"హెచ్",
+    "I":"ఐ",
+    "J":"జె",       
+    "K":"కె",
+    "L":"ఎల్",
+    "M":"ఎం",
+    "N":"ఎన్",
+    "O":"ఓ",
+    "P":"పి",
+    "Q":"క్యూ",
+    "R":"ఆర్",   
+    "S":"ఎస్",
+    "T":"టి",
+    "U":"యూ",
+    "V":"వీ",
+    "W":"డబల్యూ",
+    "X":"ఎక్స",
+    "Y":"వై",
+    "Z":"జీ"
+    }
+    n = ""
+    for i in range(len(h)):
+        print(h)
+        if(ord(h[i]) >= 65 and ord(h[i]) <= 90):
+            n = n + alpha[h[i].upper()] +"."
+        else:
+            n = n+ h[i]
+    return n
 def table_check(data):
     one = 0
     two = 0
@@ -72,13 +142,15 @@ func_dict = {
     "table_check":table_check,
     "conv":conv,
     "head_filter":head_filter,
-    "drop_row":drop_row
+    "drop_row":drop_row,
+    "translate":translate,
+    "change_abbr":change_abbr
 }
 
 def render(template):
     a = pd.read_csv("final_cricket_players.csv")
     head = list(a.columns)
-    val = a.iloc[5014].replace(np.nan ,"nan")
+    val = a.iloc[5].replace(np.nan ,"nan")
     val = dict(val.fillna("nan"))
     env = Environment(loader=FileSystemLoader("./"))
     jinja_template = env.get_template(template)
@@ -87,4 +159,8 @@ def render(template):
     return template_string
 
 if __name__ == "__main__":
-    print(render(template="personal_life and statistics.j2"))
+    print(render(template="personal_life.j2"))
+
+    print(render(template="template.j2"))
+
+
