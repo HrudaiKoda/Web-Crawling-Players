@@ -161,6 +161,6 @@ def render(template):
 if __name__ == "__main__":
     print(render(template="personal_life.j2"))
 
-    print(render(template="template.j2"))
+    print(render(template="player_statistical_analysis.j2"))
 
 
