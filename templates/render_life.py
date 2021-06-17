@@ -111,7 +111,7 @@ def getTransliteratedDescription(description):
 
 def getTranslatedDescription(description):
     global translator
-    if not is_valid_string(description):
+    if isinstance(description, str) and not is_valid_string(description):
         return description
     try:
         return translator.translate(description, lang_src='en', lang_tgt='te')
@@ -148,7 +148,10 @@ def get_trophy_name(description):
 def get_trophy_names_list(given_trophy_list):
     trophy_list = list(given_trophy_list)
     for i in range(len(trophy_list)):
-        trophy_list[i] = '[[' + get_trophy_name(trophy_list[i]) + ']]'
+        if trophy_list[i] == 'World Cup':
+            trophy_list[i] = '[[' + get_trophy_name(trophy_list[i]) + ']]'
+        else:
+            trophy_list[i] = get_trophy_name(trophy_list[i])
     return ', '.join(trophy_list)
 
 def get_matches_ref(matches_ref, player_name):
@@ -190,8 +193,17 @@ def print_names(li):
 
 def get_teams_string(teams_list):
     actual_list = ast.literal_eval(teams_list)
-    for i in range(len(actual_list)):
-        actual_list[i] = '[[' + getTransliteratedDescription(actual_list[i]) + ']]'
+    # capitals = {
+    #     'A': 'ఏ', 'P': 'పి', 'B': 'బీ', 
+    #     'S': 'ఎస్', 'D': 'డీ', 'C': 'సీ'
+    # }
+    actual_list = ast.literal_eval(getTranslatedDescription(actual_list))
+    # for j in range(len(actual_list)):
+    #     team_name_split = actual_list[j].split()
+    #     for i in range(len(team_name_split)):
+    #         if team_name_split[i] in capitals.keys():
+    #             team_name_split[i] = capitals[team_name_split[i]]
+    #     actual_list[j] = ' '.join(team_name_split)
     return ', '.join(actual_list)
 
 def get_role(role):
@@ -505,8 +517,9 @@ def get_debut_string(deb):
     tokens = curr_sub.split(' ')
     tokens.append('lo ')
     deb = deb.replace(curr_sub, ' '.join(tokens[2:]))
-    # print(deb)
-    return getTransliteratedDescription(deb)
+    partition = deb.find('lo ')
+    partition += 3
+    return getTransliteratedDescription(deb[:partition]) + getTranslatedDescription(deb[partition:])
 
 
 def getData(row):
