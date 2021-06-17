@@ -6,9 +6,6 @@ from google_trans_new import google_translator
 # from translate import Translator
 translator = Translator()
 translit = google_translator()
-
-# from anuvaad import Anuvaad
-# telugu = Anuvaad('english-telugu')
 from deeptranslit import DeepTranslit
 trans = DeepTranslit('telugu').transliterate
 
@@ -25,11 +22,12 @@ def concate_birth(date):
     else:
         li = ','.join(date)
         return li.rstrip()
+
 def get_role(role):
     role_map = {
         "Bowler": "బౌలర్",
         "Allrounder": "ఆల్ రౌండర్",
-        "Batter": "బ్యాట్స్‌మన్‌",
+        "Batter": "[[బ్యాట్స్‌మన్]]‌",
         "Opening batter": "ఓపెనింగ్ బ్యాట్స్‌మన్‌",
         "Wicketkeeper batter": "వికెట్ కీపర్ బ్యాట్స్‌మన్‌",
         "Top order batter": "టాప్ ఆర్డర్ బ్యాట్స్‌మన్‌",
@@ -45,7 +43,7 @@ def get_role(role):
 def get_trophy_name(description):
     trophy_translations = {
         "Basil D'Oliveira": "బాసిల్ డి'ఒలివెరా", 
-        'World Cup': 'ప్రపంచ కప్', 
+        'World Cup': '[[ప్రపంచ కప్]]', 
         'ICC World Test Champ': 'ఐసిసి ప్రపంచ టెస్ట్ ఛాంపియన్‌షిప్', 
         'Frank Worrell Trophy': 'ఫ్రాంక్ వొరెల్ ట్రోఫీ', 
         'Border-Gavaskar': 'బోర్డర్-గవాస్కర్ ట్రోఫీ', 
@@ -57,10 +55,11 @@ def get_trophy_name(description):
         'WCL Championship': 'ప్రపంచ క్రికెట్ లీగ్ ఛాంపియన్‌షిప్', 
         'ICC Champions Trophy': 'ఐసిసి ఛాంపియన్స్ ట్రోఫీ', 
         'The Wisden Trophy': 'ది విస్డెన్ ట్రోఫీ', 
-        'Asia Cup': 'ఆసియా కప్'       
+        'Asia Cup': 'ఆసియా కప్',
+		"ICC Women's World Cu" : 'ఐసిసి ఉమెన్స్ ప్రపంచ కప్'     
     }
     if not description in trophy_translations.keys():
-        return getTransliteratedDescription(description)
+        return get_transliteration_description(description)
     return trophy_translations[description]
 
 def get_trophy_names_list(given_trophy_list):
@@ -72,7 +71,6 @@ def get_trophy_names_list(given_trophy_list):
 def get_transliteration_description(description):
     try:
         current_attribute_value = description
-        # anu_title = telugu.anuvaad(row.title.values[0])
         deep = trans(current_attribute_value)[0]
         description = deep['pred']
     except:
@@ -85,7 +83,10 @@ def get_transliteration_description(description):
 def get_translation_description(description):
 	return translit.translate(description,lang_tgt='te')
 
-def teams(tea,Nationality):
+def get_nation(nationality):
+	return get_translation_description(nationality).strip()
+
+def teams6(tea,Nationality):
     Iteam = []
     NonIteam = []
     li = []
@@ -103,6 +104,21 @@ def teams(tea,Nationality):
     else:
         return li[:6]
 
+
+def get_teams_string(teams_list,Nationality):
+    actual_list = ast.literal_eval(teams_list)
+    actual_list = teams6(actual_list,Nationality)
+    if (len(actual_list) == 1):
+        translated_output = get_transliteration_description(actual_list[0])
+        return translated_output
+    else:
+        translated_output = get_translation_description(actual_list)
+        translated_output = ast.literal_eval(translated_output)
+        if ']]' in translated_output:
+            translated_output = translated_output.replace(']]', "']")
+        return ', '.join(translated_output)
+
+
 def spliting(row):
     li =[]
     final = []
@@ -115,6 +131,8 @@ def spliting(row):
     for i in li:
         final.append(i.strip())
     return final
+
+
 def get_source(profile_ref,player_name):
     return profile_ref + " " + player_name + " ప్రొఫైల్"
 
@@ -134,7 +152,7 @@ def Batting_role(batting):
 def interLinks_for_place(birth_place,countries):
     date = []
     for i in birth_place:
-        date.append(i.lstrip())
+        date.append(i.strip())
     for i in date:
         if i in countries:
             date.remove(i)
@@ -149,6 +167,7 @@ def interLinks_for_place(birth_place,countries):
         date = ast.literal_eval(date)
         li = ']],[['.join(date)
         return "[["+li+"]]"
+
 def Age_translation(age):
     if (age.find('y') != -1 and age.find('d') != -1):
         age = age.replace('y'," సంవత్సరాల")
@@ -159,23 +178,39 @@ def Age_translation(age):
 
 def translate_height(height):
     if (height.find('ft') != -1 and height.find('in') != -1):
-        height = height.replace('ft'," అ.")
-        height = height.replace('in'," అం.")
-    elif (height.find('ft') != -1):
-        height = height.replace('ft'," అడుగులు")
+        height = height.replace('ft',"")
+        height = height.replace('in',"")
+        height = height.split(' ')
+        
     return height
-
-def Team_translator(teams_of_player):
-	li = []
-	for i in teams_of_player:
-		li.append(get_translation_description(i))
-	return li
+		
+def translate_death(row):
+    deadth = row.split(", (")
+    if 'aged' in deadth[1]:
+        deadth[1] = deadth[1].replace('aged','వయస్సు :')
+    if (deadth[1].find('y') != -1 and deadth[1].find('d') != -1):
+        deadth[1] = deadth[1].replace('y'," సంవత్సరాల")
+        deadth[1] = deadth[1].replace('d)'," రోజులు")
+    elif (deadth[1].find('y') != -1):
+        deadth[1] = deadth[1].replace('y'," సంవత్సరాలు")
+    deadth[0] = get_translation_description(deadth[0])
+    return ','.join(deadth)
+# def Team_translator(teams_of_player):
+# 	li = []
+# 	for i in teams_of_player:
+# 		li.append(get_translation_description(i))
+# 	return li
+def conv(t):
+    t = ast.literal_eval(t)
+    t = get_translation_description(t)
+    return ast.literal_eval(t)
 
 def check_nulls_for_translation(word):
 	if word != 'nan':
 		return get_translation_description(word)
 	else:
 		return 'nan'
+
 def check_nulls_for_transliteration(word):
 	if word != 'nan':
 		return get_transliteration_description(word)
@@ -194,38 +229,57 @@ def getData(row,countries):
 	if (bith_overview[0].find('0') != -1):
 		bith_overview[0] = bith_overview[0].replace('0','')
 
+	# death_date = row['Death_Date'].values[0]
+	# if death_date != 'nan':
+	# 	death_date = ast.literal_eval(row['Death_Date'].values[0])
+	# 	death_date = concate_birth(death_date)
+	# death_date = check_nulls_for_translation(death_date)
 
 	Birth_Place = row['Birth_Place'].values[0]
 	if Birth_Place != 'nan':
 		Birth_Place = ast.literal_eval(row['Birth_Place'].values[0])
 		Birth_Place = interLinks_for_place(Birth_Place,countries)
-		# if Birth_Place != 'nan':
-		# 	Birth_Place = get_translation_description(Birth_Place)
-		# 	Birth_Place = ast.literal_eval(Birth_Place)
-	
-	team = row['Teams'].values[0]
-	if team != 'nan':
-		team = ast.literal_eval(row['Teams'].values[0])
-		teams_of_player = teams(team,row['Nationality'].values[0])
-		teams_of_player = get_translation_description(teams_of_player)
-		teams_of_player = ast.literal_eval(teams_of_player)
-		
+	deadth = row['Died'].values[0]	
+	if deadth != 'nan':
+		deadth = translate_death(row['deadth'].values[0])
+	# Death_Place = row['Death_Place'].values[0]
+	# if Death_Place != 'nan':
+	# 	Death_Place = ast.literal_eval(row['Death_Place'].values[0])
+	# 	# Death_Place = interLinks_for_place(Death_Place,countries)
+
+
+	# team = row['Teams'].values[0]
+	# if team != 'nan':
+	# 	team = ast.literal_eval(team)
+	# 	teams_of_player = teams(team,row['Nationality'].values[0])
+	# 	teams_of_player = get_translation_description(teams_of_player)
+	# 	if (teams_of_player.find(']]') != -1):
+	# 		teams_of_player = teams_of_player.replace(']]',"']")
+	# 	teams_of_player = ast.literal_eval(teams_of_player)
+	# # print(teams_of_player)
 	
 	tropies = row["Major trophies"].values[0]
 	if tropies != 'nan':
 		tropies = ast.literal_eval(row["Major trophies"].values[0])
-	AWARDS = row["Awards_telugu"].values[0]
+	
+	AWARDS = row["AWARDS"].values[0]
+	print(AWARDS)
 	if AWARDS != 'nan':
-		AWARDS = ast.literal_eval(row["Awards_telugu"].values[0])
+		AWARDS = ast.literal_eval(row["AWARDS"].values[0])
+		if (len(AWARDS) == 1):
+			li = []
+			AWARDS = get_translation_description(AWARDS[0])
+			li.append(AWARDS)
+		else:
+			AWARDS = get_translation_description(AWARDS)
+			li = ast.literal_eval(AWARDS)
 		
-		# AWARDS = Team_translator(AWARDS)
+	print(li)
 
 	records = row["Records_telugu"].values[0]
 	if records != 'nan':
 		records = ast.literal_eval(row["Records_telugu"].values[0])
-		# print(recordss)
-	# 	# records = Team_translator(records)
-
+	
 	Test_Matches_debut = spliting(row['Test Matches_debut'].values[0])
 	ODI_Matches_debut= spliting(row['ODI Matches_debut'].values[0])
 	T20I_Matches_debut = spliting(row['T20I Matches_debut'].values[0])
@@ -233,33 +287,27 @@ def getData(row,countries):
 	ODI_Matches_last_appearance = spliting(row['ODI Matches_last_appearance'].values[0])
 	T20I_Matches_last_appearance = spliting(row['T20I Matches_last_appearance'].values[0])
 	profile_ref = ast.literal_eval(row['References'].values[0])
-# ##############################
-# transliteration and translation
-# natinality (translation)
-	
-# bathing in overview
+
 	batting = Batting_role(row['Batting Style'].values[0])
 # debuts
 	data = {
-		#{%- macro info(title, id, year, genre, actors, duration, country, original_title) -%}
 		'Full_Name':get_transliteration_description(row['Full Name'].values[0]),
 		'Player_Name':get_transliteration_description(row['Player_Name'].values[0]),
-		'Nationality':get_translation_description(row['Nationality'].values[0]).strip(),
+		'Nationality':row['Nationality'].values[0].strip(),
 		'Born':check_nulls_for_translation(birth_date),
 		'Birth_place':Birth_Place,
 		'Born_ov':bith_overview,
 		'age':Age_translation(row['Age'].values[0]),
-		'Died':check_nulls_for_translation(row['Died'].values[0]),
+		'Died':deadth,
 		'Relations':row['Relations'].values[0],
 		'career_span':row['career_span'].values[0],
 		'Batting_Style':batting,
-		# 'info_batting_style':row['Batting Style'].values[0],
 		'Bowling_Style':check_nulls_for_transliteration(row['Bowling Style'].values[0]),
-		'Height':Age_translation(row['Height'].values[0]),
+		'Height':translate_height(row['Height'].values[0]),
 		'Jersey_Number':row['Jersey_Number'].values[0],
 		'Gender':row['Gender'].values[0],
 		'Playing_Role':get_role(row['Playing Role'].values[0]),
-		'Teams':teams_of_player,
+		'Teams':row['Teams'].values[0],
 		'testdebutdate':check_nulls_for_translation(Test_Matches_debut[1]),
 		'testdebutyear':Test_Matches_debut[0],
 		'testdebutagainst':check_nulls_for_translation(Test_Matches_debut[-1]),
@@ -280,7 +328,7 @@ def getData(row,countries):
 		'lastT20Iagainst':check_nulls_for_translation(T20I_Matches_last_appearance[-1]),
 		'Major_trophies':tropies,
 		'Records':records,
-		"AWARDS" :AWARDS,
+		"AWARDS" :li,
 		'profile_ref':profile_ref[0]
 
 
@@ -293,19 +341,20 @@ def main():
 	env = Environment(loader=file_loader)
 	template = env.get_template('template.j2')
 	
-	glob = {'get_profile_ref':get_profile_ref,'get_source':get_source,'get_trophy_names_list':get_trophy_names_list,'get_trophy_name':get_trophy_name }
-	# func_dict = {
-    #     "get_profile_ref": get_profile_ref
-    # }
+	glob = {'get_profile_ref':get_profile_ref,'get_source':get_source,'get_trophy_names_list':get_trophy_names_list,'get_trophy_name':get_trophy_name,'conv':conv,'get_teams_string':get_teams_string,'get_nation':get_nation }
 	template.globals.update(glob)
-    # template.globals.update(func_dict)
 	moviesDF =pickle.load(open('./data/pickle.pkl', 'rb'))
 	moviesDF.fillna(value="nan", inplace=True)
-	# ids = moviesDF.Cricinfo_id.tolist()
+	ids = moviesDF.Cricinfo_id.tolist()
 	nations = list(set(moviesDF.Nationality.tolist()))
 	countries = nations
-	
-	# print(countries)
+	# li = []
+	# for i in countries:
+	# 	print(type(i))
+	# 	i = ast.literal_eval(i)
+	# 	print(type(i))
+		# li.append(i[-1])
+	# print(li)
 	# ids =ids[3:4] #remove this to generate articles for all movies
 	
 	# Initiate the file object
