@@ -6,6 +6,7 @@
     {%- set wears = "ధరిస్తాడు" -%}
     {%- set has_taken = "తీసాడు" -%}
     {%- set has_started = "ప్రారంభించాడు" -%}
+    {%- set is_reason = "కారణమయ్యాడు" -%}
 {%- else -%}
     {%- set gender_pronoun_1 = "ఆమె" -%}
     {%- set gender_pronoun_2 = "ఆమె" -%}
@@ -14,6 +15,7 @@
     {%- set wears = "ధరిస్తుంది" -%}
     {%- set has_taken = "తీసింది" -%}
     {%- set has_started = "ప్రారంభించింది" -%}
+    {%- set is_reason = "కారణమయింది" -%}
 {%- endif -%}
 
 
@@ -109,7 +111,7 @@
         {%- if not is_trophy_table -%}
             {{- first_word ~ ' ' ~ gender_pronoun_2 ~ ' కెరీర్‌కు సంబంధించిన మరిన్ని వివరాలు క్రింద ఇవ్వబడ్డాయి: ' -}}
         {%- else -%}
-            {{- 'అతడు ఆడిన కొన్ని ట్రోఫీల గురించి మరిన్ని వివరాలు క్రింద చూడవచ్చు: ' -}}
+            {{- gender_pronoun_1 ~ ' ఆడిన కొన్ని ట్రోఫీల గురించి మరిన్ని వివరాలు క్రింద చూడవచ్చు: ' -}}
         {%- endif -%} 
         {{- "\n" -}}
         {{- "\n" -}}
@@ -161,7 +163,7 @@
         {{- "\n" -}}
         {{- [
                 'ఫీల్డర్‌గా ' ~ player_name ~ ' తన కెరీర్‌లో, ' ~ sum_dismissals |string ~ ' ఫీల్డింగ్ తొలగింపులలో ఒక భాగం, ',
-                'ఫీల్డర్‌గా ' ~ player_name ~ ' తన కెరీర్‌లో, ' ~ sum_dismissals |string ~ ' ఫీల్డింగ్ తొలగింపులకి కారణమయ్యాడు, ',
+                'ఫీల్డర్‌గా ' ~ player_name ~ ' తన కెరీర్‌లో, ' ~ sum_dismissals |string ~ ' ఫీల్డింగ్ తొలగింపులకి ' ~ is_reason ~ ', ',
             ] |random -}}
         {%- if sum_catches == 0 -%}
             {%- set line = 'ఇందులో ' ~ sum_stumpings |string ~ ' స్టంపింగ్స్ ఉన్నాయి. ' -%}

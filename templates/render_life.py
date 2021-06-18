@@ -213,18 +213,30 @@ def get_teams_string(teams_list):
     #     'S': 'ఎస్', 'D': 'డీ', 'C': 'సీ'
     # }
     # print(actual_list)
-    translated_output = getTranslatedDescription(actual_list)
-    if ']]' in translated_output:
-        translated_output = translated_output.replace(']]', ']')
+    translated_output = ""
+    try:
+        translated_output = getTranslatedDescription(actual_list)
+        if ']]' in translated_output:
+            translated_output = translated_output.replace(']]', ']')
+        actual_list = list(ast.literal_eval(translated_output))
+        return ', '.join(actual_list)
+    except:
+        try:
+            translated_output = getTransliteratedDescription(', '.join(actual_list))
+            return translated_output
+        except:
+            try:
+                translated_output = getTranslatedDescription(', '.join(actual_list))
+                return translated_output
+            except:
+                return ', '.join(actual_list)         
     # print(translated_output)
-    actual_list = list(set(ast.literal_eval(translated_output)))
     # for j in range(len(actual_list)):
     #     team_name_split = actual_list[j].split()
     #     for i in range(len(team_name_split)):
     #         if team_name_split[i] in capitals.keys():
     #             team_name_split[i] = capitals[team_name_split[i]]
     #     actual_list[j] = ' '.join(team_name_split)
-    return ', '.join(actual_list)
 
 def get_role(role):
     if not is_valid_string(role):
@@ -336,18 +348,12 @@ def can_be_considered_1(attributes, prop_name, row, curr_att):
     req_attrs = [a for a in attributes if '_' + prop_name + '_' in a]
     req_list = [a for a in req_attrs if (isinstance(row[a], str) and is_valid_string(row[a])) or ((not isinstance(row[a], str)) and stat_value(a, row[a]) != "-")]
     valids_count = len(req_list)
-    # print(valids_count, prop_name)
-    if prop_name == "T20":
-        print(req_list)
-        print(valids_count)
-        print([row[a] for a in req_list])
     return valids_count != 0
 
 def can_be_considered_2(attributes, prop_name, row, curr_att, other_list):
     req_attrs = [a for a in attributes if prop_name in a and null_check(other_list, a)]
     req_list = [a for a in req_attrs if (isinstance(row[a], str) and is_valid_string(row[a])) or ((not isinstance(row[a], str)) and stat_value(a, row[a]) != "-")]
     valids_count = len(req_list)
-    # print(valids_count, prop_name)
     return valids_count != 0
 
 
