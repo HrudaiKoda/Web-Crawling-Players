@@ -163,13 +163,21 @@ def get_trophy_names_list(given_trophy_list):
             trophy_list[i] = get_trophy_name(trophy_list[i])
     return ', '.join(trophy_list)
 
-def get_matches_ref(matches_ref, player_name):
-    if not is_valid_string(matches_ref):
+def get_matches_ref(all_ref, player_name):
+    if not is_valid_string(all_ref):
         return ''
-    required_ref = [r for r in matches_ref if "matches" in r]
+    required_ref = [r for r in all_ref if "matches" in r]
     if len(required_ref) == 0:
         return ''
     return "<ref>[" + required_ref[0] + " " + player_name.strip() + " మ్యాచ్‌లు]</ref>"
+    
+def get_stats_ref(all_ref, player_name):
+    if not is_valid_string(all_ref):
+        return ''
+    required_ref = [r for r in all_ref if "stats" in r]
+    if len(required_ref) == 0:
+        return ''
+    return "<ref>[" + required_ref[0] + " " + player_name.strip() + " గణాంకాలు]</ref>"
     
 def stat_value(attribute_name, attribute_value):
     # print(attribute_name, attribute_value)
@@ -668,7 +676,7 @@ def getData(row):
         'trophy_details': trophy_details,
         
         # References
-        'matches_ref': ast.literal_eval(row['References'])
+        'all_ref': ast.literal_eval(row['References'])
 	}
     
     return data
@@ -693,6 +701,7 @@ def main():
         "get_teams_string": get_teams_string,
         "get_translation": get_translation,
         "get_matches_ref": get_matches_ref,
+        "get_stats_ref": get_stats_ref,
         "getTransliteratedDescription": getTransliteratedDescription,
         "get_role": get_role,
         "get_debut_string": get_debut_string,
@@ -706,7 +715,7 @@ def main():
         cricket_players_DF.fillna(value="nan", inplace=True)
         ids = cricket_players_DF.Cricinfo_id.tolist()
         all_attributes = cricket_players_DF.columns.tolist()
-        ids = [54950]
+        ids = [253802]
         with open('life.txt', 'w') as fobj:
             for i, cricketer_id in enumerate(ids):
                 required_player = cricket_players_DF.loc[cricket_players_DF['Cricinfo_id']==cricketer_id]
