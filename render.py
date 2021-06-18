@@ -19,7 +19,7 @@ with open('./data_collection/data/final_cricket_players_DF.pkl', 'rb') as f:
     cricket_players_DF = pickle.load(f)
     ids = cricket_players_DF.Cricinfo_id.tolist()
     with open('cricket_players.xml', 'w') as fobj:
-	    fobj.write(tewiki + '\n')
+	fobj.write(tewiki + '\n')
         for _id in ids:
             sp = '\n\n'
             row = cricket_players_DF.loc[cricket_players_DF['Cricinfo_id']==_id]
