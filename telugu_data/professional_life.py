@@ -253,27 +253,42 @@ def get_teams_string(teams_list):
         'Under-19s': 'అండర్ -19స్', 'Under-16s': 'అండర్ -16స్', 'Under-23s': 'అండర్ -23స్' 
     }
     translated_output = ""
+    twos = [ke for ke in capitals.keys() if len(ke.split(" ")) == 2]
+    ones = [ke for ke in capitals.keys() if len(ke.split(" ")) == 1]
     try:
         for j in range(len(actual_list)):
-            to_replace = [sub for sub in capitals.keys() if sub in actual_list[j]]
-            for ke in to_replace:
-                actual_list[j] = actual_list[j].replace(ke, to_replace[ke])
+            # print("Actual team name", actual_list[j])
+            tokenized = actual_list[j].split(" ")
+            for i in range(len(tokenized)-1):
+                cur = tokenized[i] + " " + tokenized[i+1]
+                if cur in twos:
+                    t = capitals[cur].split(" ")
+                    tokenized[i] = t[0]
+                    tokenized[i+1] = t[1]
+            for i in range(len(tokenized)):
+                if tokenized[i] in ones:
+                    tokenized[i] = capitals[tokenized[i]]
+            actual_list[j] = ' '.join(tokenized)
+            # print("Updated team name", actual_list[j])
         translated_output = getTransliteratedDescription(
             ', '.join(actual_list))      
         return translated_output
-    except:
+    except Exception as e:
+        print("Level 2", e)
         try:
             translated_output = getTranslatedDescription(actual_list)
             if ']]' in translated_output:
                 translated_output = translated_output.replace(']]', ']')
             actual_list = list(ast.literal_eval(translated_output))
             return ', '.join(actual_list)
-        except:
+        except Exception as f:
+            print("Level 3", f)
             try:
                 translated_output = getTranslatedDescription(
                     ', '.join(actual_list))
                 return translated_output
-            except:
+            except Exception as g:
+                print("Final level", g)
                 return ', '.join(actual_list)
 
 
