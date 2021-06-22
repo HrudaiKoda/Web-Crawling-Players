@@ -112,7 +112,7 @@
         {%- if not is_trophy_table -%}
             {{- first_word ~ ' ' ~ gender_pronoun_2 ~ ' కెరీర్‌కు సంబంధించిన మరిన్ని వివరాలు క్రింద ఇవ్వబడ్డాయి: ' -}}
         {%- else -%}
-            {{- gender_pronoun_1 ~ ' ఆడిన కొన్ని ట్రోఫీల గురించి మరిన్ని వివరాలు క్రింద చూడవచ్చు: ' -}}
+            {{- 'ఈ ట్రోఫీలలో ' ~ gender_pronoun_2 ~ ' గణాంకాల గురించి మరిన్ని వివరాలు క్రింద ఇవ్వబడ్డాయి: ' -}}
         {%- endif -%} 
         {{- "\n" -}}
         {{- "\n" -}}
@@ -163,8 +163,8 @@
     {%- if sum_dismissals > 0 -%}
         {{- "\n" -}}
         {{- [
-                'ఫీల్డర్‌గా ' ~ player_name ~ ' తన కెరీర్‌లో, ' ~ sum_dismissals |string ~ ' ఫీల్డింగ్ తొలగింపులలో ఒక భాగం, ',
-                'ఫీల్డర్‌గా ' ~ player_name ~ ' తన కెరీర్‌లో, ' ~ sum_dismissals |string ~ ' ఫీల్డింగ్ తొలగింపులకి ' ~ is_reason ~ ', ',
+                'ఫీల్డర్‌గా ' ~ player_name ~ ' తన కెరీర్‌లో, ' ~ sum_dismissals |string ~ ' ఫీల్డింగ్ డిస్మిస్సల్స్ లో ఒక భాగం, ',
+                'ఫీల్డర్‌గా ' ~ player_name ~ ' తన కెరీర్‌లో, ' ~ sum_dismissals |string ~ ' ఫీల్డింగ్ డిస్మిస్సల్స్ కి ' ~ is_reason ~ ', ',
             ] |random -}}
         {%- if sum_catches == 0 -%}
             {%- set line = 'ఇందులో ' ~ sum_stumpings |string ~ ' స్టంపింగ్స్ ఉన్నాయి. ' -%}
