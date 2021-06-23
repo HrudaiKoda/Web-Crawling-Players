@@ -152,6 +152,56 @@ def get_trophy_name(description):
         return getTransliteratedDescription(description)
     return trophy_translations[description]
 
+def get_nationality(nation):
+    nation = nation.strip()
+    nations = {
+        'Pakistan': 'పాకిస్తాన్', 
+        'Japan': 'జపాన్', 
+        'Canada': 'కెనడా', 
+        'India': 'భారతదేశం', 
+        'Belgium': 'బెల్జియం', 
+        'P.N.G.': 'పాపువా న్యూ గిని', 
+        'Oman': 'ఒమన్', 
+        'Austria': 'ఆస్ట్రియా', 
+        'West Indies': 'వెస్ట్ ఇండీస్', 
+        'Kuwait': 'కువైట్', 
+        'E&C Africa': 'ఇ & సి ఆఫ్రికా', 
+        'Bermuda': 'బెర్ముడా', 
+        'Fiji': 'ఫిజి', 
+        'Chile': 'చిలీ', 
+        'Denmark': 'డెన్మార్క్', 
+        'Malaysia': 'మలేషియా', 
+        'Bangladesh': 'బంగ్లాదేశ్', 
+        'Germany': 'జర్మనీ', 
+        'U.A.E.': 'యునైటెడ్ అరబ్ ఎమిరేట్స్', 
+        'Hong Kong': 'హాంగ్ కొంగ', 
+        'Malta': 'మాల్టా',
+        'Zimbabwe': 'జింబాబ్వే', 
+        'Scotland': 'స్కాట్లాండ్', 
+        'Singapore': 'సింగపూర్', 
+        'Sri Lanka': 'శ్రీలంక', 
+        'England': 'ఇంగ్లాండ్', 
+        'Gibraltar': 'గిబ్రాల్టర్', 
+        'Argentina': 'అర్జెంటీనా', 
+        'Uganda': 'ఉగాండా', 
+        'Italy': 'ఇటలీ', 
+        'Kenya': 'కెన్యా', 
+        'Nepal': 'నేపాల్', 
+        'Netherlands': 'నెదర్లాండ్స్', 
+        'South Africa': 'దక్షిణ ఆఫ్రికా', 
+        'Ireland': 'ఐర్లాండ్', 
+        'U.S.A.': 'యునైటెడ్ స్టేట్స్ ఆఫ్ అమెరికా', 
+        'Afghanistan': 'ఆఫ్ఘనిస్తాన్', 
+        'Cayman Is': 'కేమెన్ ఐలాండ్స్', 
+        'New Zealand': 'న్యూజీలాండ్', 
+        'Namibia': 'నమీబియా', 
+        'Australia': 'ఆస్ట్రేలియా'
+    }
+    if not nation in nations.keys():
+        return ''
+    return nations[nation]
+
+
 def get_trophy_names_list(given_trophy_list):
     if not is_valid_string(given_trophy_list):
         return ''
@@ -216,35 +266,75 @@ def get_teams_string(teams_list):
     if not is_valid_string(teams_list):
         return ''
     actual_list = ast.literal_eval(teams_list)
-    # capitals = {
-    #     'A': 'ఏ', 'P': 'పి', 'B': 'బీ', 
-    #     'S': 'ఎస్', 'D': 'డీ', 'C': 'సీ'
-    # }
-    # print(actual_list)
+    capitals = {
+        'Super 3s': 'సూపర్ ౩స్', 'SC': 'ఎస్.సీ.', 'Glamorgan 2nd': 'గ్లమోర్గన్ 2న్ద్', 
+        'HBS': 'హెచ్.బీ.ఎస్.', 'BCCSL': 'బీ.సీ.సీ.ఎస్.ఎల్.', 'Leicestershire 2nd': 'లీసెస్టర్షైర్ 2న్ద్', 
+        'CH': 'సీ.హెచ్.', 'ECB': 'ఇ.సీ.బీ.', 'C': 'సీ.', 'Warwickshire 2nd': 'వార్విక్షైర్ 2న్ద్', 
+        'UWI': 'యూ.డబల్యూ.ఐ.', 'PINT': 'పి.ఐ.ఎన్.టి.', 'Surrey 2nd': 'సర్రే 2న్ద్', 
+        'NZCPA': 'ఎన్.జీ.సీ.పి.ఏ.', 'Lancashire 2nd': 'లాంక్షైర్ 2న్ద్', 
+        'Essex 2nd': 'ఎస్సెక్స్ 2న్ద్', 'BCB': 'బీ.సీ.బీ.', '1': '1', 
+        'Somerset 2nd': 'సోమర్సెట్ 2న్ద్', 'DVS': 'డి.వీ.ఎస్.', 'XI': 'XI', 
+        'Kent 2nd': 'కెంట్ 2న్ద్', "Men's 1": "మెన్'స్ 1", 'KNCB': 'కె.ఎన్.సీ.బీ.', 
+        'CA': 'సీ.ఏ.', 'MCA': 'ఎం.సీ.ఏ.', 'VII': 'VII', 'Patriots 1': 'పేట్రియాట్స్ 1', '19': '19', 
+        'AJ': 'ఏ.జె.', 'BCA': 'బీ.సీ.ఏ.', 'HCC': 'హెచ్.సీ.సీ.', 'PCA': 'పి.సీ.ఏ.', 'TN': 'టి.ఎన్.', 
+        'P': 'పి.', 'UCB-BCB': 'యూ.సీ.బీ.-బీ.సీ.బీ.', 'RR': 'ఆర్.ఆర్.', 'Sussex 2nd': 'సస్సెక్స్ 2న్ద్', 
+        'MAF': 'ఎం.ఏ.ఎఫ్.', 'ICBT': 'ఐ.సీ.బీ.టి.', 'DS': 'డి.ఎస్.', 'World-XI': 'వరల్డ్-XI', 'ICL': 'ఐ.సీ.ఎల్.', 
+        'Worcestershire 2nd': 'వోర్సెస్టర్షైర్ 2న్ద్', 'XII': 'XII', 'DH': 'డి.హెచ్.', 'VRA': 'వీ.ఆర్.ఏ.', 
+        'ICC': 'ఐసీసీ', 'Under-17': 'అండర్ -17', 'VOC': 'వీ.ఓ.సీ.', 'NCA': 'ఎన్.సీ.ఏ.', 
+        'MCCU': 'ఎం.సీ.సీ.యూ.', 'IV': 'IV', 'MV': 'ఎం.వీ.', 'Durham 2nd': 'డర్హామ్ 2న్ద్', 'B': 'బీ', 
+        'RCA': 'ఆర్.సీ.ఏ.', 'KSCA': 'కె.ఎస్.సీ.ఏ.', 'Northern 2nd': 'నార్తర్న్ 2న్ద్', 'WICB': 'డబల్యూ.ఐ.సీ.బీ.', 
+        'FATA': 'ఎఫ్.ఏ.టి.ఏ.', 'DY': 'డి.వై.', 'TNCA': 'టి.ఎన్.సీ.ఏ.', 'NCU': 'ఎన్.సీ.యూ.', 'S': 'ఎస్.', 
+        'CPL': 'సీ.పి.ఎల్.', 'YMCA': 'వై.ఎం.సీ.ఏ.', 'Yorkshire 2nd': 'యార్క్షైర్ 2న్ద్', 'T20': 'టి20', 'PJ': 'పి.జె.', 
+        'Patriots 2': 'పేట్రియాట్స్ 2', 'UCCE': 'యూ.సీ.సీ.ఇ.', 'Middlesex 2nd': 'మిడిల్‌సెక్స్ 2న్ద్', 'Under-23': 'అండర్-23', 
+        'D.A.V': 'డి.ఏ.వీ.', 'HDG': 'హెచ్.డి.జీ.', 'CC': 'సీ.సీ.', 'MAS': 'ఎం.ఏ.ఎస్.', 'ACB': 'ఏ.సీ.బీ.', 'UAE': 'యూ.ఏ.ఇ.', 
+        'Under 19': 'అండర్ 19', '2': '2', 'MC': 'ఎం.సీ.', 'AJK': 'ఏ.జె.కె.', 'CI': 'సీ.ఐ.', 'TUKS': 'టి.యూ.కె.ఎస్.', 
+        'Pakhtunkhwa 2nd': 'పఖ్తున్ఖ్వా 2న్ద్', 'Sindh 2nd': 'సింధ్ 2న్ద్', 'DOHS': 'డి.ఓ.హెచ్.ఎస్.', 'TUTI': 'టి.యూ.టి.ఐ.', 
+        'Gloucestershire 2nd': 'గ్లౌసెస్టర్షైర్ 2న్ద్', 'Hampshire 2nd': 'హాంప్‌షైర్ 2న్ద్', 'D': 'డి.', 'Derbyshire 2nd': 'డెర్బీషైర్ 2న్ద్', 
+        'MCCU 2nd': 'ఎం.సీ.సీ.యూ. 2న్ద్', 'A': 'ఏ.', 'VB': 'వీ.బీ.', 'Nottinghamshire 2nd': 'నాటింగ్హామ్షైర్ 2న్ద్', 
+        'Northamptonshire 2nd': 'నార్తాంప్టన్షైర్ 2న్ద్', 'KZKC': 'కె.జీ.కె.సీ.', 'DJ': 'డి.జె.', 
+        'Under-11s': 'అండర్ -11స్', 'Under-22s': 'అండర్ -22స్', 'Under-17s': 'అండర్ -17స్', 'Under': 'అండర్', 
+        'Under-15s': 'అండర్ -15స్', 'Under-25s': 'అండర్ -25స్', 'Under-20s': 'అండర్ -20స్', 'Under-21s': 'అండర్ -21స్', 
+        'Under-13s': 'అండర్ -13స్', 'Under-14s': 'అండర్ -14స్', 'Under-18s': 'అండర్ -18స్', 'Under-24s': 'అండర్ -24స్', 
+        'Under-19s': 'అండర్ -19స్', 'Under-16s': 'అండర్ -16స్', 'Under-23s': 'అండర్ -23స్' 
+    }
     translated_output = ""
+    twos = [ke for ke in capitals.keys() if len(ke.split(" ")) == 2]
+    ones = [ke for ke in capitals.keys() if len(ke.split(" ")) == 1]
     try:
-        translated_output = getTranslatedDescription(actual_list)
-        if ']]' in translated_output:
-            translated_output = translated_output.replace(']]', ']')
-        actual_list = list(ast.literal_eval(translated_output))
-        return ', '.join(actual_list)
-    except:
+        for j in range(len(actual_list)):
+            # print("Actual team name", actual_list[j])
+            tokenized = actual_list[j].split(" ")
+            for i in range(len(tokenized)-1):
+                cur = tokenized[i] + " " + tokenized[i+1]
+                if cur in twos:
+                    t = capitals[cur].split(" ")
+                    tokenized[i] = t[0]
+                    tokenized[i+1] = t[1]
+            for i in range(len(tokenized)):
+                if tokenized[i] in ones:
+                    tokenized[i] = capitals[tokenized[i]]
+            actual_list[j] = ' '.join(tokenized)
+            # print("Updated team name", actual_list[j])
+        translated_output = getTransliteratedDescription(
+            ', '.join(actual_list))      
+        return translated_output
+    except Exception as e:
+        print("Level 2", e)
         try:
-            translated_output = getTransliteratedDescription(', '.join(actual_list))
-            return translated_output
-        except:
+            translated_output = getTranslatedDescription(actual_list)
+            if ']]' in translated_output:
+                translated_output = translated_output.replace(']]', ']')
+            actual_list = list(ast.literal_eval(translated_output))
+            return ', '.join(actual_list)
+        except Exception as f:
+            print("Level 3", f)
             try:
-                translated_output = getTranslatedDescription(', '.join(actual_list))
+                translated_output = getTranslatedDescription(
+                    ', '.join(actual_list))
                 return translated_output
-            except:
-                return ', '.join(actual_list)         
-    # print(translated_output)
-    # for j in range(len(actual_list)):
-    #     team_name_split = actual_list[j].split()
-    #     for i in range(len(team_name_split)):
-    #         if team_name_split[i] in capitals.keys():
-    #             team_name_split[i] = capitals[team_name_split[i]]
-    #     actual_list[j] = ' '.join(team_name_split)
+            except Exception as g:
+                print("Final level", g)
+                return ', '.join(actual_list)
 
 def get_role(role):
     if not is_valid_string(role):
@@ -609,7 +699,7 @@ def getData(row):
         
         # {%- macro career_intro(player_name, player_role, nationality, teams, jersey_number, has_retired) -%}
         'player_role': row['Playing Role'],
-        'nationality': getTranslatedDescription(row['Nationality']).strip(),
+        'nationality': get_nationality(row['Nationality']),
         'teams': row['Teams'],
         'jersey_number': row['Jersey_Number'],
         'has_retired': did_retire(row['career_span']),
@@ -710,12 +800,12 @@ def main():
     }
     template.globals.update(func_dict)
     
-    with open('../data_collection/data/final_cricket_players_DF.pkl', 'rb') as f:
+    with open('final_cricket_players_DF.pkl', 'rb') as f:
         cricket_players_DF = pickle.load(f)
         cricket_players_DF.fillna(value="nan", inplace=True)
         ids = cricket_players_DF.Cricinfo_id.tolist()
         all_attributes = cricket_players_DF.columns.tolist()
-        ids = [253802]
+        ids = [53747]
         with open('life.txt', 'w') as fobj:
             for i, cricketer_id in enumerate(ids):
                 required_player = cricket_players_DF.loc[cricket_players_DF['Cricinfo_id']==cricketer_id]

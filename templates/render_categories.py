@@ -35,34 +35,55 @@ translated_names = {
 
 def is_valid_string(attribute_value):
     return not (attribute_value == None or pd.isnull(attribute_value) or str(attribute_value) == "" or str(attribute_value) == "nan")
-
-def getTransliteratedDescription(description):
-    try:
-        current_attribute_value = description
-        # anu_title = telugu.anuvaad(row.title.values[0])
-        deep = trans(current_attribute_value)[0]
-        description = deep['pred']
-    except:
-        try:
-            return transliterate_text(test_text, lang_code='te')
-        except:
-            pass
-    return description
-
-def getTranslatedDescription(description):
-    global translator
-    if not is_valid_string(description):
-        return description
-    try:
-        return translator.translate(description, lang_src='en', lang_tgt='te')
-    except:
-        try:
-            return ts.google(query_text=description, from_language='en', to_language='te')
-        except:
-            try:
-                return GoogleTranslator(source='en', target='te').translate(text=description)
-            except:
-                return description
+            
+def get_nationality(nation):
+    nation = nation.strip()
+    nations = {
+        'Pakistan': 'పాకిస్తాన్', 
+        'Japan': 'జపాన్', 
+        'Canada': 'కెనడా', 
+        'India': 'భారతదేశం', 
+        'Belgium': 'బెల్జియం', 
+        'P.N.G.': 'పాపువా న్యూ గిని', 
+        'Oman': 'ఒమన్', 
+        'Austria': 'ఆస్ట్రియా', 
+        'West Indies': 'వెస్ట్ ఇండీస్', 
+        'Kuwait': 'కువైట్', 
+        'E&C Africa': 'ఇ & సి ఆఫ్రికా', 
+        'Bermuda': 'బెర్ముడా', 
+        'Fiji': 'ఫిజి', 
+        'Chile': 'చిలీ', 
+        'Denmark': 'డెన్మార్క్', 
+        'Malaysia': 'మలేషియా', 
+        'Bangladesh': 'బంగ్లాదేశ్', 
+        'Germany': 'జర్మనీ', 
+        'U.A.E.': 'యునైటెడ్ అరబ్ ఎమిరేట్స్', 
+        'Hong Kong': 'హాంగ్ కొంగ', 
+        'Malta': 'మాల్టా',
+        'Zimbabwe': 'జింబాబ్వే', 
+        'Scotland': 'స్కాట్లాండ్', 
+        'Singapore': 'సింగపూర్', 
+        'Sri Lanka': 'శ్రీలంక', 
+        'England': 'ఇంగ్లాండ్', 
+        'Gibraltar': 'గిబ్రాల్టర్', 
+        'Argentina': 'అర్జెంటీనా', 
+        'Uganda': 'ఉగాండా', 
+        'Italy': 'ఇటలీ', 
+        'Kenya': 'కెన్యా', 
+        'Nepal': 'నేపాల్', 
+        'Netherlands': 'నెదర్లాండ్స్', 
+        'South Africa': 'దక్షిణ ఆఫ్రికా', 
+        'Ireland': 'ఐర్లాండ్', 
+        'U.S.A.': 'యునైటెడ్ స్టేట్స్ ఆఫ్ అమెరికా', 
+        'Afghanistan': 'ఆఫ్ఘనిస్తాన్', 
+        'Cayman Is': 'కేమెన్ ఐలాండ్స్', 
+        'New Zealand': 'న్యూజీలాండ్', 
+        'Namibia': 'నమీబియా', 
+        'Australia': 'ఆస్ట్రేలియా'
+    }
+    if not nation in nations.keys():
+        return ''
+    return nations[nation]
             
 def get_year(given_date):
     if not is_valid_string(given_date):
@@ -77,7 +98,7 @@ def get_year(given_date):
     
 def get_country_player(nationality, gender):
     global famous_countries
-    country_string = getTranslatedDescription(nationality)
+    country_string = get_nationality(nationality)
     if nationality in famous_countries.keys():
         country_string = famous_countries[nationality]
     if gender.startswith("F"):
@@ -88,7 +109,7 @@ def get_country_test_details(nationality, played_test, gender):
     global famous_countries
     if not played_test:
         return ''
-    country_string = getTranslatedDescription(nationality)
+    country_string = get_nationality(nationality)
     if nationality in famous_countries.keys():
         country_string = famous_countries[nationality]
     if gender.startswith("F"):
@@ -99,7 +120,7 @@ def get_country_odi_details(nationality, played_ODI, gender):
     global famous_countries
     if not played_ODI:
         return ''
-    country_string = getTranslatedDescription(nationality)
+    country_string = get_nationality(nationality)
     if nationality in famous_countries.keys():
         country_string = famous_countries[nationality]
     if gender.startswith("F"):
@@ -113,7 +134,7 @@ def get_country_t20_details(nationality, played_t20, gender):
     t20_f = 'ట్వంటీ-20'
     if nationality != 'India':
         t20_f = 'టీ20'
-    country_string = getTranslatedDescription(nationality)
+    country_string = get_nationality(nationality)
     if nationality in famous_countries.keys():
         country_string = famous_countries[nationality]
     if gender.startswith("F"):
@@ -159,7 +180,7 @@ def main():
         cricket_players_DF.fillna(value="nan", inplace=True)
         ids = cricket_players_DF.Cricinfo_id.tolist()
         all_attributes = cricket_players_DF.columns.tolist()
-        ids = [253802]
+        ids = [53747]
         with open('categories.txt', 'w') as fobj:
             for i, cricketer_id in enumerate(ids):
                 required_player = cricket_players_DF.loc[cricket_players_DF['Cricinfo_id']==cricketer_id]
