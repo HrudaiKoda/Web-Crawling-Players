@@ -800,12 +800,12 @@ def main():
     }
     template.globals.update(func_dict)
     
-    with open('final_cricket_players_DF.pkl', 'rb') as f:
+    with open('../data_collection/data/final_cricket_players_DF.pkl', 'rb') as f:
         cricket_players_DF = pickle.load(f)
         cricket_players_DF.fillna(value="nan", inplace=True)
         ids = cricket_players_DF.Cricinfo_id.tolist()
         all_attributes = cricket_players_DF.columns.tolist()
-        ids = [53747]
+        ids = [54950]
         with open('life.txt', 'w') as fobj:
             for i, cricketer_id in enumerate(ids):
                 required_player = cricket_players_DF.loc[cricket_players_DF['Cricinfo_id']==cricketer_id]
