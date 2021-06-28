@@ -4,9 +4,9 @@ import numpy as np
 import ast 
 #from deeptranslit import DeepTranslit
 #trans = DeepTranslit('telugu')
-from google.transliteration import transliterate_word , transliterate_text
-from google_trans_new import google_translator
-translator = google_translator()
+#from google.transliteration import transliterate_word , transliterate_text
+#f3rom google_trans_new import google_translator
+#translator = google_translator()
 
 
 def translate(var):
@@ -14,7 +14,9 @@ def translate(var):
     for i in range(len(var)):
         if(var[i] != "nan"):
             if(i == 1):
-                re = transliterate_text(list_str(var[i],0),lang_code="te")
+                re = list_str(var[i],3)
+                re = re[0:-1]
+                #re = transliterate_text(list_str(var[i],2),lang_code="te")
                 
             elif(i == 4):
                 relation =str()
@@ -35,19 +37,38 @@ def translate(var):
 def conv(t):
     literal = ast.literal_eval(t)
     return literal
+def interwiki(li):
+    li = ast.literal_eval(li)
+    ret = ""
+    for i in range(len(li)):
+        ret = ret + "[[" + transliterate_text(li[i],lang_code="te") + "]],"
+        
+    return ret
+def inter_wiki_date(li):
+    li = ast.literal_eval(li)
+    ret = ""
+    for i in range(len(li)):
+        ret = ret + "[[" + li[i] + "]],"
+    return ret[0:-1]
 def list_str(val,check_year):
-    pr = str(val)
+    if(check_year == 2):
+        p = inter_wiki_date(val)
+    elif(check_year == 3):
+        p = interwiki(val)
+    else:
+        pr = str(val)
     
-    p = pr.replace("[","")
-    p = p.replace("]","")
-    p = p.replace("'","")
-    if(check_year == 1):
-        p = p.replace("Y"," సంవత్సరాల")
-        p = p.replace("D"," రోజులు")
-        print(p)
+        p = pr.replace("[","")
+        p = p.replace("]","")
+        p = p.replace("'","")
+
+        if(check_year == 1):
+            p = p.replace("Y"," సంవత్సరాల")
+            p = p.replace("D"," రోజులు")
+    
     return p
 def nan_check(x):
-    if(x == -1 or x == "nan"):
+    if(x == -1 or x == "nan" or x == 0 or x == "-1"):
         return "-"
     else:
         return x
@@ -103,6 +124,12 @@ def change_abbr(h):
         else:
             n = n+ h[i]
     return n
+def relation_print(li):
+    ret = ast.literal_eval(li)
+    s= ""
+    for i in range(len(ret)):
+        s = s + ret[i][0] + ret[i][1]
+    return s
 def table_check(data):
     one = 0
     two = 0
@@ -135,6 +162,12 @@ def check(tag_name,a,b,c):
         c = nan_check(c)
         val = "| " +str(tag_name)+ " || " + str(a) + " || " + str(b) + " || " + str(c) + " |"
         return val
+def sing_plu(a):
+    if(a > 1):
+        return "లు "
+    else:
+        return " "
+
 func_dict = {
     "check": check,
     "list_str":list_str,
@@ -144,14 +177,18 @@ func_dict = {
     "head_filter":head_filter,
     "drop_row":drop_row,
     "translate":translate,
-    "change_abbr":change_abbr
+    "change_abbr":change_abbr,
+    "sing_plu":sing_plu,
+    "relation_print":relation_print
 }
 
 def render(template):
-    a = pd.read_csv("final_cricket_players.csv")
+    a = pd.read_csv("final_rel_change.csv",low_memory=False)
     head = list(a.columns)
-    val = a.iloc[5].replace(np.nan ,"nan")
-    val = dict(val.fillna("nan"))
+    val = a.loc[a["Cricinfo_id"] == 7913]
+    val = val.replace(np.nan ,"nan")
+    val = val.fillna("nan")
+    val = dict(val.squeeze())
     env = Environment(loader=FileSystemLoader("./"))
     jinja_template = env.get_template(template)
     jinja_template.globals.update(func_dict)
@@ -161,6 +198,6 @@ def render(template):
 if __name__ == "__main__":
     print(render(template="personal_life.j2"))
 
-    print(render(template="player_statistical_analysis.j2"))
+    print(render(template="template.j2"))
 
 
