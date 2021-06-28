@@ -7,6 +7,7 @@
     {%- set has_taken = "తీసాడు" -%}
     {%- set has_started = "ప్రారంభించాడు" -%}
     {%- set is_reason = "కారణమయ్యాడు" -%}
+    {%- set has_clinched = "సాధించాడు" -%}
 {%- else -%}
     {%- set gender_pronoun_1 = "ఆమె" -%}
     {%- set gender_pronoun_2 = "ఆమె" -%}
@@ -16,6 +17,7 @@
     {%- set has_taken = "తీసింది" -%}
     {%- set has_started = "ప్రారంభించింది" -%}
     {%- set is_reason = "కారణమయింది" -%}
+    {%- set has_clinched = "సాధించింది" -%}
 {%- endif -%}
 
 
@@ -167,13 +169,13 @@
                 'ఫీల్డర్‌గా ' ~ player_name ~ ' తన కెరీర్‌లో, ' ~ sum_dismissals |string ~ ' ఫీల్డింగ్ డిస్మిస్సల్స్ కి ' ~ is_reason ~ ', ',
             ] |random -}}
         {%- if sum_catches == 0 -%}
-            {%- set line = 'ఇందులో ' ~ sum_stumpings |string ~ ' స్టంపింగ్స్ ఉన్నాయి. ' -%}
+            {%- set line = 'ఈ డిస్మిస్సల్స్ లో ' ~ sum_stumpings |string ~ ' స్టంపింగ్స్ ఉన్నాయి. ' -%}
         {%- elif sum_stumpings == 0 -%}
-            {%- set line = 'ఇందులో ' ~ sum_catches |string ~ ' క్యాచ్‌లు ఉన్నాయి. ' -%}
+            {%- set line = 'ఈ డిస్మిస్సల్స్ లో ' ~ sum_catches |string ~ ' క్యాచ్‌లు ఉన్నాయి. ' -%}
         {%- else -%}
             {%- set line = [
-                            'ఇందులో ' ~ sum_catches |string ~ ' క్యాచ్‌లు, ' ~ sum_stumpings |string ~ ' స్టంపింగ్స్ ఉన్నాయి. ',
-                            'వీటిలో ' ~ sum_stumpings |string ~ ' స్టంపింగ్స్, ' ~ sum_catches |string ~ ' క్యాచ్‌లు ఉన్నాయి. '
+                            'ఈ డిస్మిస్సల్స్ లో ' ~ sum_catches |string ~ ' క్యాచ్‌లు, ' ~ sum_stumpings |string ~ ' స్టంపింగ్స్ ఉన్నాయి. ',
+                            'ఈ డిస్మిస్సల్స్ లో ' ~ sum_stumpings |string ~ ' స్టంపింగ్స్, ' ~ sum_catches |string ~ ' క్యాచ్‌లు ఉన్నాయి. '
                             ] |random -%}
         {%- endif -%}
         {{- line -}}
@@ -186,7 +188,7 @@
                         bowling_10w_test, bowling_10w_FC) -%}
     {{- "\n" -}}
     {{- opening_sentence('బౌలర్‌గా', player_name, sum_bowling_matches, sum_bowling_innings, has_played) -}}
-    {{- bowling_sent1(gender_pronoun_1, sum_bowling_balls, has_done, sum_wickets, has_taken) -}}
+    {{- bowling_sent1(gender_pronoun_1, sum_bowling_balls, has_done, sum_wickets, has_clinched) -}}
     {%- set line1 = bowling_description_func('టెస్ట్ క్రికెట్లో', gender_pronoun_2, test_bowling_average, test_bowling_economy) -%}
     {%- set line2 = bowling_description_func('వన్డే ఇంటర్నేషనల్‌లో', gender_pronoun_2, ODI_bowling_average, ODI_bowling_economy) -%}
     {%- set line3 = bowling_description_func('టీ20 అంతర్జాతీయ మ్యాచ్‌ల్లో', gender_pronoun_2, T20I_bowling_average, T20I_bowling_economy) -%}
@@ -194,7 +196,7 @@
     {%- for elem in details -%}
         {{- elem -}}
     {%- endfor -%}
-    {{- bowling_sent2(gender_pronoun_2, gender_pronoun_1, bowling_10w_test, bowling_10w_FC, has_taken) -}}
+    {{- bowling_sent2(gender_pronoun_2, gender_pronoun_1, bowling_10w_test, bowling_10w_FC, has_clinched) -}}
     {{- "\n" -}}
 {%- endmacro -%}
 
@@ -219,7 +221,7 @@
 {{ define_section("క్రీడా జీవితం") }}
 {{ define_sub_section("ప్రారంభ రోజులు") }}
 {{ early_career(player_name, career_start_year, first_class_debut, listA_debut, T20_debut, T20I_debut, ODI_debut, test_debut, all_ref) }}
-{{ define_sub_section("అంతర్జాతీయ, దేశీయ కెరీర్లు") }}
+{{ define_sub_section("కెరీర్") }}
 {{ career_intro(player_name, player_role, nationality, teams, jersey_number, has_retired, all_ref) }}
 
 {%- set is_primary_bowler = "Bowl" in player_role -%}
