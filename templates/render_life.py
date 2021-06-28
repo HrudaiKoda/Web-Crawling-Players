@@ -106,7 +106,7 @@ def getTransliteratedDescription(description):
         description = deep['pred']
     except:
         try:
-            return transliterate_text(test_text, lang_code='te')
+            return transliterate_text(description, lang_code='te')
         except:
             pass
     return description
@@ -130,7 +130,7 @@ def getTranslatedDescription(description):
                 return description
 
 def get_trophy_name(description):
-    if not is_valid_string(description):
+    if not is_valid_string(description) or description == None or pd.isnull(description):
         return ''
     trophy_translations = {
         "Basil D'Oliveira": "బాసిల్ డి'ఒలివెరా", 
@@ -230,14 +230,11 @@ def get_stats_ref(all_ref, player_name):
     return "<ref>[" + required_ref[0] + " " + player_name.strip() + " గణాంకాలు]</ref>"
     
 def stat_value(attribute_name, attribute_value):
-    # print(attribute_name, attribute_value)
-    if str(attribute_value) == "" or str(attribute_value) == "nan" or attribute_value == None:
-        # print(attribute_name, attribute_value, '1')
+    if not is_valid_string(attribute_value) or attribute_value == None or pd.isnull(attribute_value):
         return "-"
     if "hs" in attribute_name.lower() or "bbi" in attribute_name.lower() or "BBM" in attribute_name or "span" in attribute_name.lower() or attribute_name == 'sp':
         return attribute_value
     if int(float(attribute_value)) < 0:
-        # print(attribute_name, attribute_value, '2')
         return "-"
     return attribute_value
 
@@ -263,7 +260,7 @@ def print_names(li):
     return (li)
 
 def get_teams_string(teams_list):
-    if not is_valid_string(teams_list):
+    if not is_valid_string(teams_list) or teams_list == None or pd.isnull(teams_list):
         return ''
     actual_list = ast.literal_eval(teams_list)
     capitals = {
@@ -337,7 +334,7 @@ def get_teams_string(teams_list):
                 return ', '.join(actual_list)
 
 def get_role(role):
-    if not is_valid_string(role):
+    if not is_valid_string(role) or role == None or pd.isnull(role):
         return ''
     role_map = {
         "Bowler": "బౌలర్",
@@ -384,45 +381,72 @@ def bowling_description_func(first_word, gender_pronoun_2, num1, num2):
 def opening_sentence(first_word, player_name, num1, num2, has_played):
     if num1 <= 0 and num2 <= 0:
         return ''
+    match_word = 'మ్యాచ్‌లు'
+    if num1 == 1:
+        match_word = 'మ్యాచ్‌'
+    innings_word = 'ఇన్నింగ్స్‌లలో'
+    if num2 == 1:
+        innings_word = 'ఇన్నింగ్స్‌లో'
     if num1 > 0 and num2 > 0:
-        return (first_word + ' ' + player_name + ' ' + str(num1) + ' మ్యాచ్‌లు, ' + str(num2) + ' ఇన్నింగ్స్‌లలో ' + has_played + '. ')
+        return (first_word + ' ' + player_name + ' ' + str(num1) + ' ' + match_word + ', ' + str(num2) + ' ' + innings_word + ' ' + has_played + '. ')
     elif num1 > 0:
-        return (first_word + ' ' + player_name + ' ' + str(num1) + ' మ్యాచ్‌లు ' + has_played + '. ')
-    return (first_word + ' ' + player_name + ' ' + str(num2) + ' ఇన్నింగ్స్‌లలో ' + has_played + '. ')
+        return (first_word + ' ' + player_name + ' ' + str(num1) + ' ' + match_word + ' ' + has_played + '. ')
+    return (first_word + ' ' + player_name + ' ' + str(num2) + ' ' + innings_word + ' ' + has_played + '. ')
 
 
 def batting_sent1(gender_pronoun_1, sum_batting_100s, sum_batting_50s, has_done):
     if sum_batting_100s <= 0 and sum_batting_50s <= 0:
         return ''
+    hundred_word = 'శతకాలు'
+    if sum_batting_100s == 1:
+        hundred_word = 'శతకం'
+    fifty_word = 'అర్ధ శతకాలు'
+    if sum_batting_50s == 1:
+        fifty_word = 'అర్ధ శతకం'
     if sum_batting_100s > 0 and sum_batting_50s > 0:
-        return ('అన్ని ఫార్మాట్లు కలిపి ' + gender_pronoun_1 + ' ' + str(sum_batting_100s) + ' శతకాలు, ' + str(sum_batting_50s) + ' అర్ధ శతకాలు ' + has_done + '. ')
+        return ('అన్ని ఫార్మాట్లు కలిపి ' + gender_pronoun_1 + ' ' + str(sum_batting_100s) + ' ' + hundred_word + ', ' + str(sum_batting_50s) + ' ' + fifty_word + ' ' + has_done + '. ')
     elif sum_batting_100s > 0:
-        return ('అన్ని ఫార్మాట్లు కలిపి ' + gender_pronoun_1 + ' ' + str(sum_batting_100s) + ' శతకాలు ' + has_done + '. ')
-    return ('అన్ని ఫార్మాట్లు కలిపి ' + gender_pronoun_1 + ' ' + str(sum_batting_50s) + ' అర్ధ శతకాలు ' + has_done + '. ')
+        return ('అన్ని ఫార్మాట్లు కలిపి ' + gender_pronoun_1 + ' ' + str(sum_batting_100s) + ' ' + hundred_word + ' ' + has_done + '. ')
+    return ('అన్ని ఫార్మాట్లు కలిపి ' + gender_pronoun_1 + ' ' + str(sum_batting_50s) + ' ' + fifty_word + ' ' + has_done + '. ')
 
 
 def bowling_sent1(gender_pronoun_1, sum_bowling_balls, has_done, sum_wickets, has_taken):
     if sum_bowling_balls <= 0 and sum_wickets <= 0:
         return ''
+    balls_word = 'బంతులు'
+    overs_word = 'ఓవర్లు'
+    wickets_word = 'వికెట్లు'
+    if sum_bowling_balls == 1:
+        balls_word = 'బంతి'
+    if sum_wickets == 1:
+        wickets_word = 'వికెట్'
+    if sum_bowling_balls//6 == 1:
+        overs_word = 'ఓవర్'
     if sum_bowling_balls > 0 and sum_wickets > 0:
-        return ('తన కెరీర్ లో, ' + gender_pronoun_1 + ' మొత్తం ' + str(sum_bowling_balls) + ' బంతులు (' + str(sum_bowling_balls//6) + ' ఓవర్లు) బౌలింగ్ చేసి, ' + str(sum_wickets) + ' వికెట్లు ' + has_taken + '. ')
+        return ('తన కెరీర్ లో, ' + gender_pronoun_1 + ' మొత్తం ' + str(sum_bowling_balls) + ' ' + balls_word + ' (' + str(sum_bowling_balls//6) + ' ' + overs_word + ') బౌలింగ్ చేసి, ' + str(sum_wickets) + ' ' + wickets_word + ' ' + has_taken + '. ')
     elif sum_bowling_balls > 0:
-        return ('తన కెరీర్ లో, ' + gender_pronoun_1 + ' మొత్తం ' + str(sum_bowling_balls) + ' బంతులు (' + str(sum_bowling_balls//6) + ' ఓవర్లు) బౌలింగ్ ' + has_done + '. ')
-    return ('తన కెరీర్ లో ' + str(sum_wickets) + ' వికెట్లు ' + has_taken + '. ')
+        return ('తన కెరీర్ లో, ' + gender_pronoun_1 + ' మొత్తం ' + str(sum_bowling_balls) + ' ' + balls_word + ' (' + str(sum_bowling_balls//6) + ' ' + overs_word + ') బౌలింగ్ ' + has_done + '. ')
+    return ('తన కెరీర్ లో ' + str(sum_wickets) + ' ' + wickets_word + ' ' + has_taken + '. ')
 
 
 def bowling_sent2(gender_pronoun_2, gender_pronoun_1, bowling_10w_test, bowling_10w_FC, has_taken):
     if bowling_10w_test <= 0 and bowling_10w_FC <= 0:
         return ''
+    test_word = 'టెస్ట్ మ్యాచ్‌లలో'
+    if bowling_10w_test == 1:
+        test_word = 'టెస్ట్ మ్యాచ్ లో'
+    fc_word = 'ఫస్ట్ క్లాస్ మ్యాచ్‌లలో'
+    if bowling_10w_FC == 1:
+        fc_word = 'ఫస్ట్ క్లాస్ మ్యాచ్‌ లో'
     if bowling_10w_test > 0 and bowling_10w_FC > 0:
-        return (gender_pronoun_2 + ' కెరీర్లో, ' + gender_pronoun_1 + ' ' + str(bowling_10w_test) + ' టెస్ట్ మ్యాచ్లలో, ' + str(bowling_10w_FC) + ' ఫస్ట్ క్లాస్ మ్యాచ్లలో 10 వికెట్లు ' + has_taken + '. ')
+        return (gender_pronoun_2 + ' కెరీర్లో, ' + gender_pronoun_1 + ' ' + str(bowling_10w_test) + ' ' + test_word + ', ' + str(bowling_10w_FC) + ' ' + fc_word + ' 10 వికెట్లు ' + has_taken + '. ')
     elif bowling_10w_test > 0:
-        return (gender_pronoun_2 + ' కెరీర్లో, ' + gender_pronoun_1 + ' ' + str(bowling_10w_test) + ' టెస్ట్ మ్యాచ్లలో 10 వికెట్లు ' + has_taken + '. ')
-    return (gender_pronoun_2 + ' కెరీర్లో, ' + gender_pronoun_1 + ' ' + str(bowling_10w_FC) + ' ఫస్ట్ క్లాస్ మ్యాచ్లలో 10 వికెట్లు ' + has_taken + '. ')
+        return (gender_pronoun_2 + ' కెరీర్లో, ' + gender_pronoun_1 + ' ' + str(bowling_10w_test) + ' ' + test_word + ' 10 వికెట్లు ' + has_taken + '. ')
+    return (gender_pronoun_2 + ' కెరీర్లో, ' + gender_pronoun_1 + ' ' + str(bowling_10w_FC) + ' ' + fc_word + ' 10 వికెట్లు ' + has_taken + '. ')
 
 def get_translation(word, prefix_string):
     global translated_names
-    if not is_valid_string(word):
+    if not is_valid_string(word) or word == None or pd.isnull(word):
         return ''
     if not word in translated_names.keys():
         return getTranslatedDescription(word)
@@ -444,13 +468,13 @@ def null_check(given_list, given_att):
 
 def can_be_considered_1(attributes, prop_name, row, curr_att):
     req_attrs = [a for a in attributes if '_' + prop_name + '_' in a]
-    req_list = [a for a in req_attrs if (isinstance(row[a], str) and is_valid_string(row[a])) or ((not isinstance(row[a], str)) and stat_value(a, row[a]) != "-")]
+    req_list = [a for a in req_attrs if (isinstance(row[a], str) and is_valid_string(row[a])) or ((not isinstance(row[a], str)) and stat_value(a, row[a]) != "-" and stat_value(a, row[a]) > 0)]
     valids_count = len(req_list)
     return valids_count != 0
 
 def can_be_considered_2(attributes, prop_name, row, curr_att, other_list):
     req_attrs = [a for a in attributes if prop_name in a and null_check(other_list, a)]
-    req_list = [a for a in req_attrs if (isinstance(row[a], str) and is_valid_string(row[a])) or ((not isinstance(row[a], str)) and stat_value(a, row[a]) != "-")]
+    req_list = [a for a in req_attrs if (isinstance(row[a], str) and is_valid_string(row[a])) or ((not isinstance(row[a], str)) and stat_value(a, row[a]) != "-" and stat_value(a, row[a]) > 0)]
     valids_count = len(req_list)
     return valids_count != 0
 
@@ -541,12 +565,15 @@ def get_fielding_info(row):
 
 
 def can_consider_trophy_stat(stat_name, all_trophies):
-    return len([ke for ke in all_trophies.keys() if stat_name in all_trophies[ke].keys() and is_valid_string(all_trophies[ke][stat_name])]) != 0
+    valid_entries = [all_trophies[ke][stat_name] for ke in all_trophies.keys() if stat_name in all_trophies[ke].keys() and is_valid_string(all_trophies[ke][stat_name]) and not (all_trophies[ke][stat_name] == None or pd.isnull(all_trophies[ke][stat_name]))]
+    valid_entries = [entry for entry in valid_entries if (isinstance(entry, str) and entry != '-') or ((isinstance(entry, int) or isinstance(entry, float)) and entry > 0)]
+    # print(valid_entries)
+    return len(valid_entries) != 0
 
 
 def get_trophy_info(row):
     global all_attributes
-    if not is_valid_string(row['Major_Trophies']):
+    if not is_valid_string(row['Major_Trophies']) or row['Major_Trophies'] == None or pd.isnull(row['Major_Trophies']):
         return [], [], {}
     all_trophies = ast.literal_eval(row['Major_Trophies'])
     if len(all_trophies) == 0:
@@ -635,7 +662,7 @@ def get_description_sums(row):
 
 
 def get_start_year(span):
-    if not is_valid_string(span):
+    if not is_valid_string(span) or span == None or pd.isnull(span):
         return -1
     try:
         break_up = span.split('-')
@@ -645,7 +672,7 @@ def get_start_year(span):
 
 
 def did_retire(span):
-    if not is_valid_string(span):
+    if not is_valid_string(span) or span == None or pd.isnull(span):
         return False
     try:
         break_up = span.split('-')
@@ -655,7 +682,7 @@ def did_retire(span):
     
 def get_debut_string(deb):
     # print(deb)
-    if not is_valid_string(deb):
+    if not is_valid_string(deb) or deb == None or pd.isnull(deb):
         return ''
     deb = deb.replace("vs", "versus")
     deb = deb.replace("Vs", "versus")
@@ -800,7 +827,7 @@ def main():
     }
     template.globals.update(func_dict)
     
-    with open('../data_collection/data/final_cricket_players_DF.pkl', 'rb') as f:
+    with open('final_cricket_players_DF.pkl', 'rb') as f:
         cricket_players_DF = pickle.load(f)
         cricket_players_DF.fillna(value="nan", inplace=True)
         ids = cricket_players_DF.Cricinfo_id.tolist()
