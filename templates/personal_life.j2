@@ -8,64 +8,83 @@
     {% set accomplish = "సాధించాడు" %}
 
 
+
 {%- else -%}
     {% set gender_pronoun_1 = "ఆమె" %}
     {% set gender_pronoun_2 = "ఆమె" %}
     {% set has_played = "ఆడింది" %}
-    {% set born = "జన్మించింది " %}
+    {% set born = "జన్మించింది" %}
     {% set has_done = "చేసింది" %}
     {% set die = "మరణించింది" %}
     {% set accomplish = "సాధించింది" %}
+
 {%- endif -%}
 {%- set tra_list_name = ["Player_Name", "Birth_Place" , "Birth_Date", "Education" ,"Relations" , "Death_Date" , "Death_Place" ]-%}
-{%- set tra_list = [Player_Name, Birth_Place , Birth_Date, Education ,Relations , Death_Date , Death_Place ]-%}
-{%- set new_trans = translate(tra_list) -%}
+{%- set tra_list = [Telugu_Player_Name, Telugu_Birth_Place , Telugu_Birth_Date, Telugu_Education ,Telugu_Relations , Telugu_Death_Date , Telugu_Death_Place ]-%}
 {%- set new_dict = {}-%}
 {%- for i in range(tra_list|length) -%}
-{%- set x = new_dict.__setitem__(tra_list_name[i],new_trans[i]) -%}
+{%- set x = new_dict.__setitem__(tra_list_name[i],tra_list[i]) -%}
 {%- endfor -%}
 {% macro personal_life(new_dict)%}
-{%- if new_dict["Birth_Place"] != 'nan'%}
-{% set y = new_dict.__setitem__("Birth_Place",list_str(new_dict["Birth_Place"],0)) %}
+
+
+{%- if new_dict["Birth_Date"] != "-1"%}
+{% set y = new_dict.__setitem__("Birth_Date",list_str(new_dict["Birth_Date"],2)) %}
+
 {% endif %}
 
-{%- if new_dict["Birth_Date"] != 'nan'%}
-{% set y = new_dict.__setitem__("Birth_Date",list_str(new_dict["Birth_Date"],0)) %}
+{%- if new_dict["Birth_Place"] != 'nan'%}
+{% set y = new_dict.__setitem__("Birth_Place",list_str(new_dict["Birth_Place"],0)) %}
+
 {% endif %}
 ==వ్యక్తిగత జీవితం== 
     {{'\n'}}
-    {%- if new_dict["Birth_Place"] != 'nan' and new_dict["Birth_Date"] != 'nan'%}
-        {%- set line1 = [new_dict["Player_Name"]," ", new_dict["Birth_Place"] , " లో " ,new_dict["Birth_Date"]," న ",born,"."] | join('')-%}
-        {%- set line2 = [new_dict["Player_Name"] ," ",new_dict["Birth_Date"]," న ",new_dict["Birth_Place"], " లో " ,born,"."] | join('')-%}
+    {%- if new_dict["Birth_Place"] != 'nan' and new_dict["Birth_Date"] != "-1"%}
+        {%- set line1 = [new_dict["Player_Name"]," ", new_dict["Birth_Place"] , "లో " ,new_dict["Birth_Date"],"న ",born,"."] | join('')-%}
+        {%- set line2 = [new_dict["Player_Name"] ," ",new_dict["Birth_Date"],"న ",new_dict["Birth_Place"], "లో " ,born,"."] | join('')-%}
         {{[line1 , line2] | random}}
 
-    {%- elif new_dict["Birth_Date"] != 'nan' and new_dict["Birth_Place"] == 'nan'%}
-        {%-set line1 =  [new_dict["Player_Name"],new_dict["Birth_Date"]," న ",born,"."] | join('')-%}
+    {%- elif new_dict["Birth_Date"] != "-1" and new_dict["Birth_Place"] == 'nan'%}
+        {%-set line1 =  [new_dict["Player_Name"],new_dict["Birth_Date"],"న ",born,"."] | join('')-%}
         {{[line1] | random}}
 
-    {%- elif new_dict["Birth_Date"] == 'nan' and new_dict["Birth_Place"] != 'nan'%}
-        {%-set line1 =  [new_dict["Player_Name"] ,new_dict["Birth_Place"], " లో ",born,"."] | join('')-%}
+    {%- elif new_dict["Birth_Date"] == "-1" and new_dict["Birth_Place"] != 'nan'%}
+        {%-set line1 =  [new_dict["Player_Name"] ,new_dict["Birth_Place"], "లో ",born,". "] | join('')-%}
         {{[line1] | random}}
     {%- endif -%}
 
-    {%- if new_dict["Education"] != "nan"-%}
+    {%- if new_dict["Education"] != "nan"-%} 
         {%-set line1 = [gender_pronoun_1," ",new_dict["Education"], "లో విద్యను పూర్తి ",has_done,"."] | join('')-%}
         {%-set line2 = [gender_pronoun_1," తన విద్యను ",new_dict["Education"],"లో పూర్తి ",has_done,"."] | join('')-%}
         {{[line1 ,line2] | random}}
     {%- endif -%}
-    {%-if new_dict["Death_Date"] != 'nan'-%}
-    {% set y = new_dict.__setitem__("Death_Date",list_str(new_dict["Death_Date"],0)) %}
-    {% set y = new_dict.__setitem__("Death_Place",list_str(new_dict["Death_Place"],1)) %}
-    {{"\n"}}
-{%-set line1 = [gender_pronoun_1," ",new_dict["Death_Date"],"న ",new_dict["Death_Place"],"లో",die] | join('')-%}
-        {{[line1] | random}}
-    {%- endif -%}
-    {%- if new_dict["Relations"] != "nan" -%}
+
+
+    {%- if new_dict["Relations"] != "[]" -%}
         {%-set line1 = [gender_pronoun_2," బంధువులు:"] | join('')-%}
         {{[line1] | random}}
         {%- set s = new_dict["Relations"]-%}
-            {{change_abbr(s)}}
+            {{relation_print(s)}}
     {%-endif-%}
+
+{%- if new_dict["Death_Date"] != "nan"%}
+{% set y = new_dict.__setitem__("Death_Date",list_str(new_dict["Death_Date"],2)) %}
+{%-endif-%}  
+{%- if new_dict["Death_Place"] != "nan"%}
+{% set y = new_dict.__setitem__("Death_Place",list_str(new_dict["Death_Place"],4)) %}
+{%-endif-%}
+{%-if new_dict["Death_Date"] != 'nan' and  new_dict["Death_Place"] != 'nan'-%}
+
+{%-set line1 = [gender_pronoun_1," ",new_dict["Death_Date"],"న ",new_dict["Death_Place"],"లో ",die] | join('')-%}
+{{[line1] | random}}
+{%- elif new_dict["Death_Date"] != 'nan'-%}
+
+{%-set line1 = [gender_pronoun_1," ",new_dict["Death_Date"],"న ",die] | join('')-%}
+{{[line1] | random}}
+{%- elif new_dict["Death_Place"] != 'nan'  -%}
+{%-set line1 = [gender_pronoun_1," ",new_dict["Death_Place"],"లో ",die] | join('')-%}
+{{[line1] | random}}
+{%-endif-%}
 
 {%endmacro%}
 
