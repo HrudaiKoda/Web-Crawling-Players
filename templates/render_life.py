@@ -14,6 +14,11 @@ from google.transliteration import transliterate_word, transliterate_text
 translator = google_translator()
 trans = DeepTranslit('telugu').transliterate
 all_attributes = []
+month_names = {
+    'February': 'ఫిబ్రవరి', 'December': 'డిసెంబర్', 'May': 'మే', 'October': 'అక్టోబర్', 
+    'January': 'జనవరి', 'November': 'నవంబర్', 'April': 'ఏప్రిల్', 'March': 'మార్చి', 
+    'September': 'సెప్టెంబర్', 'June': 'జూన్', 'August': 'ఆగస్టు', 'July': 'జూలై'
+}
 
 bat_stat_order = {
     "Mat": 1,
@@ -680,31 +685,97 @@ def did_retire(span):
     except:
         return False
     
+def change_abbr(h):
+    alpha = {
+        "A":"ఏ",      
+        "B":"బీ",
+        "C":"సీ",  
+        "D":"డీ",
+        "E":"ఈ",
+        "F":"ఎఫ్",
+        "G":"జీ",
+        "H":"హెచ్",
+        "I":"ఐ",
+        "J":"జే",       
+        "K":"కే",
+        "L":"ఎల్",
+        "M":"ఎం",
+        "N":"ఎన్",
+        "O":"ఓ",
+        "P":"పీ",
+        "Q":"క్యూ",
+        "R":"ఆర్",   
+        "S":"ఎస్",
+        "T":"టీ",
+        "U":"యూ",
+        "V":"వీ",
+        "W":"డబల్యూ",
+        "X":"ఎక్స్",
+        "Y":"వై",
+        "Z":"జెడ్"
+    }
+    return ''.join([alpha[i] + '.' for i in h])[:-1]
+
+def get_token_translation(token):
+    non_alphas = {
+        "QuettaR": 'క్వెట్టా',
+        "NAM": 'నమీబియా',
+        "AFG": 'ఆఫ్ఘనిస్తాన్',
+        "GER": 'జర్మనీ',
+        "BDESH": 'బంగ్లాదేశ్',
+        'World-XI': 'వరల్డ్-XI',
+        'C&C': 'సీ&సీ',
+        'T&T': 'టీ&టీ',
+        'XI': 'XI',
+        'UCB-BCB': change_abbr('UCB') + '-' + change_abbr('BCB'),
+        'SL': 'శ్రీలంక',
+        'PAK': 'పాకిస్తాన్',
+        'USA': 'యునైటెడ్ స్టేట్స్ ఆఫ్ అమెరికా',
+        'UAE': 'యునైటెడ్ అరబ్ ఎమిరేట్స్',
+        'ENG': 'ఇంగ్లాండ్',
+        'PNG': 'పాపువా న్యూ గిని',
+        'LIONS': 'లయన్స్',
+        'NZ': 'న్యూజీలాండ్',
+        'PNJB': 'పంజాబ్',
+        'OMAN': 'ఒమన్',
+        'HKG': 'హాంగ్ కొంగ',
+        'WI': 'వెస్ట్ ఇండీస్',
+        'AUS': 'ఆస్ట్రేలియా',
+        'SA': 'దక్షిణ ఆఫ్రికా',
+        'BIHAR': 'బిహార్',
+        'IND': 'ఇండియా'
+    }
+    if token in non_alphas.keys():
+        return non_alphas[token]
+    return change_abbr(token)
+
 def get_debut_string(deb):
-    # print(deb)
+    global month_names
     if not is_valid_string(deb) or deb == None or pd.isnull(deb):
         return ''
-    deb = deb.replace("vs", "versus")
-    deb = deb.replace("Vs", "versus")
-    deb = deb.replace("vS", "versus")
-    deb = deb.replace("VS", "versus")
+    deb = deb.replace(" vs ", " versus ")
+    months_in_deb = [month for month in month_names.keys() if month in deb]
+    for month in months_in_deb:
+        deb = deb.replace(month, month_names[month])
+    tokens = deb.split(" ")
+    for j in range(len(tokens)):
+        tok = tokens[j]
+        if len(tok) > 0 and tok[-1] >= 'A' and tok[-1] <= 'Z':
+            tokens[j] = get_token_translation(tok)
+    deb = ' '.join(tokens)
     occ = deb.find(" at ")
     if occ == -1:
         return getTransliteratedDescription(deb)
     deb = deb[:occ] + ', ' + deb[occ:]
     occ = deb.find(" at ")
-    occ2 = deb.find("-")
+    occ2 = deb[occ:].find(" - ") + occ
     if occ2 == -1:
         occ2 = len(deb)
     curr_sub = deb[occ:occ2]
-    # print(curr_sub)
     tokens = curr_sub.split(' ')
-    tokens.append('lo ')
+    tokens.append('లో ')
     deb = deb.replace(curr_sub, ' '.join(tokens[2:]))
-    partition = deb.find('lo ')
-    partition += 3
-    return getTransliteratedDescription(deb[:partition]) + getTranslatedDescription(deb[partition:])
-
+    return getTransliteratedDescription(deb)
 
 def getData(row):
     batting_format_names, batting_stat_names, batting_details = get_batting_info(row)
@@ -832,7 +903,7 @@ def main():
         cricket_players_DF.fillna(value="nan", inplace=True)
         ids = cricket_players_DF.Cricinfo_id.tolist()
         all_attributes = cricket_players_DF.columns.tolist()
-        ids = [54950]
+        ids = [253802]
         with open('life.txt', 'w') as fobj:
             for i, cricketer_id in enumerate(ids):
                 required_player = cricket_players_DF.loc[cricket_players_DF['Cricinfo_id']==cricketer_id]
