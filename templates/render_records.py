@@ -22,6 +22,7 @@ def getData(row):
 	t20i_records = row.t20i_records_telugu.values[0]
 	gender = row.Gender.values[0]
 	references = ast.literal_eval(row.References.values[0])
+	awards = row.awards_telugu.values[0]
 
 
 	if(all_records !='[]'):
@@ -51,6 +52,12 @@ def getData(row):
 		except:
 			t20i_records = ast.literal_eval(row.t20i_records.values[0])
 
+	if(awards != 'nan'):
+		try:
+			awards = awards.split(',,')
+		except:
+			awards = ast.literal_eval(row.AWARDS.values[0])
+
 
 	# Data dictionary 
 	data = {
@@ -61,6 +68,7 @@ def getData(row):
 		'odi_records': odi_records,
 		't20i_records': t20i_records,
 		'gender': gender,
+		'awards': awards,
 		'references': references
 	  }
 
