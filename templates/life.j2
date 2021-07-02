@@ -31,22 +31,22 @@
     {%- endif -%}
     {{- "\n" -}}
     {%- if is_valid_string(first_class_debut) -%}
-        {{- '* ఫస్ట్ క్లాస్ కెరీర్‌లో ' ~ gender_pronoun_2 ~ ' తొలి మ్యాచ్: ' ~ get_debut_string(first_class_debut) ~ '.' ~ "\n" -}}
+        {{- '* ఫస్ట్ క్లాస్ కెరీర్‌లో ' ~ gender_pronoun_2 ~ ' తొలి మ్యాచ్: ' ~ first_class_debut ~ '.' ~ "\n" -}}
     {%- endif -%}
     {%- if is_valid_string(listA_debut) -%}
-        {{- '* లిస్ట్ ఏ కెరీర్ లో ' ~ gender_pronoun_2 ~ ' తొలి మ్యాచ్: ' ~ get_debut_string(listA_debut) ~ '.' ~ "\n" -}}
+        {{- '* లిస్ట్ ఏ కెరీర్ లో ' ~ gender_pronoun_2 ~ ' తొలి మ్యాచ్: ' ~ listA_debut ~ '.' ~ "\n" -}}
     {%- endif -%}
     {%- if is_valid_string(T20_debut) -%}
-        {{- '* టీ20 లో ' ~ gender_pronoun_2 ~ ' తొలి మ్యాచ్: ' ~ get_debut_string(T20_debut) ~ '.' ~ "\n" -}}
+        {{- '* టీ20 లో ' ~ gender_pronoun_2 ~ ' తొలి మ్యాచ్: ' ~ T20_debut ~ '.' ~ "\n" -}}
     {%- endif -%}
     {%- if is_valid_string(T20I_debut) -%}
-        {{- '* టీ20 అంతర్జాతీయ మ్యాచ్‌ల్లో ' ~ gender_pronoun_2 ~ ' తొలి మ్యాచ్: ' ~ get_debut_string(T20I_debut) ~ '.' ~ "\n" -}}
+        {{- '* టీ20 అంతర్జాతీయ మ్యాచ్‌ల్లో ' ~ gender_pronoun_2 ~ ' తొలి మ్యాచ్: ' ~ T20I_debut ~ '.' ~ "\n" -}}
     {%- endif -%}
     {%- if is_valid_string(ODI_debut) -%}
-        {{- '* వన్డే ఇంటర్నేషనల్‌లో ' ~ gender_pronoun_2 ~ ' తొలి మ్యాచ్: ' ~ get_debut_string(ODI_debut) ~ '.' ~ "\n" -}}
+        {{- '* వన్డే ఇంటర్నేషనల్‌లో ' ~ gender_pronoun_2 ~ ' తొలి మ్యాచ్: ' ~ ODI_debut ~ '.' ~ "\n" -}}
     {%- endif -%}
     {%- if is_valid_string(test_debut) -%}
-        {{- '* టెస్ట్ క్రికెట్‌లో ' ~ gender_pronoun_2 ~ ' తొలి మ్యాచ్: ' ~ get_debut_string(test_debut) ~ '.' ~ "\n" -}}
+        {{- '* టెస్ట్ క్రికెట్‌లో ' ~ gender_pronoun_2 ~ ' తొలి మ్యాచ్: ' ~ test_debut ~ '.' ~ "\n" -}}
     {%- endif -%}
 {%- endmacro -%}
 
@@ -65,7 +65,7 @@
         {%- set play2 = "వహిస్తుంది" -%}
     {%- endif -%}
     {%- if is_valid_string(player_role) -%}
-        {{- player_name ~ ' ఒక ' ~ get_role(player_role) ~ '. ' -}} 
+        {{- player_name ~ ' ఒక ' ~ player_role ~ '. ' -}} 
     {%- endif -%}
     {%- if is_valid_string(nationality) -%}
         {{- [
@@ -76,13 +76,13 @@
     {%- if teams |length > 0 -%}
         {%- if ',' in teams -%}
             {{- [
-                    gender_pronoun_1 ~ ' ' ~ get_teams_string(teams) ~ ' వంటి వివిధ జట్ల కోసం ' ~ play ~ '. ',
-                    gender_pronoun_1 ~ ' ' ~ get_teams_string(teams) ~ ' వంటి వివిధ జట్లకు ప్రాతినిధ్యం ' ~ play2 ~ '. '
+                    gender_pronoun_1 ~ ' ' ~ teams ~ ' వంటి వివిధ జట్ల కోసం ' ~ play ~ '. ',
+                    gender_pronoun_1 ~ ' ' ~ teams ~ ' వంటి వివిధ జట్లకు ప్రాతినిధ్యం ' ~ play2 ~ '. '
                 ] |random -}}
         {%- else -%}
             {{- [
-                    gender_pronoun_1 ~ ' ' ~ get_teams_string(teams) ~ ' జట్టు కోసం ' ~ play ~ '. ',
-                    gender_pronoun_1 ~ ' ' ~ get_teams_string(teams) ~ ' జట్టుకు ప్రాతినిధ్యం ' ~ play2 ~ '. '
+                    gender_pronoun_1 ~ ' ' ~ teams ~ ' జట్టు కోసం ' ~ play ~ '. ',
+                    gender_pronoun_1 ~ ' ' ~ teams ~ ' జట్టుకు ప్రాతినిధ్యం ' ~ play2 ~ '. '
                 ] |random -}}
         {%- endif -%}
     {%- endif -%}
@@ -233,15 +233,15 @@
 {%- macro trophy_description(player_name, major_trophy_and_championship_names) -%}
     {%- if major_trophy_and_championship_names |length > 0 -%}
         {{- "\n" -}}
-        {%- if major_trophy_and_championship_names |length == 1 -%}
+        {%- if not ',' in major_trophy_and_championship_names -%}
             {{- [
-                    player_name ~ ' ' ~ get_trophy_names_list(major_trophy_and_championship_names) ~ ' లో ' ~ has_played ~ '.' ~ "\n",
-                    'తన కెరీర్ లో ' ~ player_name ~ ' ' ~ get_trophy_names_list(major_trophy_and_championship_names) ~ ' లో ' ~ has_played ~ '.' ~ "\n"
+                    player_name ~ ' ' ~ major_trophy_and_championship_names ~ ' లో ' ~ has_played ~ '.' ~ "\n",
+                    'తన కెరీర్ లో ' ~ player_name ~ ' ' ~ major_trophy_and_championship_names ~ ' లో ' ~ has_played ~ '.' ~ "\n"
                 ] |random -}}
         {%- else -%}
             {{- [
-                    player_name ~ ' ' ~ get_trophy_names_list(major_trophy_and_championship_names) ~ ' వంటి ప్రధాన క్రికెట్ ట్రోఫీలు, ఛాంపియన్‌షిప్‌లలో ' ~ has_played ~ '.' ~ "\n",
-                    'తన కెరీర్ లో ' ~ player_name ~ ' ' ~ get_trophy_names_list(major_trophy_and_championship_names) ~ ' వంటి ప్రధాన క్రికెట్ ట్రోఫీల్లో ' ~ has_played ~ '.' ~ "\n"
+                    player_name ~ ' ' ~ major_trophy_and_championship_names ~ ' వంటి ప్రధాన క్రికెట్ ట్రోఫీలు, ఛాంపియన్‌షిప్‌లలో ' ~ has_played ~ '.' ~ "\n",
+                    'తన కెరీర్ లో ' ~ player_name ~ ' ' ~ major_trophy_and_championship_names ~ ' వంటి ప్రధాన క్రికెట్ ట్రోఫీల్లో ' ~ has_played ~ '.' ~ "\n"
                 ] |random -}}        
         {%- endif -%}
     {%- endif -%}
@@ -262,7 +262,7 @@
 {{ career_intro(player_name, player_role, nationality, teams, jersey_number, has_retired, all_ref) }}
 
 {%- set is_primary_bowler = "Bowl" in player_role -%}
-{%- set is_primary_wicketkeeper = player_role == "Wicketkeeper" -%}
+{%- set is_primary_wicketkeeper = player_role == "వికెట్ కీపర్" -%}
 
 {%- if is_primary_bowler -%}
     {{- bowling_description(player_name, sum_bowling_matches, sum_bowling_innings, sum_bowling_balls, sum_wickets, test_bowling_average,

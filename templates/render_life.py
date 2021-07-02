@@ -15,8 +15,8 @@ translator = google_translator()
 trans = DeepTranslit('telugu').transliterate
 all_attributes = []
 month_names = {
-    'February': 'ఫిబ్రవరి', 'December': 'డిసెంబర్', 'May': 'మే', 'October': 'అక్టోబర్', 
-    'January': 'జనవరి', 'November': 'నవంబర్', 'April': 'ఏప్రిల్', 'March': 'మార్చి', 
+    'February': 'ఫిబ్రవరి', 'December': 'డిసెంబర్', 'May': 'మే', 'October': 'అక్టోబర్',
+    'January': 'జనవరి', 'November': 'నవంబర్', 'April': 'ఏప్రిల్', 'March': 'మార్చి',
     'September': 'సెప్టెంబర్', 'June': 'జూన్', 'August': 'ఆగస్టు', 'July': 'జూలై'
 }
 
@@ -55,16 +55,16 @@ bowl_stat_order = {
 
 translated_names = {
     'rn': "పరుగులు",
-    'bta': "సగటు బ్యాటింగ్ స్కోరు", 
-    'st': "స్టంపింగ్స్", 
-    'fw': "ఐదు వికెట్ మ్యాచ్‌లు", 
-    'mt': "మ్యాచ్‌లు", 
-    'bbi': "ఉత్తమ బౌలింగ్ ఇన్నింగ్స్", 
-    'hs': "అత్యధిక స్కోరు", 
-    'wk': "వికెట్లు", 
-    'ct': "క్యాచ్‌లు", 
-    'bwa': "సగటు బౌలింగ్ స్కోరు", 
-    'sp': "వ్యవధి", 
+    'bta': "సగటు బ్యాటింగ్ స్కోరు",
+    'st': "స్టంపింగ్స్",
+    'fw': "ఐదు వికెట్ మ్యాచ్‌లు",
+    'mt': "మ్యాచ్‌లు",
+    'bbi': "ఉత్తమ బౌలింగ్ ఇన్నింగ్స్",
+    'hs': "అత్యధిక స్కోరు",
+    'wk': "వికెట్లు",
+    'ct': "క్యాచ్‌లు",
+    'bwa': "సగటు బౌలింగ్ స్కోరు",
+    'sp': "వ్యవధి",
     "Mat": "మ్యాచ్‌లు",
     "Inns": "ఇన్నింగ్స్",
     "NO": "నాట్-అవుట్స్",
@@ -96,12 +96,14 @@ translated_names = {
     "T20I": "అంతర్జాతీయ టీ20",
     "FC": "ఫస్ట్ క్లాస్",
     "List A": "లిస్ట్ ఏ"
-}    
+}
+
 
 def is_valid_string(attribute_value):
-    if not isinstance(attribute_value, str):
+    if not isinstance(attribute_value, str) and not isinstance(attribute_value, float) and not isinstance(attribute_value, type(None)):
         return True
     return not (attribute_value == None or pd.isnull(attribute_value) or str(attribute_value) == "" or str(attribute_value) == "nan")
+
 
 def getTransliteratedDescription(description):
     try:
@@ -115,6 +117,7 @@ def getTransliteratedDescription(description):
         except:
             pass
     return description
+
 
 def getTranslatedDescription(description):
     global translator
@@ -134,72 +137,75 @@ def getTranslatedDescription(description):
             except:
                 return description
 
+
 def get_trophy_name(description):
     if not is_valid_string(description) or description == None or pd.isnull(description):
         return ''
     trophy_translations = {
-        "Basil D'Oliveira": "బాసిల్ డి'ఒలివెరా", 
-        'World Cup': 'ప్రపంచ కప్', 
-        'ICC World Test Champ': 'ఐసిసి ప్రపంచ టెస్ట్ ఛాంపియన్‌షిప్', 
-        'Frank Worrell Trophy': 'ఫ్రాంక్ వొరెల్ ట్రోఫీ', 
-        'Border-Gavaskar': 'బోర్డర్-గవాస్కర్ ట్రోఫీ', 
-        "Men's T20 World Cup": 'టీ20 ప్రపంచ కప్', 
-        'The Ashes': 'ది యాషెస్', 
-        'World Cup Qualifier': 'ప్రపంచ కప్ క్వాలిఫైయర్', 
-        'Chappell-Hadlee': 'చాపెల్-హాడ్లీ', 
-        'Trans-Tasman Trophy': 'ట్రాన్స్-టాస్మాన్ ట్రోఫీ', 
-        'WCL Championship': 'ప్రపంచ క్రికెట్ లీగ్ ఛాంపియన్‌షిప్', 
-        'ICC Champions Trophy': 'ఐసిసి ఛాంపియన్స్ ట్రోఫీ', 
-        'The Wisden Trophy': 'ది విస్డెన్ ట్రోఫీ', 
-        'Asia Cup': 'ఆసియా కప్'       
+        "Basil D'Oliveira": "బాసిల్ డి'ఒలివెరా",
+        'World Cup': '[[ప్రపంచ కప్]]',
+        'ICC World Test Champ': 'ఐసిసి ప్రపంచ టెస్ట్ ఛాంపియన్‌షిప్',
+        'Frank Worrell Trophy': 'ఫ్రాంక్ వొరెల్ ట్రోఫీ',
+        'Border-Gavaskar': 'బోర్డర్-గవాస్కర్ ట్రోఫీ',
+        "Men's T20 World Cup": 'టీ20 ప్రపంచ కప్',
+        'The Ashes': 'ది యాషెస్',
+        'World Cup Qualifier': 'ప్రపంచ కప్ క్వాలిఫైయర్',
+        'Chappell-Hadlee': 'చాపెల్-హాడ్లీ',
+        'Trans-Tasman Trophy': 'ట్రాన్స్-టాస్మాన్ ట్రోఫీ',
+        'WCL Championship': 'ప్రపంచ క్రికెట్ లీగ్ ఛాంపియన్‌షిప్',
+        'ICC Champions Trophy': 'ఐసిసి ఛాంపియన్స్ ట్రోఫీ',
+        'The Wisden Trophy': 'ది విస్డెన్ ట్రోఫీ',
+        'Asia Cup': 'ఆసియా కప్',
+        "ICC Women's Champ": 'ఐసిసి విమెన్స్ ఛాంపియన్షిప్',
+        "ICC Women's World Cu": 'ఐసిసి విమెన్స్ ప్రపంచ కప్',
+        'Rose Bowl': 'రోజ్ బౌల్'
     }
-    if not description in trophy_translations.keys():
-        return getTransliteratedDescription(description)
     return trophy_translations[description]
+
 
 def get_nationality(nation):
     nation = nation.strip()
     nations = {
-        'Pakistan': 'పాకిస్తాన్', 
-        'Japan': 'జపాన్', 
-        'Canada': 'కెనడా', 
-        'India': 'భారతదేశం', 
-        'Belgium': 'బెల్జియం', 
-        'P.N.G.': 'పాపువా న్యూ గిని', 
-        'Oman': 'ఒమన్', 
-        'Austria': 'ఆస్ట్రియా', 
-        'West Indies': 'వెస్ట్ ఇండీస్', 
-        'Kuwait': 'కువైట్', 
-        'E&C Africa': 'ఇ & సి ఆఫ్రికా', 
-        'Bermuda': 'బెర్ముడా', 
-        'Fiji': 'ఫిజి', 
-        'Chile': 'చిలీ', 
-        'Denmark': 'డెన్మార్క్', 
-        'Malaysia': 'మలేషియా', 
-        'Bangladesh': 'బంగ్లాదేశ్', 
-        'Germany': 'జర్మనీ', 
-        'U.A.E.': 'యునైటెడ్ అరబ్ ఎమిరేట్స్', 
-        'Hong Kong': 'హాంగ్ కొంగ', 
+        'Pakistan': 'పాకిస్తాన్',
+        'Japan': 'జపాన్',
+        'Canada': 'కెనడా',
+        'India': 'భారతదేశం',
+        'Belgium': 'బెల్జియం',
+        'P.N.G.': 'పాపువా న్యూ గిని',
+        'Oman': 'ఒమన్',
+        'Austria': 'ఆస్ట్రియా',
+        'West Indies': 'వెస్ట్ ఇండీస్',
+        'Kuwait': 'కువైట్',
+        'E&C Africa': 'ఇ & సి ఆఫ్రికా',
+        'Bermuda': 'బెర్ముడా',
+        'Fiji': 'ఫిజి',
+        'Chile': 'చిలీ',
+        'Denmark': 'డెన్మార్క్',
+        'Malaysia': 'మలేషియా',
+        'Bangladesh': 'బంగ్లాదేశ్',
+        'Germany': 'జర్మనీ',
+        'U.A.E.': 'యునైటెడ్ అరబ్ ఎమిరేట్స్',
+        'Hong Kong': 'హాంగ్ కొంగ',
         'Malta': 'మాల్టా',
-        'Zimbabwe': 'జింబాబ్వే', 
-        'Scotland': 'స్కాట్లాండ్', 
-        'Singapore': 'సింగపూర్', 
-        'Sri Lanka': 'శ్రీలంక', 
-        'England': 'ఇంగ్లాండ్', 
-        'Gibraltar': 'గిబ్రాల్టర్', 
-        'Argentina': 'అర్జెంటీనా', 
-        'Uganda': 'ఉగాండా', 
-        'Italy': 'ఇటలీ', 
-        'Kenya': 'కెన్యా', 
-        'Nepal': 'నేపాల్', 
-        'Netherlands': 'నెదర్లాండ్స్', 
-        'South Africa': 'దక్షిణ ఆఫ్రికా', 
-        'Ireland': 'ఐర్లాండ్', 
-        'U.S.A.': 'యునైటెడ్ స్టేట్స్ ఆఫ్ అమెరికా', 
-        'Afghanistan': 'ఆఫ్ఘనిస్తాన్', 
-        'Cayman Is': 'కేమెన్ ఐలాండ్స్', 
-        'New Zealand': 'న్యూజీలాండ్', 
-        'Namibia': 'నమీబియా', 
+        'Zimbabwe': 'జింబాబ్వే',
+        'Scotland': 'స్కాట్లాండ్',
+        'Singapore': 'సింగపూర్',
+        'Sri Lanka': 'శ్రీలంక',
+        'England': 'ఇంగ్లాండ్',
+        'Gibraltar': 'గిబ్రాల్టర్',
+        'Argentina': 'అర్జెంటీనా',
+        'Uganda': 'ఉగాండా',
+        'Italy': 'ఇటలీ',
+        'Kenya': 'కెన్యా',
+        'Nepal': 'నేపాల్',
+        'Netherlands': 'నెదర్లాండ్స్',
+        'South Africa': 'దక్షిణ ఆఫ్రికా',
+        'Ireland': 'ఐర్లాండ్',
+        'U.S.A.': 'యునైటెడ్ స్టేట్స్ ఆఫ్ అమెరికా',
+        'Afghanistan': 'ఆఫ్ఘనిస్తాన్',
+        'Cayman Is': 'కేమెన్ ఐలాండ్స్',
+        'New Zealand': 'న్యూజీలాండ్',
+        'Namibia': 'నమీబియా',
         'Australia': 'ఆస్ట్రేలియా'
     }
     if not nation in nations.keys():
@@ -212,11 +218,9 @@ def get_trophy_names_list(given_trophy_list):
         return ''
     trophy_list = list(given_trophy_list)
     for i in range(len(trophy_list)):
-        if trophy_list[i] == 'World Cup':
-            trophy_list[i] = '[[' + get_trophy_name(trophy_list[i]) + ']]'
-        else:
-            trophy_list[i] = get_trophy_name(trophy_list[i])
+        trophy_list[i] = get_trophy_name(trophy_list[i])
     return ', '.join(trophy_list)
+
 
 def get_matches_ref(all_ref, player_name):
     if not is_valid_string(all_ref):
@@ -225,7 +229,8 @@ def get_matches_ref(all_ref, player_name):
     if len(required_ref) == 0:
         return ''
     return "<ref>[" + required_ref[0] + " " + player_name.strip() + " మ్యాచ్‌లు]</ref>"
-    
+
+
 def get_stats_ref(all_ref, player_name):
     if not is_valid_string(all_ref):
         return ''
@@ -233,7 +238,8 @@ def get_stats_ref(all_ref, player_name):
     if len(required_ref) == 0:
         return ''
     return "<ref>[" + required_ref[0] + " " + player_name.strip() + " గణాంకాలు]</ref>"
-    
+
+
 def stat_value(attribute_name, attribute_value):
     if not is_valid_string(attribute_value) or attribute_value == None or pd.isnull(attribute_value):
         return "-"
@@ -243,61 +249,68 @@ def stat_value(attribute_name, attribute_value):
         return "-"
     return attribute_value
 
+
 def bat_comparator(a, b):
     global bat_stat_order
     if bat_stat_order[a] > bat_stat_order[b]:
         return 1
     return -1
-    
+
+
 def get_bat_atts_sorted(bat_stats_list):
     return sorted(bat_stats_list, key=cmp_to_key(bat_comparator))
+
 
 def bowl_comparator(a, b):
     global bowl_stat_order
     if bowl_stat_order[a] > bowl_stat_order[b]:
         return 1
     return -1
-    
+
+
 def get_bowl_atts_sorted(bowl_stats_list):
-    return sorted(bowl_stats_list, key=cmp_to_key(bowl_comparator))   
-    
+    # print(bowl_stats_list)
+    return sorted(bowl_stats_list, key=cmp_to_key(bowl_comparator))
+
+
 def print_names(li):
     return (li)
+
 
 def get_teams_string(teams_list):
     if not is_valid_string(teams_list) or teams_list == None or pd.isnull(teams_list):
         return ''
     actual_list = ast.literal_eval(teams_list)
     capitals = {
-        'Super 3s': 'సూపర్ ౩స్', 'SC': 'ఎస్.సీ.', 'Glamorgan 2nd': 'గ్లమోర్గన్ 2న్ద్', 
-        'HBS': 'హెచ్.బీ.ఎస్.', 'BCCSL': 'బీ.సీ.సీ.ఎస్.ఎల్.', 'Leicestershire 2nd': 'లీసెస్టర్షైర్ 2న్ద్', 
-        'CH': 'సీ.హెచ్.', 'ECB': 'ఇ.సీ.బీ.', 'C': 'సీ.', 'Warwickshire 2nd': 'వార్విక్షైర్ 2న్ద్', 
-        'UWI': 'యూ.డబల్యూ.ఐ.', 'PINT': 'పి.ఐ.ఎన్.టి.', 'Surrey 2nd': 'సర్రే 2న్ద్', 
-        'NZCPA': 'ఎన్.జీ.సీ.పి.ఏ.', 'Lancashire 2nd': 'లాంక్షైర్ 2న్ద్', 
-        'Essex 2nd': 'ఎస్సెక్స్ 2న్ద్', 'BCB': 'బీ.సీ.బీ.', '1': '1', 
-        'Somerset 2nd': 'సోమర్సెట్ 2న్ద్', 'DVS': 'డి.వీ.ఎస్.', 'XI': 'XI', 
-        'Kent 2nd': 'కెంట్ 2న్ద్', "Men's 1": "మెన్'స్ 1", 'KNCB': 'కె.ఎన్.సీ.బీ.', 
-        'CA': 'సీ.ఏ.', 'MCA': 'ఎం.సీ.ఏ.', 'VII': 'VII', 'Patriots 1': 'పేట్రియాట్స్ 1', '19': '19', 
-        'AJ': 'ఏ.జె.', 'BCA': 'బీ.సీ.ఏ.', 'HCC': 'హెచ్.సీ.సీ.', 'PCA': 'పి.సీ.ఏ.', 'TN': 'టి.ఎన్.', 
-        'P': 'పి.', 'UCB-BCB': 'యూ.సీ.బీ.-బీ.సీ.బీ.', 'RR': 'ఆర్.ఆర్.', 'Sussex 2nd': 'సస్సెక్స్ 2న్ద్', 
-        'MAF': 'ఎం.ఏ.ఎఫ్.', 'ICBT': 'ఐ.సీ.బీ.టి.', 'DS': 'డి.ఎస్.', 'World-XI': 'వరల్డ్-XI', 'ICL': 'ఐ.సీ.ఎల్.', 
-        'Worcestershire 2nd': 'వోర్సెస్టర్షైర్ 2న్ద్', 'XII': 'XII', 'DH': 'డి.హెచ్.', 'VRA': 'వీ.ఆర్.ఏ.', 
-        'ICC': 'ఐసీసీ', 'Under-17': 'అండర్ -17', 'VOC': 'వీ.ఓ.సీ.', 'NCA': 'ఎన్.సీ.ఏ.', 
-        'MCCU': 'ఎం.సీ.సీ.యూ.', 'IV': 'IV', 'MV': 'ఎం.వీ.', 'Durham 2nd': 'డర్హామ్ 2న్ద్', 'B': 'బీ', 
-        'RCA': 'ఆర్.సీ.ఏ.', 'KSCA': 'కె.ఎస్.సీ.ఏ.', 'Northern 2nd': 'నార్తర్న్ 2న్ద్', 'WICB': 'డబల్యూ.ఐ.సీ.బీ.', 
-        'FATA': 'ఎఫ్.ఏ.టి.ఏ.', 'DY': 'డి.వై.', 'TNCA': 'టి.ఎన్.సీ.ఏ.', 'NCU': 'ఎన్.సీ.యూ.', 'S': 'ఎస్.', 
-        'CPL': 'సీ.పి.ఎల్.', 'YMCA': 'వై.ఎం.సీ.ఏ.', 'Yorkshire 2nd': 'యార్క్షైర్ 2న్ద్', 'T20': 'టి20', 'PJ': 'పి.జె.', 
-        'Patriots 2': 'పేట్రియాట్స్ 2', 'UCCE': 'యూ.సీ.సీ.ఇ.', 'Middlesex 2nd': 'మిడిల్‌సెక్స్ 2న్ద్', 'Under-23': 'అండర్-23', 
-        'D.A.V': 'డి.ఏ.వీ.', 'HDG': 'హెచ్.డి.జీ.', 'CC': 'సీ.సీ.', 'MAS': 'ఎం.ఏ.ఎస్.', 'ACB': 'ఏ.సీ.బీ.', 'UAE': 'యూ.ఏ.ఇ.', 
-        'Under 19': 'అండర్ 19', '2': '2', 'MC': 'ఎం.సీ.', 'AJK': 'ఏ.జె.కె.', 'CI': 'సీ.ఐ.', 'TUKS': 'టి.యూ.కె.ఎస్.', 
-        'Pakhtunkhwa 2nd': 'పఖ్తున్ఖ్వా 2న్ద్', 'Sindh 2nd': 'సింధ్ 2న్ద్', 'DOHS': 'డి.ఓ.హెచ్.ఎస్.', 'TUTI': 'టి.యూ.టి.ఐ.', 
-        'Gloucestershire 2nd': 'గ్లౌసెస్టర్షైర్ 2న్ద్', 'Hampshire 2nd': 'హాంప్‌షైర్ 2న్ద్', 'D': 'డి.', 'Derbyshire 2nd': 'డెర్బీషైర్ 2న్ద్', 
-        'MCCU 2nd': 'ఎం.సీ.సీ.యూ. 2న్ద్', 'A': 'ఏ.', 'VB': 'వీ.బీ.', 'Nottinghamshire 2nd': 'నాటింగ్హామ్షైర్ 2న్ద్', 
-        'Northamptonshire 2nd': 'నార్తాంప్టన్షైర్ 2న్ద్', 'KZKC': 'కె.జీ.కె.సీ.', 'DJ': 'డి.జె.', 
-        'Under-11s': 'అండర్ -11స్', 'Under-22s': 'అండర్ -22స్', 'Under-17s': 'అండర్ -17స్', 'Under': 'అండర్', 
-        'Under-15s': 'అండర్ -15స్', 'Under-25s': 'అండర్ -25స్', 'Under-20s': 'అండర్ -20స్', 'Under-21s': 'అండర్ -21స్', 
-        'Under-13s': 'అండర్ -13స్', 'Under-14s': 'అండర్ -14స్', 'Under-18s': 'అండర్ -18స్', 'Under-24s': 'అండర్ -24స్', 
-        'Under-19s': 'అండర్ -19స్', 'Under-16s': 'అండర్ -16స్', 'Under-23s': 'అండర్ -23స్' 
+        'Super 3s': 'సూపర్ ౩స్', 'SC': 'ఎస్.సీ.', 'Glamorgan 2nd': 'గ్లమోర్గన్ 2న్ద్',
+        'HBS': 'హెచ్.బీ.ఎస్.', 'BCCSL': 'బీ.సీ.సీ.ఎస్.ఎల్.', 'Leicestershire 2nd': 'లీసెస్టర్షైర్ 2న్ద్',
+        'CH': 'సీ.హెచ్.', 'ECB': 'ఇ.సీ.బీ.', 'C': 'సీ.', 'Warwickshire 2nd': 'వార్విక్షైర్ 2న్ద్',
+        'UWI': 'యూ.డబల్యూ.ఐ.', 'PINT': 'పి.ఐ.ఎన్.టి.', 'Surrey 2nd': 'సర్రే 2న్ద్',
+        'NZCPA': 'ఎన్.జీ.సీ.పి.ఏ.', 'Lancashire 2nd': 'లాంక్షైర్ 2న్ద్',
+        'Essex 2nd': 'ఎస్సెక్స్ 2న్ద్', 'BCB': 'బీ.సీ.బీ.', '1': '1',
+        'Somerset 2nd': 'సోమర్సెట్ 2న్ద్', 'DVS': 'డి.వీ.ఎస్.', 'XI': 'XI',
+        'Kent 2nd': 'కెంట్ 2న్ద్', "Men's 1": "మెన్'స్ 1", 'KNCB': 'కె.ఎన్.సీ.బీ.',
+        'CA': 'సీ.ఏ.', 'MCA': 'ఎం.సీ.ఏ.', 'VII': 'VII', 'Patriots 1': 'పేట్రియాట్స్ 1', '19': '19',
+        'AJ': 'ఏ.జె.', 'BCA': 'బీ.సీ.ఏ.', 'HCC': 'హెచ్.సీ.సీ.', 'PCA': 'పి.సీ.ఏ.', 'TN': 'టి.ఎన్.',
+        'P': 'పి.', 'UCB-BCB': 'యూ.సీ.బీ.-బీ.సీ.బీ.', 'RR': 'ఆర్.ఆర్.', 'Sussex 2nd': 'సస్సెక్స్ 2న్ద్',
+        'MAF': 'ఎం.ఏ.ఎఫ్.', 'ICBT': 'ఐ.సీ.బీ.టి.', 'DS': 'డి.ఎస్.', 'World-XI': 'వరల్డ్-XI', 'ICL': 'ఐ.సీ.ఎల్.',
+        'Worcestershire 2nd': 'వోర్సెస్టర్షైర్ 2న్ద్', 'XII': 'XII', 'DH': 'డి.హెచ్.', 'VRA': 'వీ.ఆర్.ఏ.',
+        'ICC': 'ఐసీసీ', 'Under-17': 'అండర్ -17', 'VOC': 'వీ.ఓ.సీ.', 'NCA': 'ఎన్.సీ.ఏ.',
+        'MCCU': 'ఎం.సీ.సీ.యూ.', 'IV': 'IV', 'MV': 'ఎం.వీ.', 'Durham 2nd': 'డర్హామ్ 2న్ద్', 'B': 'బీ',
+        'RCA': 'ఆర్.సీ.ఏ.', 'KSCA': 'కె.ఎస్.సీ.ఏ.', 'Northern 2nd': 'నార్తర్న్ 2న్ద్', 'WICB': 'డబల్యూ.ఐ.సీ.బీ.',
+        'FATA': 'ఎఫ్.ఏ.టి.ఏ.', 'DY': 'డి.వై.', 'TNCA': 'టి.ఎన్.సీ.ఏ.', 'NCU': 'ఎన్.సీ.యూ.', 'S': 'ఎస్.',
+        'CPL': 'సీ.పి.ఎల్.', 'YMCA': 'వై.ఎం.సీ.ఏ.', 'Yorkshire 2nd': 'యార్క్షైర్ 2న్ద్', 'T20': 'టి20', 'PJ': 'పి.జె.',
+        'Patriots 2': 'పేట్రియాట్స్ 2', 'UCCE': 'యూ.సీ.సీ.ఇ.', 'Middlesex 2nd': 'మిడిల్‌సెక్స్ 2న్ద్', 'Under-23': 'అండర్-23',
+        'D.A.V': 'డి.ఏ.వీ.', 'HDG': 'హెచ్.డి.జీ.', 'CC': 'సీ.సీ.', 'MAS': 'ఎం.ఏ.ఎస్.', 'ACB': 'ఏ.సీ.బీ.', 'UAE': 'యూ.ఏ.ఇ.',
+        'Under 19': 'అండర్ 19', '2': '2', 'MC': 'ఎం.సీ.', 'AJK': 'ఏ.జె.కె.', 'CI': 'సీ.ఐ.', 'TUKS': 'టి.యూ.కె.ఎస్.',
+        'Pakhtunkhwa 2nd': 'పఖ్తున్ఖ్వా 2న్ద్', 'Sindh 2nd': 'సింధ్ 2న్ద్', 'DOHS': 'డి.ఓ.హెచ్.ఎస్.', 'TUTI': 'టి.యూ.టి.ఐ.',
+        'Gloucestershire 2nd': 'గ్లౌసెస్టర్షైర్ 2న్ద్', 'Hampshire 2nd': 'హాంప్‌షైర్ 2న్ద్', 'D': 'డి.', 'Derbyshire 2nd': 'డెర్బీషైర్ 2న్ద్',
+        'MCCU 2nd': 'ఎం.సీ.సీ.యూ. 2న్ద్', 'A': 'ఏ.', 'VB': 'వీ.బీ.', 'Nottinghamshire 2nd': 'నాటింగ్హామ్షైర్ 2న్ద్',
+        'Northamptonshire 2nd': 'నార్తాంప్టన్షైర్ 2న్ద్', 'KZKC': 'కె.జీ.కె.సీ.', 'DJ': 'డి.జె.',
+        'Under-11s': 'అండర్ -11స్', 'Under-22s': 'అండర్ -22స్', 'Under-17s': 'అండర్ -17స్', 'Under': 'అండర్',
+        'Under-15s': 'అండర్ -15స్', 'Under-25s': 'అండర్ -25స్', 'Under-20s': 'అండర్ -20స్', 'Under-21s': 'అండర్ -21స్',
+        'Under-13s': 'అండర్ -13స్', 'Under-14s': 'అండర్ -14స్', 'Under-18s': 'అండర్ -18స్', 'Under-24s': 'అండర్ -24స్',
+        'Under-19s': 'అండర్ -19స్', 'Under-16s': 'అండర్ -16స్', 'Under-23s': 'అండర్ -23స్'
     }
     translated_output = ""
     twos = [ke for ke in capitals.keys() if len(ke.split(" ")) == 2]
@@ -318,7 +331,7 @@ def get_teams_string(teams_list):
             actual_list[j] = ' '.join(tokenized)
             # print("Updated team name", actual_list[j])
         translated_output = getTransliteratedDescription(
-            ', '.join(actual_list))      
+            ', '.join(actual_list))
         return translated_output
     except Exception as e:
         print("Level 2", e)
@@ -338,6 +351,7 @@ def get_teams_string(teams_list):
                 print("Final level", g)
                 return ', '.join(actual_list)
 
+
 def get_role(role):
     if not is_valid_string(role) or role == None or pd.isnull(role):
         return ''
@@ -356,7 +370,8 @@ def get_role(role):
     if not role in role_map.keys():
         return role
     return role_map[role]
-    
+
+
 def shuffle_list(given_list):
     result = list(given_list)
     random.shuffle(result)
@@ -449,6 +464,7 @@ def bowling_sent2(gender_pronoun_2, gender_pronoun_1, bowling_10w_test, bowling_
         return (gender_pronoun_2 + ' కెరీర్లో, ' + gender_pronoun_1 + ' ' + str(bowling_10w_test) + ' ' + test_word + ' 10 వికెట్లు ' + has_taken + '. ')
     return (gender_pronoun_2 + ' కెరీర్లో, ' + gender_pronoun_1 + ' ' + str(bowling_10w_FC) + ' ' + fc_word + ' 10 వికెట్లు ' + has_taken + '. ')
 
+
 def get_translation(word, prefix_string):
     global translated_names
     if not is_valid_string(word) or word == None or pd.isnull(word):
@@ -465,21 +481,27 @@ def get_translation(word, prefix_string):
         return "సగటు బౌలింగ్ స్కోరు"
     return translated_names[word]
 
+
 def null_check(given_list, given_att):
     for element in given_list:
         if '_' + element + '_' in given_att:
             return True
     return False
 
+
 def can_be_considered_1(attributes, prop_name, row, curr_att):
     req_attrs = [a for a in attributes if '_' + prop_name + '_' in a]
-    req_list = [a for a in req_attrs if (isinstance(row[a], str) and is_valid_string(row[a])) or ((not isinstance(row[a], str)) and stat_value(a, row[a]) != "-" and stat_value(a, row[a]) > 0)]
+    req_list = [a for a in req_attrs if (isinstance(row[a], str) and is_valid_string(row[a])) or (
+        (not isinstance(row[a], str)) and stat_value(a, row[a]) != "-" and stat_value(a, row[a]) > 0)]
     valids_count = len(req_list)
     return valids_count != 0
 
+
 def can_be_considered_2(attributes, prop_name, row, curr_att, other_list):
-    req_attrs = [a for a in attributes if prop_name in a and null_check(other_list, a)]
-    req_list = [a for a in req_attrs if (isinstance(row[a], str) and is_valid_string(row[a])) or ((not isinstance(row[a], str)) and stat_value(a, row[a]) != "-" and stat_value(a, row[a]) > 0)]
+    req_attrs = [
+        a for a in attributes if prop_name in a and null_check(other_list, a)]
+    req_list = [a for a in req_attrs if (isinstance(row[a], str) and is_valid_string(row[a])) or (
+        (not isinstance(row[a], str)) and stat_value(a, row[a]) != "-" and stat_value(a, row[a]) > 0)]
     valids_count = len(req_list)
     return valids_count != 0
 
@@ -487,12 +509,12 @@ def can_be_considered_2(attributes, prop_name, row, curr_att, other_list):
 def get_batting_info(row):
     global all_attributes
     bat_attributes = [att for att in all_attributes if "Batting_" in att and (
-        not "_Ct" in att) and (not "_St" in att)]
+        not "_Ct" in att) and (not "_St" in att) and att != 'Batting_Style_telugu']
     batting_format_names = []
     batting_stat_names = []
     batting_details = {}
     # print(row['Batting_T20_Mat'])
-    
+
     for att in bat_attributes:
         curr_att = att.split('_')
         # print(curr_att)
@@ -516,7 +538,9 @@ def get_batting_info(row):
 
 def get_bowling_info(row):
     global all_attributes
-    bowl_attributes = [att for att in all_attributes if "Bowling_" in att]
+    bowl_attributes = [
+        att for att in all_attributes if "Bowling_" in att and att != 'Bowling_Style_telugu']
+    # print(bowl_attributes)
     bowling_format_names = []
     bowling_stat_names = []
     bowling_details = {}
@@ -526,7 +550,7 @@ def get_bowling_info(row):
         if can_be_considered_1(bowl_attributes, curr_att[1], row, curr_att):
             bowling_format_names.append(curr_att[1])
     for att in bowl_attributes:
-        curr_att = att.split('_')            
+        curr_att = att.split('_')
         if can_be_considered_2(bowl_attributes, curr_att[2], row, curr_att, bowling_format_names):
             bowling_stat_names.append(curr_att[2])
 
@@ -545,7 +569,7 @@ def get_bowling_info(row):
 def get_fielding_info(row):
     global all_attributes
     field_attributes = [att for att in all_attributes if "Batting_" in att and (
-        "_Ct" in att or "_St" in att or "Mat" in att or "Inns" in att)]
+        "_Ct" in att or "_St" in att or "Mat" in att or "Inns" in att) and att != 'Batting_Style_telugu']
     fielding_format_names = []
     fielding_stat_names = []
     fielding_details = {}
@@ -555,7 +579,7 @@ def get_fielding_info(row):
         if can_be_considered_1(field_attributes, curr_att[1], row, curr_att):
             fielding_format_names.append(curr_att[1])
     for att in field_attributes:
-        curr_att = att.split('_')            
+        curr_att = att.split('_')
         if can_be_considered_2(field_attributes, curr_att[2], row, curr_att, fielding_format_names):
             fielding_stat_names.append(curr_att[2])
 
@@ -570,8 +594,10 @@ def get_fielding_info(row):
 
 
 def can_consider_trophy_stat(stat_name, all_trophies):
-    valid_entries = [all_trophies[ke][stat_name] for ke in all_trophies.keys() if stat_name in all_trophies[ke].keys() and is_valid_string(all_trophies[ke][stat_name]) and not (all_trophies[ke][stat_name] == None or pd.isnull(all_trophies[ke][stat_name]))]
-    valid_entries = [entry for entry in valid_entries if (isinstance(entry, str) and entry != '-') or ((isinstance(entry, int) or isinstance(entry, float)) and entry > 0)]
+    valid_entries = [all_trophies[ke][stat_name] for ke in all_trophies.keys() if stat_name in all_trophies[ke].keys() and is_valid_string(
+        all_trophies[ke][stat_name]) and not (all_trophies[ke][stat_name] == None or pd.isnull(all_trophies[ke][stat_name]))]
+    valid_entries = [entry for entry in valid_entries if (isinstance(
+        entry, str) and entry != '-') or ((isinstance(entry, int) or isinstance(entry, float)) and entry > 0)]
     # print(valid_entries)
     return len(valid_entries) != 0
 
@@ -584,7 +610,7 @@ def get_trophy_info(row):
     if len(all_trophies) == 0:
         return [], [], {}
     trophy_names = [name for name in all_trophies.keys()
-                                                       if len(all_trophies[name]) > 0]
+                    if len(all_trophies[name]) > 0]
     trophy_stat_names = []
     if len(trophy_names) == 0:
         return [], [], {}
@@ -602,7 +628,8 @@ def get_trophy_info(row):
                 trophy_details[key1][key2] = all_trophies[key1][key2]
     # for i in range(len(trophy_names)):
     #     trophy_names[i] = getTransliteratedDescription(trophy_names[i])
-    trophy_stat_names = [t_stat for t_stat in trophy_stat_names if not t_stat in ['tt', 'pr', 'hn', 'bbad']]
+    trophy_stat_names = [t_stat for t_stat in trophy_stat_names if not t_stat in [
+        'tt', 'pr', 'hn', 'bbad']]
     return trophy_names, trophy_stat_names, trophy_details
 
 
@@ -638,7 +665,7 @@ def get_description_sums(row):
     sum_catches = sum([row[att] for att in field_catch_attrs if row[att] > 0])
 
     field_stump_attrs = [
-        att for att in all_attributes if "Batting_" in att and "St" in att]
+        att for att in all_attributes if "Batting_" in att and "St" in att and att != 'Batting_Style_telugu']
     sum_stumpings = sum([row[att]
                         for att in field_stump_attrs if row[att] > 0])
 
@@ -684,37 +711,39 @@ def did_retire(span):
         return int(break_up[1]) < 2021
     except:
         return False
-    
+
+
 def change_abbr(h):
     alpha = {
-        "A":"ఏ",      
-        "B":"బీ",
-        "C":"సీ",  
-        "D":"డీ",
-        "E":"ఈ",
-        "F":"ఎఫ్",
-        "G":"జీ",
-        "H":"హెచ్",
-        "I":"ఐ",
-        "J":"జే",       
-        "K":"కే",
-        "L":"ఎల్",
-        "M":"ఎం",
-        "N":"ఎన్",
-        "O":"ఓ",
-        "P":"పీ",
-        "Q":"క్యూ",
-        "R":"ఆర్",   
-        "S":"ఎస్",
-        "T":"టీ",
-        "U":"యూ",
-        "V":"వీ",
-        "W":"డబల్యూ",
-        "X":"ఎక్స్",
-        "Y":"వై",
-        "Z":"జెడ్"
+        "A": "ఏ",
+        "B": "బీ",
+        "C": "సీ",
+        "D": "డీ",
+        "E": "ఈ",
+        "F": "ఎఫ్",
+        "G": "జీ",
+        "H": "హెచ్",
+        "I": "ఐ",
+        "J": "జే",
+        "K": "కే",
+        "L": "ఎల్",
+        "M": "ఎం",
+        "N": "ఎన్",
+        "O": "ఓ",
+        "P": "పీ",
+        "Q": "క్యూ",
+        "R": "ఆర్",
+        "S": "ఎస్",
+        "T": "టీ",
+        "U": "యూ",
+        "V": "వీ",
+        "W": "డబల్యూ",
+        "X": "ఎక్స్",
+        "Y": "వై",
+        "Z": "జెడ్"
     }
     return ''.join([alpha[i] + '.' for i in h])[:-1]
+
 
 def get_token_translation(token):
     non_alphas = {
@@ -749,6 +778,7 @@ def get_token_translation(token):
         return non_alphas[token]
     return change_abbr(token)
 
+
 def get_debut_string(deb):
     global month_names
     if not is_valid_string(deb) or deb == None or pd.isnull(deb):
@@ -777,39 +807,44 @@ def get_debut_string(deb):
     deb = deb.replace(curr_sub, ' '.join(tokens[2:]))
     return getTransliteratedDescription(deb)
 
+
 def getData(row):
-    batting_format_names, batting_stat_names, batting_details = get_batting_info(row)
-    bowling_format_names, bowling_stat_names, bowling_details = get_bowling_info(row)
-    fielding_format_names, fielding_stat_names, fielding_details = get_fielding_info(row)
+    batting_format_names, batting_stat_names, batting_details = get_batting_info(
+        row)
+    bowling_format_names, bowling_stat_names, bowling_details = get_bowling_info(
+        row)
+    fielding_format_names, fielding_stat_names, fielding_details = get_fielding_info(
+        row)
     trophy_names, trophy_stat_names, trophy_details = get_trophy_info(row)
-    sum_batting_matches, sum_batting_innings, sum_batting_runs, sum_batting_100s, sum_batting_50s, sum_dismissals, sum_catches, sum_stumpings, sum_bowling_matches, sum_bowling_innings, sum_bowling_balls, sum_wickets = get_description_sums(row)
+    sum_batting_matches, sum_batting_innings, sum_batting_runs, sum_batting_100s, sum_batting_50s, sum_dismissals, sum_catches, sum_stumpings, sum_bowling_matches, sum_bowling_innings, sum_bowling_balls, sum_wickets = get_description_sums(
+        row)
     data = {
         # {%- macro early_career(player_name, career_start_year, first_class_debut, listA_debut, T20_debut, T20I_debut, ODI_debut, test_debut) -%}
-        'player_name': getTransliteratedDescription(row['Player_Name']).strip(),
+        'player_name': row['Player_Name_Telugu'].strip(),
         'gender': row['Gender'],
         'career_start_year': get_start_year(row['career_span']),
-        'first_class_debut': row['FC Matches_debut'],
-        'listA_debut': row['List A Matches_debut'],
-        'T20_debut': row['T20 Matches_debut'],
-        'T20I_debut': row['T20I Matches_debut'],
-        'ODI_debut': row['ODI Matches_debut'],
-        'test_debut': row['Test Matches_debut'],
-        
+        'first_class_debut': row['FC Matches_debut_Telugu'],
+        'listA_debut': row['List A Matches_debut_Telugu'],
+        'T20_debut': row['T20 Matches_debut_Telugu'],
+        'T20I_debut': row['T20I Matches_debut_Telugu'],
+        'ODI_debut': row['ODI Matches_debut_Telugu'],
+        'test_debut': row['Test Matches_debut_Telugu'],
+
         # {%- macro career_intro(player_name, player_role, nationality, teams, jersey_number, has_retired) -%}
-        'player_role': row['Playing Role'],
-        'nationality': get_nationality(row['Nationality']),
-        'teams': row['Teams'],
+        'player_role': row['Playing Role_Telugu'],
+        'nationality': row['Nationality_Telugu'],
+        'teams': row['Teams_Telugu'],
         'jersey_number': row['Jersey_Number'],
         'has_retired': did_retire(row['career_span']),
-        
-        # {%- macro batting_description(player_name, sum_batting_matches, sum_batting_innings, sum_batting_runs, sum_batting_100s, 
-        #                sum_batting_50s, test_batting_average, test_batting_strike_rate, ODI_batting_average, 
+
+        # {%- macro batting_description(player_name, sum_batting_matches, sum_batting_innings, sum_batting_runs, sum_batting_100s,
+        #                sum_batting_50s, test_batting_average, test_batting_strike_rate, ODI_batting_average,
         #                ODI_batting_strike_rate, T20I_batting_average, T20I_batting_strike_rate) -%}
-        
+
         'sum_batting_matches': sum_batting_matches,
         'sum_batting_innings': sum_batting_innings,
-        'sum_batting_runs': sum_batting_runs, 
-        'sum_batting_100s': sum_batting_100s, 
+        'sum_batting_runs': sum_batting_runs,
+        'sum_batting_100s': sum_batting_100s,
         'sum_batting_50s': sum_batting_50s,
         'test_batting_average': row['Batting_Test_Ave'],
         'test_batting_strike_rate': row['Batting_Test_SR'],
@@ -817,20 +852,20 @@ def getData(row):
         'ODI_batting_strike_rate': row['Batting_ODI_SR'],
         'T20I_batting_average': row['Batting_T20I_Ave'],
         'T20I_batting_strike_rate': row['Batting_T20I_SR'],
-        
+
         # {%- macro fielding_description(sum_dismissals, sum_catches, sum_stumpings, is_wicketkeeper) -%}
         'sum_dismissals': sum_dismissals,
         'sum_catches': sum_catches,
         'sum_stumpings': sum_stumpings,
-        
-		# {%- macro bowling_description(player_name, sum_bowling_matches, sum_bowling_innings, sum_bowling_balls, sum_wickets, test_bowling_average,
-		#                         test_bowling_economy, ODI_bowling_average, ODI_bowling_economy, T20I_bowling_average, T20I_bowling_economy,
-		#                         bowling_10w_test, bowling_10w_FC) -%}
-  
-		'sum_bowling_matches': sum_bowling_matches,
-  		'sum_bowling_innings': sum_bowling_innings, 
-    	'sum_bowling_balls': sum_bowling_balls, 
-     	'sum_wickets': sum_wickets,
+
+        # {%- macro bowling_description(player_name, sum_bowling_matches, sum_bowling_innings, sum_bowling_balls, sum_wickets, test_bowling_average,
+        #                         test_bowling_economy, ODI_bowling_average, ODI_bowling_economy, T20I_bowling_average, T20I_bowling_economy,
+        #                         bowling_10w_test, bowling_10w_FC) -%}
+
+        'sum_bowling_matches': sum_bowling_matches,
+        'sum_bowling_innings': sum_bowling_innings,
+        'sum_bowling_balls': sum_bowling_balls,
+        'sum_wickets': sum_wickets,
         'test_bowling_average': row['Bowling_Test_Ave'],
         'test_bowling_economy': row['Bowling_Test_Econ'],
         'ODI_bowling_average': row['Bowling_ODI_Ave'],
@@ -839,42 +874,43 @@ def getData(row):
         'T20I_bowling_economy': row['Bowling_T20I_Econ'],
         'bowling_10w_test': row['Bowling_Test_10w'],
         'bowling_10w_FC': row['Bowling_FC_10w'],
-        
+
         # {%- macro trophy_description(player_name, major_trophy_and_championship_names) -%}
-        'major_trophy_and_championship_names': trophy_names,
-        
+        'major_trophy_and_championship_names': row['trophy_names_Telugu'],
+
         # Batting table
         'batting_format_names': batting_format_names,
         'batting_stat_names': batting_stat_names,
         'batting_details': batting_details,
-        
+
         # Bowling table
         'bowling_format_names': bowling_format_names,
         'bowling_stat_names': bowling_stat_names,
         'bowling_details': bowling_details,
-                
+
         # Fielding table
         'fielding_format_names': fielding_format_names,
         'fielding_stat_names': fielding_stat_names,
         'fielding_details': fielding_details,
-                
+
         # Trophy table
         'trophy_names': trophy_names,
-        'trophy_stat_names': trophy_stat_names, 
+        'trophy_stat_names': trophy_stat_names,
         'trophy_details': trophy_details,
-        
+
         # References
         'all_ref': ast.literal_eval(row['References'])
-	}
-    
+    }
+
     return data
+
 
 def main():
     global all_attributes
     file_loader = FileSystemLoader('./')
     env = Environment(loader=file_loader)
     template = env.get_template('life.j2')
-    
+
     func_dict = {
         "stat_value": stat_value,
         "is_valid_string": is_valid_string,
@@ -897,8 +933,8 @@ def main():
         "get_trophy_names_list": get_trophy_names_list
     }
     template.globals.update(func_dict)
-    
-    with open('final_cricket_players_DF.pkl', 'rb') as f:
+
+    with open('final_cricket_players_translated_dataset_with_images.pkl', 'rb') as f:
         cricket_players_DF = pickle.load(f)
         cricket_players_DF.fillna(value="nan", inplace=True)
         ids = cricket_players_DF.Cricinfo_id.tolist()
@@ -906,16 +942,17 @@ def main():
         ids = [253802]
         with open('life.txt', 'w') as fobj:
             for i, cricketer_id in enumerate(ids):
-                required_player = cricket_players_DF.loc[cricket_players_DF['Cricinfo_id']==cricketer_id]
+                required_player = cricket_players_DF.loc[cricket_players_DF['Cricinfo_id'] == cricketer_id]
                 for j, row in required_player.iterrows():
                     # print(row)
                     va = template.render(getData(row))
                     fobj.write(va)
                 # fobj.write(text)
-				# writePage(title, text, fobj)		
-				# print(i, title)
-				# print(text, '\n')
-			# fobj.write('</mediawiki>')
+                    # writePage(title, text, fobj)
+                    # print(i, title)
+                    # print(text, '\n')
+                    # fobj.write('</mediawiki>')
+
 
 if __name__ == '__main__':
-	main()
+    main()
