@@ -186,10 +186,7 @@
                 {{- 'ఫీల్డర్‌గా ' ~ player_name ~ ' తన కెరీర్‌లో, 1 ఫీల్డింగ్ డిస్మిస్సల్ కి ' ~ is_reason ~ ' (1 స్టంపింగ్). ' -}}
             {%- endif -%}
         {%- else -%}
-            {{- [
-                    'ఫీల్డర్‌గా ' ~ player_name ~ ' తన కెరీర్‌లో, ' ~ sum_dismissals |string ~ ' ఫీల్డింగ్ డిస్మిస్సల్స్ లో ఒక భాగం, ',
-                    'ఫీల్డర్‌గా ' ~ player_name ~ ' తన కెరీర్‌లో, ' ~ sum_dismissals |string ~ ' ఫీల్డింగ్ డిస్మిస్సల్స్ కి ' ~ is_reason ~ ', '
-                ] |random -}}
+            {{- 'ఫీల్డర్‌గా ' ~ player_name ~ ' తన కెరీర్‌లో, ' ~ sum_dismissals |string ~ ' ఫీల్డింగ్ డిస్మిస్సల్స్ కి ' ~ is_reason ~ ', ' -}}
             {%- if sum_catches == 0 -%}
                 {%- set line = 'ఈ డిస్మిస్సల్స్ లో ' ~ sum_stumpings |string ~ ' స్టంపింగ్స్ ఉన్నాయి. ' -%}
             {%- elif sum_stumpings == 0 -%}

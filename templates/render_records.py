@@ -54,7 +54,7 @@ def getData(row):
 
 	if(awards != 'nan'):
 		try:
-			awards = awards.split(',,')
+			awards = awards.split(',, ')
 		except:
 			awards = ast.literal_eval(row.AWARDS.values[0])
 
