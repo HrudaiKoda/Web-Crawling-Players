@@ -2,16 +2,9 @@ import pickle
 import random
 import ast
 from jinja2 import Environment, FileSystemLoader
-import translators as ts
 import pandas as pd
-from deeptranslit import DeepTranslit
 from functools import cmp_to_key
-from deep_translator import GoogleTranslator
-from google_trans_new import google_translator
-from google.transliteration import transliterate_word, transliterate_text
 
-translator = google_translator()
-trans = DeepTranslit('telugu').transliterate
 all_attributes = []
 famous_countries = {
     'India': 'భారతీయ', 
@@ -175,12 +168,12 @@ def main():
     }
     template.globals.update(func_dict)
     
-    with open('final_cricket_players_DF.pkl', 'rb') as f:
+    with open('final_cricket_players_translated_dataset_with_images.pkl', 'rb') as f:
         cricket_players_DF = pickle.load(f)
         cricket_players_DF.fillna(value="nan", inplace=True)
         ids = cricket_players_DF.Cricinfo_id.tolist()
         all_attributes = cricket_players_DF.columns.tolist()
-        ids = [53747]
+        ids = [54950]
         with open('categories.txt', 'w') as fobj:
             for i, cricketer_id in enumerate(ids):
                 required_player = cricket_players_DF.loc[cricket_players_DF['Cricinfo_id']==cricketer_id]
