@@ -135,7 +135,32 @@
 {%- endmacro -%}
 
 
+{%- macro function_awards(player_name, awards)  -%}
 
+	{%- if awards != 'nan' %}
+
+== పురస్కారాలు,  క్రీడా గౌరవాలు ==  
+
+{%- set line1 = [player_name,' ఈ క్రింది అవార్డులు ',word3] |join('') %}
+{%- set line2 = ['ఈ క్రింది అవార్డులు ',player_name,' ',word4] |join('') %}
+{%- set line3 = [player_name,' దక్కించుకున్న అవార్డులు'] |join('') %}
+
+{{ [line1, line2, line3] | random }}:
+
+<div style="overflow-y: scroll; overflow-x: hidden; max-height :40em;">
+
+{% for award in awards -%}
+
+{{-loop.index}}. {{ award.strip() }}
+
+{% endfor -%}
+
+</div>
+
+	{%- endif -%}
+
+
+{%- endmacro -%}
 
 
 {%- macro function_references(references)  -%}
@@ -166,6 +191,8 @@
 {{- odiRecords(player_name, odi_records) -}}
 
 {{- t20iRecords(player_name, t20i_records) -}}
+
+{{- function_awards(player_name, awards) -}}
 
 {{- function_references(references) -}}
 
