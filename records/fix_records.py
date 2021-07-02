@@ -73,9 +73,6 @@ def create_dicts():
 def get_transformed_record(ele, gender):
     global structures
     global categories
-    has_won = "సాధించాడు"
-    if gender == "Female":
-        has_won = "సాధించింది"
     current_val = ele.split(" ")
     if len(current_val) == 0:
         return ''
@@ -100,11 +97,10 @@ def get_transformed_record(ele, gender):
     if categories[structure] == 'No rank, no statistic':
         return handle_gender(translated_structure + '.', row['Gender'])
     if categories[structure] == 'Only rank':
-        return translated_structure + " జాబితా లో " + prefix + " " + has_won + "."
+        return translated_structure + " జాబితా లో " + prefix + "."
     if categories[structure] == 'Only statistic':
         return handle_gender(translated_structure + " " + suffix + '.', row['Gender'])
-    return translated_structure + " జాబితా లో " + prefix + " " + has_won + " " + suffix + '.'
-    
+    return translated_structure + " జాబితా లో " + prefix + " " + suffix + '.'
     
     
 english_cols = ['Records', 'Test Records', 'ODI Records', 'T20I Records']
@@ -137,7 +133,9 @@ for j in range(4):
         for ele in given_list:
             transformed_record = get_transformed_record(ele, row["Gender"])
             if transformed_record != '':
+                transformed_record = transformed_record.strip()
                 player_record_list.append(transformed_record)
+        player_record_list = list(set(player_record_list))
         new_telugu_lists[j].append(str(player_record_list))
     a[telugu_cols[j]] = new_telugu_lists[j]
     
