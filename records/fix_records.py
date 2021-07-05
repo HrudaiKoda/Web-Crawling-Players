@@ -69,10 +69,8 @@ def create_dicts():
         categories[row['English']] = row['Category']
     structures[' 99 not out (and 199, 299 etc) '] = '99 నాట్ అవుట్ (199, 299 ఎట్సిట్రా) గా నిలిచినా ఆటగాళ్ల'
     categories[' 99 not out (and 199, 299 etc) '] = 'Both rank and statistic present'
-
-def get_transformed_record(ele, gender):
-    global structures
-    global categories
+    
+def get_sentence(ele):
     current_val = ele.split(" ")
     if len(current_val) == 0:
         return ''
@@ -87,13 +85,17 @@ def get_transformed_record(ele, gender):
     prefix = ele[:start_index]
     structure = ele[start_index:end_index]
     suffix = ele[end_index:]
-    
+    return prefix, structure, suffix
+
+def get_transformed_record(ele, gender):
+    global structures
+    global categories
+    prefix, structure, suffix = get_sentence(ele)
     prefix = get_prefix(prefix)
     prefix = prefix.strip()
     translated_structure = structures[structure].strip()
     suffix = get_suffix(suffix)
     suffix = suffix.strip()
-    
     if categories[structure] == 'No rank, no statistic':
         return handle_gender(translated_structure + '.', row['Gender'])
     if categories[structure] == 'Only rank':
@@ -129,8 +131,14 @@ for j in range(4):
         given_list = ast.literal_eval(a.at[i, attribute])
         given_list = [g for g in given_list if not "worst" in g.lower()]
         a.at[i, attribute] = str(given_list)
+        unique_structures = []
         player_record_list = []
         for ele in given_list:
+            record_prefix, record_structure, record_suffix = get_sentence(ele)
+            record_structure = record_structure.strip()
+            if record_structure in unique_structures:
+                continue
+            unique_structures.append(record_structure)
             transformed_record = get_transformed_record(ele, row["Gender"])
             if transformed_record != '':
                 transformed_record = transformed_record.strip()
