@@ -1,18 +1,18 @@
 import pickle
 import random
 import ast
-from jinja2 import Environment, FileSystemLoader
-import translators as ts
 import pandas as pd
-from deeptranslit import DeepTranslit
 from functools import cmp_to_key
-from deep_translator import GoogleTranslator
-from google_trans_new import google_translator
-from google.transliteration import transliterate_word, transliterate_text
+from jinja2 import Environment, FileSystemLoader
+# import translators as ts
+# from deeptranslit import DeepTranslit
+# from deep_translator import GoogleTranslator
+# from google_trans_new import google_translator
+# from google.transliteration import transliterate_word, transliterate_text
 
 
-translator = google_translator()
-trans = DeepTranslit('telugu').transliterate
+# translator = google_translator()
+# trans = DeepTranslit('telugu').transliterate
 all_attributes = []
 month_names = {
     'February': 'ఫిబ్రవరి', 'December': 'డిసెంబర్', 'May': 'మే', 'October': 'అక్టోబర్',
@@ -105,37 +105,37 @@ def is_valid_string(attribute_value):
     return not (attribute_value == None or pd.isnull(attribute_value) or str(attribute_value) == "" or str(attribute_value) == "nan")
 
 
-def getTransliteratedDescription(description):
-    try:
-        current_attribute_value = description
-        # anu_title = telugu.anuvaad(row.title.values[0])
-        deep = trans(current_attribute_value)[0]
-        description = deep['pred']
-    except:
-        try:
-            return transliterate_text(description, lang_code='te')
-        except:
-            pass
-    return description
+# def getTransliteratedDescription(description):
+#     try:
+#         current_attribute_value = description
+#         # anu_title = telugu.anuvaad(row.title.values[0])
+#         deep = trans(current_attribute_value)[0]
+#         description = deep['pred']
+#     except:
+#         try:
+#             return transliterate_text(description, lang_code='te')
+#         except:
+#             pass
+#     return description
 
 
-def getTranslatedDescription(description):
-    global translator
-    if isinstance(description, str) and not is_valid_string(description):
-        return description
-    try:
-        # print('1')
-        return translator.translate(description, lang_src='en', lang_tgt='te')
-    except:
-        try:
-            # print('2')
-            return ts.google(query_text=description, from_language='en', to_language='te')
-        except:
-            try:
-                # print('3')
-                return GoogleTranslator(source='en', target='te').translate(text=description)
-            except:
-                return description
+# def getTranslatedDescription(description):
+#     global translator
+#     if isinstance(description, str) and not is_valid_string(description):
+#         return description
+#     try:
+#         # print('1')
+#         return translator.translate(description, lang_src='en', lang_tgt='te')
+#     except:
+#         try:
+#             # print('2')
+#             return ts.google(query_text=description, from_language='en', to_language='te')
+#         except:
+#             try:
+#                 # print('3')
+#                 return GoogleTranslator(source='en', target='te').translate(text=description)
+#             except:
+#                 return description
 
 
 def get_trophy_name(description):
@@ -277,79 +277,79 @@ def print_names(li):
     return (li)
 
 
-def get_teams_string(teams_list):
-    if not is_valid_string(teams_list) or teams_list == None or pd.isnull(teams_list):
-        return ''
-    actual_list = ast.literal_eval(teams_list)
-    capitals = {
-        'Super 3s': 'సూపర్ ౩స్', 'SC': 'ఎస్.సీ.', 'Glamorgan 2nd': 'గ్లమోర్గన్ 2న్ద్',
-        'HBS': 'హెచ్.బీ.ఎస్.', 'BCCSL': 'బీ.సీ.సీ.ఎస్.ఎల్.', 'Leicestershire 2nd': 'లీసెస్టర్షైర్ 2న్ద్',
-        'CH': 'సీ.హెచ్.', 'ECB': 'ఇ.సీ.బీ.', 'C': 'సీ.', 'Warwickshire 2nd': 'వార్విక్షైర్ 2న్ద్',
-        'UWI': 'యూ.డబల్యూ.ఐ.', 'PINT': 'పి.ఐ.ఎన్.టి.', 'Surrey 2nd': 'సర్రే 2న్ద్',
-        'NZCPA': 'ఎన్.జీ.సీ.పి.ఏ.', 'Lancashire 2nd': 'లాంక్షైర్ 2న్ద్',
-        'Essex 2nd': 'ఎస్సెక్స్ 2న్ద్', 'BCB': 'బీ.సీ.బీ.', '1': '1',
-        'Somerset 2nd': 'సోమర్సెట్ 2న్ద్', 'DVS': 'డి.వీ.ఎస్.', 'XI': 'XI',
-        'Kent 2nd': 'కెంట్ 2న్ద్', "Men's 1": "మెన్'స్ 1", 'KNCB': 'కె.ఎన్.సీ.బీ.',
-        'CA': 'సీ.ఏ.', 'MCA': 'ఎం.సీ.ఏ.', 'VII': 'VII', 'Patriots 1': 'పేట్రియాట్స్ 1', '19': '19',
-        'AJ': 'ఏ.జె.', 'BCA': 'బీ.సీ.ఏ.', 'HCC': 'హెచ్.సీ.సీ.', 'PCA': 'పి.సీ.ఏ.', 'TN': 'టి.ఎన్.',
-        'P': 'పి.', 'UCB-BCB': 'యూ.సీ.బీ.-బీ.సీ.బీ.', 'RR': 'ఆర్.ఆర్.', 'Sussex 2nd': 'సస్సెక్స్ 2న్ద్',
-        'MAF': 'ఎం.ఏ.ఎఫ్.', 'ICBT': 'ఐ.సీ.బీ.టి.', 'DS': 'డి.ఎస్.', 'World-XI': 'వరల్డ్-XI', 'ICL': 'ఐ.సీ.ఎల్.',
-        'Worcestershire 2nd': 'వోర్సెస్టర్షైర్ 2న్ద్', 'XII': 'XII', 'DH': 'డి.హెచ్.', 'VRA': 'వీ.ఆర్.ఏ.',
-        'ICC': 'ఐసీసీ', 'Under-17': 'అండర్ -17', 'VOC': 'వీ.ఓ.సీ.', 'NCA': 'ఎన్.సీ.ఏ.',
-        'MCCU': 'ఎం.సీ.సీ.యూ.', 'IV': 'IV', 'MV': 'ఎం.వీ.', 'Durham 2nd': 'డర్హామ్ 2న్ద్', 'B': 'బీ',
-        'RCA': 'ఆర్.సీ.ఏ.', 'KSCA': 'కె.ఎస్.సీ.ఏ.', 'Northern 2nd': 'నార్తర్న్ 2న్ద్', 'WICB': 'డబల్యూ.ఐ.సీ.బీ.',
-        'FATA': 'ఎఫ్.ఏ.టి.ఏ.', 'DY': 'డి.వై.', 'TNCA': 'టి.ఎన్.సీ.ఏ.', 'NCU': 'ఎన్.సీ.యూ.', 'S': 'ఎస్.',
-        'CPL': 'సీ.పి.ఎల్.', 'YMCA': 'వై.ఎం.సీ.ఏ.', 'Yorkshire 2nd': 'యార్క్షైర్ 2న్ద్', 'T20': 'టి20', 'PJ': 'పి.జె.',
-        'Patriots 2': 'పేట్రియాట్స్ 2', 'UCCE': 'యూ.సీ.సీ.ఇ.', 'Middlesex 2nd': 'మిడిల్‌సెక్స్ 2న్ద్', 'Under-23': 'అండర్-23',
-        'D.A.V': 'డి.ఏ.వీ.', 'HDG': 'హెచ్.డి.జీ.', 'CC': 'సీ.సీ.', 'MAS': 'ఎం.ఏ.ఎస్.', 'ACB': 'ఏ.సీ.బీ.', 'UAE': 'యూ.ఏ.ఇ.',
-        'Under 19': 'అండర్ 19', '2': '2', 'MC': 'ఎం.సీ.', 'AJK': 'ఏ.జె.కె.', 'CI': 'సీ.ఐ.', 'TUKS': 'టి.యూ.కె.ఎస్.',
-        'Pakhtunkhwa 2nd': 'పఖ్తున్ఖ్వా 2న్ద్', 'Sindh 2nd': 'సింధ్ 2న్ద్', 'DOHS': 'డి.ఓ.హెచ్.ఎస్.', 'TUTI': 'టి.యూ.టి.ఐ.',
-        'Gloucestershire 2nd': 'గ్లౌసెస్టర్షైర్ 2న్ద్', 'Hampshire 2nd': 'హాంప్‌షైర్ 2న్ద్', 'D': 'డి.', 'Derbyshire 2nd': 'డెర్బీషైర్ 2న్ద్',
-        'MCCU 2nd': 'ఎం.సీ.సీ.యూ. 2న్ద్', 'A': 'ఏ.', 'VB': 'వీ.బీ.', 'Nottinghamshire 2nd': 'నాటింగ్హామ్షైర్ 2న్ద్',
-        'Northamptonshire 2nd': 'నార్తాంప్టన్షైర్ 2న్ద్', 'KZKC': 'కె.జీ.కె.సీ.', 'DJ': 'డి.జె.',
-        'Under-11s': 'అండర్ -11స్', 'Under-22s': 'అండర్ -22స్', 'Under-17s': 'అండర్ -17స్', 'Under': 'అండర్',
-        'Under-15s': 'అండర్ -15స్', 'Under-25s': 'అండర్ -25స్', 'Under-20s': 'అండర్ -20స్', 'Under-21s': 'అండర్ -21స్',
-        'Under-13s': 'అండర్ -13స్', 'Under-14s': 'అండర్ -14స్', 'Under-18s': 'అండర్ -18స్', 'Under-24s': 'అండర్ -24స్',
-        'Under-19s': 'అండర్ -19స్', 'Under-16s': 'అండర్ -16స్', 'Under-23s': 'అండర్ -23స్'
-    }
-    translated_output = ""
-    twos = [ke for ke in capitals.keys() if len(ke.split(" ")) == 2]
-    ones = [ke for ke in capitals.keys() if len(ke.split(" ")) == 1]
-    try:
-        for j in range(len(actual_list)):
-            # print("Actual team name", actual_list[j])
-            tokenized = actual_list[j].split(" ")
-            for i in range(len(tokenized)-1):
-                cur = tokenized[i] + " " + tokenized[i+1]
-                if cur in twos:
-                    t = capitals[cur].split(" ")
-                    tokenized[i] = t[0]
-                    tokenized[i+1] = t[1]
-            for i in range(len(tokenized)):
-                if tokenized[i] in ones:
-                    tokenized[i] = capitals[tokenized[i]]
-            actual_list[j] = ' '.join(tokenized)
-            # print("Updated team name", actual_list[j])
-        translated_output = getTransliteratedDescription(
-            ', '.join(actual_list))
-        return translated_output
-    except Exception as e:
-        print("Level 2", e)
-        try:
-            translated_output = getTranslatedDescription(actual_list)
-            if ']]' in translated_output:
-                translated_output = translated_output.replace(']]', ']')
-            actual_list = list(ast.literal_eval(translated_output))
-            return ', '.join(actual_list)
-        except Exception as f:
-            print("Level 3", f)
-            try:
-                translated_output = getTranslatedDescription(
-                    ', '.join(actual_list))
-                return translated_output
-            except Exception as g:
-                print("Final level", g)
-                return ', '.join(actual_list)
+# def get_teams_string(teams_list):
+#     if not is_valid_string(teams_list) or teams_list == None or pd.isnull(teams_list):
+#         return ''
+#     actual_list = ast.literal_eval(teams_list)
+#     capitals = {
+#         'Super 3s': 'సూపర్ ౩స్', 'SC': 'ఎస్.సీ.', 'Glamorgan 2nd': 'గ్లమోర్గన్ 2న్ద్',
+#         'HBS': 'హెచ్.బీ.ఎస్.', 'BCCSL': 'బీ.సీ.సీ.ఎస్.ఎల్.', 'Leicestershire 2nd': 'లీసెస్టర్షైర్ 2న్ద్',
+#         'CH': 'సీ.హెచ్.', 'ECB': 'ఇ.సీ.బీ.', 'C': 'సీ.', 'Warwickshire 2nd': 'వార్విక్షైర్ 2న్ద్',
+#         'UWI': 'యూ.డబల్యూ.ఐ.', 'PINT': 'పి.ఐ.ఎన్.టి.', 'Surrey 2nd': 'సర్రే 2న్ద్',
+#         'NZCPA': 'ఎన్.జీ.సీ.పి.ఏ.', 'Lancashire 2nd': 'లాంక్షైర్ 2న్ద్',
+#         'Essex 2nd': 'ఎస్సెక్స్ 2న్ద్', 'BCB': 'బీ.సీ.బీ.', '1': '1',
+#         'Somerset 2nd': 'సోమర్సెట్ 2న్ద్', 'DVS': 'డి.వీ.ఎస్.', 'XI': 'XI',
+#         'Kent 2nd': 'కెంట్ 2న్ద్', "Men's 1": "మెన్'స్ 1", 'KNCB': 'కె.ఎన్.సీ.బీ.',
+#         'CA': 'సీ.ఏ.', 'MCA': 'ఎం.సీ.ఏ.', 'VII': 'VII', 'Patriots 1': 'పేట్రియాట్స్ 1', '19': '19',
+#         'AJ': 'ఏ.జె.', 'BCA': 'బీ.సీ.ఏ.', 'HCC': 'హెచ్.సీ.సీ.', 'PCA': 'పి.సీ.ఏ.', 'TN': 'టి.ఎన్.',
+#         'P': 'పి.', 'UCB-BCB': 'యూ.సీ.బీ.-బీ.సీ.బీ.', 'RR': 'ఆర్.ఆర్.', 'Sussex 2nd': 'సస్సెక్స్ 2న్ద్',
+#         'MAF': 'ఎం.ఏ.ఎఫ్.', 'ICBT': 'ఐ.సీ.బీ.టి.', 'DS': 'డి.ఎస్.', 'World-XI': 'వరల్డ్-XI', 'ICL': 'ఐ.సీ.ఎల్.',
+#         'Worcestershire 2nd': 'వోర్సెస్టర్షైర్ 2న్ద్', 'XII': 'XII', 'DH': 'డి.హెచ్.', 'VRA': 'వీ.ఆర్.ఏ.',
+#         'ICC': 'ఐసీసీ', 'Under-17': 'అండర్ -17', 'VOC': 'వీ.ఓ.సీ.', 'NCA': 'ఎన్.సీ.ఏ.',
+#         'MCCU': 'ఎం.సీ.సీ.యూ.', 'IV': 'IV', 'MV': 'ఎం.వీ.', 'Durham 2nd': 'డర్హామ్ 2న్ద్', 'B': 'బీ',
+#         'RCA': 'ఆర్.సీ.ఏ.', 'KSCA': 'కె.ఎస్.సీ.ఏ.', 'Northern 2nd': 'నార్తర్న్ 2న్ద్', 'WICB': 'డబల్యూ.ఐ.సీ.బీ.',
+#         'FATA': 'ఎఫ్.ఏ.టి.ఏ.', 'DY': 'డి.వై.', 'TNCA': 'టి.ఎన్.సీ.ఏ.', 'NCU': 'ఎన్.సీ.యూ.', 'S': 'ఎస్.',
+#         'CPL': 'సీ.పి.ఎల్.', 'YMCA': 'వై.ఎం.సీ.ఏ.', 'Yorkshire 2nd': 'యార్క్షైర్ 2న్ద్', 'T20': 'టి20', 'PJ': 'పి.జె.',
+#         'Patriots 2': 'పేట్రియాట్స్ 2', 'UCCE': 'యూ.సీ.సీ.ఇ.', 'Middlesex 2nd': 'మిడిల్‌సెక్స్ 2న్ద్', 'Under-23': 'అండర్-23',
+#         'D.A.V': 'డి.ఏ.వీ.', 'HDG': 'హెచ్.డి.జీ.', 'CC': 'సీ.సీ.', 'MAS': 'ఎం.ఏ.ఎస్.', 'ACB': 'ఏ.సీ.బీ.', 'UAE': 'యూ.ఏ.ఇ.',
+#         'Under 19': 'అండర్ 19', '2': '2', 'MC': 'ఎం.సీ.', 'AJK': 'ఏ.జె.కె.', 'CI': 'సీ.ఐ.', 'TUKS': 'టి.యూ.కె.ఎస్.',
+#         'Pakhtunkhwa 2nd': 'పఖ్తున్ఖ్వా 2న్ద్', 'Sindh 2nd': 'సింధ్ 2న్ద్', 'DOHS': 'డి.ఓ.హెచ్.ఎస్.', 'TUTI': 'టి.యూ.టి.ఐ.',
+#         'Gloucestershire 2nd': 'గ్లౌసెస్టర్షైర్ 2న్ద్', 'Hampshire 2nd': 'హాంప్‌షైర్ 2న్ద్', 'D': 'డి.', 'Derbyshire 2nd': 'డెర్బీషైర్ 2న్ద్',
+#         'MCCU 2nd': 'ఎం.సీ.సీ.యూ. 2న్ద్', 'A': 'ఏ.', 'VB': 'వీ.బీ.', 'Nottinghamshire 2nd': 'నాటింగ్హామ్షైర్ 2న్ద్',
+#         'Northamptonshire 2nd': 'నార్తాంప్టన్షైర్ 2న్ద్', 'KZKC': 'కె.జీ.కె.సీ.', 'DJ': 'డి.జె.',
+#         'Under-11s': 'అండర్ -11స్', 'Under-22s': 'అండర్ -22స్', 'Under-17s': 'అండర్ -17స్', 'Under': 'అండర్',
+#         'Under-15s': 'అండర్ -15స్', 'Under-25s': 'అండర్ -25స్', 'Under-20s': 'అండర్ -20స్', 'Under-21s': 'అండర్ -21స్',
+#         'Under-13s': 'అండర్ -13స్', 'Under-14s': 'అండర్ -14స్', 'Under-18s': 'అండర్ -18స్', 'Under-24s': 'అండర్ -24స్',
+#         'Under-19s': 'అండర్ -19స్', 'Under-16s': 'అండర్ -16స్', 'Under-23s': 'అండర్ -23స్'
+#     }
+#     translated_output = ""
+#     twos = [ke for ke in capitals.keys() if len(ke.split(" ")) == 2]
+#     ones = [ke for ke in capitals.keys() if len(ke.split(" ")) == 1]
+#     try:
+#         for j in range(len(actual_list)):
+#             # print("Actual team name", actual_list[j])
+#             tokenized = actual_list[j].split(" ")
+#             for i in range(len(tokenized)-1):
+#                 cur = tokenized[i] + " " + tokenized[i+1]
+#                 if cur in twos:
+#                     t = capitals[cur].split(" ")
+#                     tokenized[i] = t[0]
+#                     tokenized[i+1] = t[1]
+#             for i in range(len(tokenized)):
+#                 if tokenized[i] in ones:
+#                     tokenized[i] = capitals[tokenized[i]]
+#             actual_list[j] = ' '.join(tokenized)
+#             # print("Updated team name", actual_list[j])
+#         translated_output = getTransliteratedDescription(
+#             ', '.join(actual_list))
+#         return translated_output
+#     except Exception as e:
+#         print("Level 2", e)
+#         try:
+#             translated_output = getTranslatedDescription(actual_list)
+#             if ']]' in translated_output:
+#                 translated_output = translated_output.replace(']]', ']')
+#             actual_list = list(ast.literal_eval(translated_output))
+#             return ', '.join(actual_list)
+#         except Exception as f:
+#             print("Level 3", f)
+#             try:
+#                 translated_output = getTranslatedDescription(
+#                     ', '.join(actual_list))
+#                 return translated_output
+#             except Exception as g:
+#                 print("Final level", g)
+#                 return ', '.join(actual_list)
 
 
 def get_role(role):
@@ -470,7 +470,7 @@ def get_translation(word, prefix_string):
     if not is_valid_string(word) or word == None or pd.isnull(word):
         return ''
     if not word in translated_names.keys():
-        return getTranslatedDescription(word)
+        return word
     if word == "SR":
         if prefix_string == 'Batting_':
             return translated_names[word]
@@ -779,33 +779,33 @@ def get_token_translation(token):
     return change_abbr(token)
 
 
-def get_debut_string(deb):
-    global month_names
-    if not is_valid_string(deb) or deb == None or pd.isnull(deb):
-        return ''
-    deb = deb.replace(" vs ", " versus ")
-    months_in_deb = [month for month in month_names.keys() if month in deb]
-    for month in months_in_deb:
-        deb = deb.replace(month, month_names[month])
-    tokens = deb.split(" ")
-    for j in range(len(tokens)):
-        tok = tokens[j]
-        if len(tok) > 0 and tok[-1] >= 'A' and tok[-1] <= 'Z':
-            tokens[j] = get_token_translation(tok)
-    deb = ' '.join(tokens)
-    occ = deb.find(" at ")
-    if occ == -1:
-        return getTransliteratedDescription(deb)
-    deb = deb[:occ] + ', ' + deb[occ:]
-    occ = deb.find(" at ")
-    occ2 = deb[occ:].find(" - ") + occ
-    if occ2 == -1:
-        occ2 = len(deb)
-    curr_sub = deb[occ:occ2]
-    tokens = curr_sub.split(' ')
-    tokens.append('లో ')
-    deb = deb.replace(curr_sub, ' '.join(tokens[2:]))
-    return getTransliteratedDescription(deb)
+# def get_debut_string(deb):
+#     global month_names
+#     if not is_valid_string(deb) or deb == None or pd.isnull(deb):
+#         return ''
+#     deb = deb.replace(" vs ", " versus ")
+#     months_in_deb = [month for month in month_names.keys() if month in deb]
+#     for month in months_in_deb:
+#         deb = deb.replace(month, month_names[month])
+#     tokens = deb.split(" ")
+#     for j in range(len(tokens)):
+#         tok = tokens[j]
+#         if len(tok) > 0 and tok[-1] >= 'A' and tok[-1] <= 'Z':
+#             tokens[j] = get_token_translation(tok)
+#     deb = ' '.join(tokens)
+#     occ = deb.find(" at ")
+#     if occ == -1:
+#         return getTransliteratedDescription(deb)
+#     deb = deb[:occ] + ', ' + deb[occ:]
+#     occ = deb.find(" at ")
+#     occ2 = deb[occ:].find(" - ") + occ
+#     if occ2 == -1:
+#         occ2 = len(deb)
+#     curr_sub = deb[occ:occ2]
+#     tokens = curr_sub.split(' ')
+#     tokens.append('లో ')
+#     deb = deb.replace(curr_sub, ' '.join(tokens[2:]))
+#     return getTransliteratedDescription(deb)
 
 
 def getData(row):
@@ -922,13 +922,13 @@ def main():
         "bowling_sent1": bowling_sent1,
         "bowling_sent2": bowling_sent2,
         "print_names": print_names,
-        "get_teams_string": get_teams_string,
+        # "get_teams_string": get_teams_string,
         "get_translation": get_translation,
         "get_matches_ref": get_matches_ref,
         "get_stats_ref": get_stats_ref,
-        "getTransliteratedDescription": getTransliteratedDescription,
+        # "getTransliteratedDescription": getTransliteratedDescription,
         "get_role": get_role,
-        "get_debut_string": get_debut_string,
+        # "get_debut_string": get_debut_string,
         "get_trophy_name": get_trophy_name,
         "get_trophy_names_list": get_trophy_names_list
     }
@@ -939,7 +939,7 @@ def main():
         cricket_players_DF.fillna(value="nan", inplace=True)
         ids = cricket_players_DF.Cricinfo_id.tolist()
         all_attributes = cricket_players_DF.columns.tolist()
-        ids = [253802]
+        ids = [28081]
         with open('life.txt', 'w') as fobj:
             for i, cricketer_id in enumerate(ids):
                 required_player = cricket_players_DF.loc[cricket_players_DF['Cricinfo_id'] == cricketer_id]

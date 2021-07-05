@@ -1,6 +1,8 @@
 {%- if gender == "Male" -%}
-    {%- set gender_pronoun_1 = "అతడు" -%}
-    {%- set gender_pronoun_2 = "అతడి" -%}
+    {%- set gender_pronoun_1 = "అతను" -%}
+    {%- set gender_pronoun_2 = "అతని" -%}
+    {%- set gender_pronoun_3 = "ఇతను" -%}
+    {%- set gender_pronoun_4 = "ఇతని" -%}
     {%- set has_played = "ఆడాడు" -%}
     {%- set has_done = "చేశాడు" -%}
     {%- set wears = "ధరిస్తాడు" -%}
@@ -11,6 +13,8 @@
 {%- else -%}
     {%- set gender_pronoun_1 = "ఆమె" -%}
     {%- set gender_pronoun_2 = "ఆమె" -%}
+    {%- set gender_pronoun_3 = "ఈమె" -%}
+    {%- set gender_pronoun_4 = "ఈమె" -%}
     {%- set has_played = "ఆడింది" -%}
     {%- set has_done = "చేసింది" -%}
     {%- set wears = "ధరిస్తుంది" -%}
@@ -76,22 +80,23 @@
     {%- if teams |length > 0 -%}
         {%- if ',' in teams -%}
             {{- [
-                    gender_pronoun_1 ~ ' ' ~ teams ~ ' వంటి వివిధ జట్ల కోసం ' ~ play ~ '. ',
-                    gender_pronoun_1 ~ ' ' ~ teams ~ ' వంటి వివిధ జట్లకు ప్రాతినిధ్యం ' ~ play2 ~ '. '
+                    gender_pronoun_3 ~ ' ' ~ teams ~ ' వంటి వివిధ జట్ల కోసం ' ~ play ~ '. ',
+                    gender_pronoun_3 ~ ' ' ~ teams ~ ' వంటి వివిధ జట్లకు ప్రాతినిధ్యం ' ~ play2 ~ '. '
                 ] |random -}}
         {%- else -%}
             {{- [
-                    gender_pronoun_1 ~ ' ' ~ teams ~ ' జట్టు కోసం ' ~ play ~ '. ',
-                    gender_pronoun_1 ~ ' ' ~ teams ~ ' జట్టుకు ప్రాతినిధ్యం ' ~ play2 ~ '. '
+                    gender_pronoun_3 ~ ' ' ~ teams ~ ' జట్టు కోసం ' ~ play ~ '. ',
+                    gender_pronoun_3 ~ ' ' ~ teams ~ ' జట్టుకు ప్రాతినిధ్యం ' ~ play2 ~ '. '
                 ] |random -}}
         {%- endif -%}
     {%- endif -%}
     {%- if jersey_number > 0 -%}
         {{- [
                 gender_pronoun_1 ~ ' ' ~ jersey_number |string ~ ' వ అంకె జెర్సీ ' ~ wears ~ '. ',
-                gender_pronoun_2 ~ ' జెర్సీ సంఖ్య ' ~ jersey_number |string ~ '. ',
+                gender_pronoun_4 ~ ' జెర్సీ సంఖ్య ' ~ jersey_number |string ~ '. ',
                 gender_pronoun_1 ~ ' ధరించే జెర్సీ సంఖ్య ' ~ jersey_number |string ~ '. '
             ] |random -}}
+        {{- "<ref>[https://www.cricketerlife.com/cricket-jersey-number/ " ~ player_name ~ " జెర్సీ సంఖ్య]</ref>" -}}
     {%- endif -%}
     {{- get_stats_ref(all_ref, player_name) -}}
     {{- "\n" -}}
@@ -104,12 +109,12 @@
     {{- opening_sentence('బ్యాట్స్‌మన్‌గా', player_name, sum_batting_matches, sum_batting_innings, has_played) -}}
     {%- if sum_batting_runs > 0 -%}
         {%- if sum_batting_runs > 1 -%}
-            {{- gender_pronoun_1 ~ ' తన కెరీర్ లో మొత్తం ' ~ sum_batting_runs |string ~ ' పరుగులు ' ~ has_done ~ '. ' -}}
+            {{- gender_pronoun_3 ~ ' తన కెరీర్ లో మొత్తం ' ~ sum_batting_runs |string ~ ' పరుగులు ' ~ has_done ~ '. ' -}}
         {%- else -%}
-            {{- gender_pronoun_1 ~ ' తన కెరీర్ లో మొత్తం 1 పరుగు ' ~ has_done ~ '. ' -}}
+            {{- gender_pronoun_3 ~ ' తన కెరీర్ లో మొత్తం 1 పరుగు ' ~ has_done ~ '. ' -}}
         {%- endif -%}
     {%- endif -%}
-    {{- batting_sent1(gender_pronoun_1, sum_batting_100s, sum_batting_50s, has_done) -}}
+    {{- batting_sent1(gender_pronoun_3, sum_batting_100s, sum_batting_50s, has_done) -}}
     {%- set line1 = batting_description_func('టెస్ట్ క్రికెట్లో', gender_pronoun_2, test_batting_average, test_batting_strike_rate) -%}
     {%- set line2 = batting_description_func('వన్డే ఇంటర్నేషనల్‌లో', gender_pronoun_2, ODI_batting_average, ODI_batting_strike_rate) -%}
     {%- set line3 = batting_description_func('టీ20 అంతర్జాతీయ మ్యాచ్‌ల్లో', gender_pronoun_2, T20I_batting_average, T20I_batting_strike_rate) -%}
@@ -120,15 +125,15 @@
     {{- "\n" -}}
 {%- endmacro -%}
 
-{%- macro display_table(horizontal_headings, stat_names, table_details, table_name, horizontal_headings_description, prefix_string, is_trophy_table, first_word) -%}
+{%- macro display_table(player_name, horizontal_headings, stat_names, table_details, table_name, horizontal_headings_description, prefix_string, is_trophy_table, first_word) -%}
     {%- if horizontal_headings |length > 0 and stat_names |length > 0 -%}
         {%- if not is_trophy_table -%}
-            {{- first_word ~ ' ' ~ gender_pronoun_2 ~ ' కెరీర్‌కు సంబంధించిన మరిన్ని వివరాలు క్రింద ఇవ్వబడ్డాయి: ' -}}
+            {{- first_word ~ ' ' ~ gender_pronoun_4 ~ ' కెరీర్‌కు సంబంధించిన మరిన్ని వివరాలు క్రింద ఇవ్వబడ్డాయి: ' -}}
         {%- else -%}
             {%- if horizontal_headings |length == 1 -%}
-                {{- 'ఈ ట్రోఫీలో ' ~ gender_pronoun_2 ~ ' గణాంకాల గురించి మరిన్ని వివరాలు క్రింద ఇవ్వబడ్డాయి: ' -}}
+                {{- 'ఈ ట్రోఫీలో ' ~ player_name ~ ' కి సంబంధించిన గణాంకాల గురించి మరిన్ని వివరాలు క్రింద ఇవ్వబడ్డాయి: ' -}}
             {%- else -%} 
-                {{- 'ఈ ట్రోఫీలలో ' ~ gender_pronoun_2 ~ ' గణాంకాల గురించి మరిన్ని వివరాలు క్రింద ఇవ్వబడ్డాయి: ' -}}
+                {{- 'ఈ ట్రోఫీలలో ' ~ player_name ~ ' కి సంబంధించిన గణాంకాల గురించి మరిన్ని వివరాలు క్రింద ఇవ్వబడ్డాయి: ' -}}
             {%- endif -%}
         {%- endif -%} 
         {{- "\n" -}}
@@ -176,17 +181,22 @@
     {%- endif -%}
 {%- endmacro -%}
 
-{%- macro fielding_description(sum_dismissals, sum_catches, sum_stumpings, is_wicketkeeper) -%}
+{%- macro fielding_description(sum_dismissals, sum_catches, sum_stumpings, is_wicketkeeper, player_role) -%}
     {%- if sum_dismissals > 0 -%}
         {{- "\n" -}}
+        {%- if not 'వికెట్' in player_role -%}
+            {%- set field_role = 'ఫీల్డర్‌గా ' -%}
+        {%- else -%}
+            {%- set field_role = 'వికెట్ కీపర్ గా ' -%}
+        {%- endif -%}
         {%- if sum_dismissals == 1 -%}
             {%- if sum_catches == 1 -%}
-                {{- 'ఫీల్డర్‌గా ' ~ player_name ~ ' తన కెరీర్‌లో, 1 ఫీల్డింగ్ డిస్మిస్సల్ కి ' ~ is_reason ~ ' (1 క్యాచ్‌). ' -}}
+                {{- field_role ~ player_name ~ ' తన కెరీర్‌లో, 1 ఫీల్డింగ్ డిస్మిస్సల్ కి ' ~ is_reason ~ ' (1 క్యాచ్‌). ' -}}
             {%- else -%}
-                {{- 'ఫీల్డర్‌గా ' ~ player_name ~ ' తన కెరీర్‌లో, 1 ఫీల్డింగ్ డిస్మిస్సల్ కి ' ~ is_reason ~ ' (1 స్టంపింగ్). ' -}}
+                {{- field_role ~ player_name ~ ' తన కెరీర్‌లో, 1 ఫీల్డింగ్ డిస్మిస్సల్ కి ' ~ is_reason ~ ' (1 స్టంపింగ్). ' -}}
             {%- endif -%}
         {%- else -%}
-            {{- 'ఫీల్డర్‌గా ' ~ player_name ~ ' తన కెరీర్‌లో, ' ~ sum_dismissals |string ~ ' ఫీల్డింగ్ డిస్మిస్సల్స్ కి ' ~ is_reason ~ ', ' -}}
+            {{- field_role ~ player_name ~ ' తన కెరీర్‌లో, ' ~ sum_dismissals |string ~ ' ఫీల్డింగ్ డిస్మిస్సల్స్ కి ' ~ is_reason ~ ', ' -}}
             {%- if sum_catches == 0 -%}
                 {%- set line = 'ఈ డిస్మిస్సల్స్ లో ' ~ sum_stumpings |string ~ ' స్టంపింగ్స్ ఉన్నాయి. ' -%}
             {%- elif sum_stumpings == 0 -%}
@@ -216,14 +226,14 @@
     {{- "\n" -}}
     {{- opening_sentence('బౌలర్‌గా', player_name, sum_bowling_matches, sum_bowling_innings, has_played) -}}
     {{- bowling_sent1(gender_pronoun_1, sum_bowling_balls, has_done, sum_wickets, has_clinched) -}}
-    {%- set line1 = bowling_description_func('టెస్ట్ క్రికెట్లో', gender_pronoun_2, test_bowling_average, test_bowling_economy) -%}
-    {%- set line2 = bowling_description_func('వన్డే ఇంటర్నేషనల్‌లో', gender_pronoun_2, ODI_bowling_average, ODI_bowling_economy) -%}
-    {%- set line3 = bowling_description_func('టీ20 అంతర్జాతీయ మ్యాచ్‌ల్లో', gender_pronoun_2, T20I_bowling_average, T20I_bowling_economy) -%}
+    {%- set line1 = bowling_description_func('టెస్ట్ క్రికెట్లో', gender_pronoun_4, test_bowling_average, test_bowling_economy) -%}
+    {%- set line2 = bowling_description_func('వన్డే ఇంటర్నేషనల్‌లో', gender_pronoun_4, ODI_bowling_average, ODI_bowling_economy) -%}
+    {%- set line3 = bowling_description_func('టీ20 అంతర్జాతీయ మ్యాచ్‌ల్లో', gender_pronoun_4, T20I_bowling_average, T20I_bowling_economy) -%}
     {%- set details = shuffle_list([line1, line2, line3]) -%}
     {%- for elem in details -%}
         {{- elem -}}
     {%- endfor -%}
-    {{- bowling_sent2(gender_pronoun_2, gender_pronoun_1, bowling_10w_test, bowling_10w_FC, has_clinched) -}}
+    {{- bowling_sent2(gender_pronoun_4, gender_pronoun_1, bowling_10w_test, bowling_10w_FC, has_clinched) -}}
     {{- "\n" -}}
 {%- endmacro -%}
 
@@ -265,15 +275,15 @@
     {{- bowling_description(player_name, sum_bowling_matches, sum_bowling_innings, sum_bowling_balls, sum_wickets, test_bowling_average,
                             test_bowling_economy, ODI_bowling_average, ODI_bowling_economy, T20I_bowling_average, T20I_bowling_economy,
                             bowling_10w_test, bowling_10w_FC) -}}
-    {{- display_table(bowling_format_names, bowling_stat_names, bowling_details, 'బౌలింగ్ కెరీర్ గణాంకాలు', 'ఫార్మాట్', 'Bowling_', False, 'బౌలర్‌గా') -}} 
+    {{- display_table(player_name, bowling_format_names, bowling_stat_names, bowling_details, 'బౌలింగ్ కెరీర్ గణాంకాలు', 'ఫార్మాట్', 'Bowling_', False, 'బౌలర్‌గా') -}} 
 {%- elif is_primary_wicketkeeper -%}
-    {{- fielding_description(sum_dismissals, sum_catches, sum_stumpings, is_primary_wicketkeeper) -}}
-    {{- display_table(fielding_format_names, fielding_stat_names, fielding_details, 'ఫీల్డింగ్ కెరీర్ గణాంకాలు', 'ఫార్మాట్', 'Batting_', False, 'ఫీల్డర్‌గా') -}}
+    {{- fielding_description(sum_dismissals, sum_catches, sum_stumpings, is_primary_wicketkeeper, player_role) -}}
+    {{- display_table(player_name, fielding_format_names, fielding_stat_names, fielding_details, 'ఫీల్డింగ్ కెరీర్ గణాంకాలు', 'ఫార్మాట్', 'Batting_', False, 'ఫీల్డర్‌గా') -}}
 {%- else %}
     {{- batting_description(player_name, sum_batting_matches, sum_batting_innings, sum_batting_runs, sum_batting_100s, 
                             sum_batting_50s, test_batting_average, test_batting_strike_rate, ODI_batting_average, 
                             ODI_batting_strike_rate, T20I_batting_average, T20I_batting_strike_rate) -}}
-    {{- display_table(batting_format_names, batting_stat_names, batting_details, 'బ్యాటింగ్ కెరీర్ గణాంకాలు', 'ఫార్మాట్', 'Batting_', False, 'బ్యాట్స్‌మన్‌గా') -}}  
+    {{- display_table(player_name, batting_format_names, batting_stat_names, batting_details, 'బ్యాటింగ్ కెరీర్ గణాంకాలు', 'ఫార్మాట్', 'Batting_', False, 'బ్యాట్స్‌మన్‌గా') -}}  
 {%- endif %}
 
 
@@ -281,10 +291,10 @@
     {{- batting_description(player_name, sum_batting_matches, sum_batting_innings, sum_batting_runs, sum_batting_100s, 
                             sum_batting_50s, test_batting_average, test_batting_strike_rate, ODI_batting_average, 
                             ODI_batting_strike_rate, T20I_batting_average, T20I_batting_strike_rate) -}}
-    {{- display_table(batting_format_names, batting_stat_names, batting_details, 'బ్యాటింగ్ కెరీర్ గణాంకాలు', 'ఫార్మాట్', 'Batting_', False, 'బ్యాట్స్‌మన్‌గా') -}}
+    {{- display_table(player_name, batting_format_names, batting_stat_names, batting_details, 'బ్యాటింగ్ కెరీర్ గణాంకాలు', 'ఫార్మాట్', 'Batting_', False, 'బ్యాట్స్‌మన్‌గా') -}}
 {%- else %}
-    {{- fielding_description(sum_dismissals, sum_catches, sum_stumpings, is_primary_wicketkeeper) -}}
-    {{- display_table(fielding_format_names, fielding_stat_names, fielding_details, 'ఫీల్డింగ్ కెరీర్ గణాంకాలు', 'ఫార్మాట్', 'Batting_', False, 'ఫీల్డర్‌గా') -}}
+    {{- fielding_description(sum_dismissals, sum_catches, sum_stumpings, is_primary_wicketkeeper, player_role) -}}
+    {{- display_table(player_name, fielding_format_names, fielding_stat_names, fielding_details, 'ఫీల్డింగ్ కెరీర్ గణాంకాలు', 'ఫార్మాట్', 'Batting_', False, 'ఫీల్డర్‌గా') -}}
 {%- endif %}
 
 
@@ -292,13 +302,13 @@
     {{- batting_description(player_name, sum_batting_matches, sum_batting_innings, sum_batting_runs, sum_batting_100s, 
                             sum_batting_50s, test_batting_average, test_batting_strike_rate, ODI_batting_average, 
                             ODI_batting_strike_rate, T20I_batting_average, T20I_batting_strike_rate) -}}
-    {{- display_table(batting_format_names, batting_stat_names, batting_details, 'బ్యాటింగ్ కెరీర్ గణాంకాలు', 'ఫార్మాట్', 'Batting_', False, 'బ్యాట్స్‌మన్‌గా') -}}
+    {{- display_table(player_name, batting_format_names, batting_stat_names, batting_details, 'బ్యాటింగ్ కెరీర్ గణాంకాలు', 'ఫార్మాట్', 'Batting_', False, 'బ్యాట్స్‌మన్‌గా') -}}
 {%- else -%}
     {{- bowling_description(player_name, sum_bowling_matches, sum_bowling_innings, sum_bowling_balls, sum_wickets, test_bowling_average,
                             test_bowling_economy, ODI_bowling_average, ODI_bowling_economy, T20I_bowling_average, T20I_bowling_economy,
                             bowling_10w_test, bowling_10w_FC) -}}
-    {{- display_table(bowling_format_names, bowling_stat_names, bowling_details, 'బౌలింగ్ కెరీర్ గణాంకాలు', 'ఫార్మాట్', 'Bowling_', False, 'బౌలర్‌గా') -}} 
+    {{- display_table(player_name, bowling_format_names, bowling_stat_names, bowling_details, 'బౌలింగ్ కెరీర్ గణాంకాలు', 'ఫార్మాట్', 'Bowling_', False, 'బౌలర్‌గా') -}} 
 {%- endif -%}
 
 {{- trophy_description(player_name, major_trophy_and_championship_names) -}}
-{{- display_table(trophy_names, trophy_stat_names, trophy_details, 'ప్రధాన ట్రోఫీల గణాంకాలు', 'ట్రోఫీ పేరు', '', True, '') -}}
+{{- display_table(player_name, trophy_names, trophy_stat_names, trophy_details, 'ప్రధాన ట్రోఫీల గణాంకాలు', 'ట్రోఫీ పేరు', '', True, '') -}}
