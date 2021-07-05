@@ -83,8 +83,9 @@
 
 {%- macro Overview(Player_Name,full_name_english,profile_ref,Gender,Full_Name,Born_ov,age,Nationality,career_span,Playing_Role,Batting_Style,Bowling_Style,Teams,Major_trophies,AWARDS) -%}
 	{% if Gender == "Male" %}
-		{%- set gender_pronoun_1 = "అతడు" -%}
-		{%- set gender_pronoun_2 = "అతడి" -%}
+		{%- set gender_pronoun_1 = "అతను" -%}
+		{%- set gender_pronoun_2 = "అతని" -%}
+		{%- set gender_pronoun_6 = "ఇతను" -%}
 		{%- set gender_pronoun_3 = "ఆడాడు" -%}
 		{%- set gender_pronoun_4 = "పాల్గొన్నాడు" -%}
 		{%- set gender_pronoun_5 = "గెలుచుకున్నాడు" -%}
@@ -92,6 +93,7 @@
 	{%- else -%}
 		{%- set gender_pronoun_1 = "ఆమె" -%}
 		{%- set gender_pronoun_2 = "ఆమె" -%}
+		{%- set gender_pronoun_6 = "ఈమె" -%}
 		{%- set gender_pronoun_3 = "ఆడింది" -%}
 		{%- set gender_pronoun_4 = "పాల్గొన్నది" -%}
 		{%- set gender_pronoun_5 = "గెలుచుకుంది" -%}
@@ -127,25 +129,25 @@
 	{{[country1] | random}}
 	{%- endif -%}
     {%- if career_span != 'nan' -%}
-        {%- set span_line1=[' ',gender_pronoun_1,' కెరీర్ ',career_span, ' సంవత్సరాలలో విస్తరించింది. '] | join('')-%}
-		{%- set span_line2=[' ',career_span,' సంవత్సరాలలో ',gender_pronoun_2,' కెరీర్ విస్తరించింది. '] | join('')-%}
+        {%- set span_line1=[' ',gender_pronoun_2,' కెరీర్ ',career_span, ' సంవత్సరాల మధ్యలో క్రియాశీలంగా ఉంది. '] | join('')-%}
+		{%- set span_line2=[' ',career_span,' సంవత్సరాల మధ్యలో ',gender_pronoun_2,' కెరీర్ క్రియాశీలంగా ఉంది. '] | join('')-%}
 		{{[span_line1,span_line2] | random}}
 	{%- endif -%}
     {%- if Playing_Role != 'nan' -%}
-		{%- set span_role1=[gender_pronoun_1,' ఒక ',Playing_Role,'. '] | join('')-%}
+		{%- set span_role1=[Player_Name,' ఒక ',Playing_Role,'. '] | join('')-%}
         {{[span_role1] | random}}
 	{%- endif -%}
 	{%- if Batting_Style != 'nan' and Bowling_Style != 'nan' -%}
-    	{%-set line4 =  [gender_pronoun_1,' ఒక ',Batting_Style,' బ్యాట్స్‌మన్, ',Bowling_Style,' బౌలర్. '] | join('')-%}
+    	{%-set line4 =  [gender_pronoun_6,' ఒక ',Batting_Style,' బ్యాట్స్‌మన్, ',Bowling_Style,' బౌలర్. '] | join('')-%}
         {{[line4] | random}}
 	{%- elif Batting_Style != 'nan' -%}
-	{%-set line4 =  [gender_pronoun_1,' ఒక ',Batting_Style,' బ్యాట్స్‌మన్. '] | join('')-%}
+	{%-set line4 =  [gender_pronoun_6,' ఒక ',Batting_Style,' బ్యాట్స్‌మన్. '] | join('')-%}
         {{[line4] | random}}
 	{%- elif Bowling_Style != 'nan' -%}
-	{%-set line4 =  [gender_pronoun_1,' ఒక ',Bowling_Style,' బౌలర్. '] | join('')-%}
+	{%-set line4 =  [gender_pronoun_6,' ఒక ',Bowling_Style,' బౌలర్. '] | join('')-%}
         {{[line4] | random}}
 	{%- endif -%}
-    {%- if Teams |length > 0 -%}
+    {%- if Teams != 'nan' -%}
 	{%- if ',' in Teams -%}
     	{%-set line4 =  [gender_pronoun_1,' ',Teams,' మొదలైన జట్టులలో ',gender_pronoun_3,'.'] | join('')-%}
         {{[line4] | random}}
@@ -155,7 +157,7 @@
 	{%- endif -%}	
 	{%- endif -%}
     {%- if Major_trophies != 'nan' -%}
-		{%- if Major_trophies|length > 1 -%}
+		{%- if ',' in Major_trophies -%}
 		{%- set line1 = [' ',gender_pronoun_1,' ',Major_trophies,' వంటి ఎన్నో ప్రసిద్ధి చెందిన ట్రోఫీలలో ', gender_pronoun_4, '. ' ] | join('') -%}
    			{{[line1] | random}}
 		{%- else -%}
@@ -167,7 +169,7 @@
 
     {%- if AWARDS != 'nan' -%}
 		{%- if AWARDS|length > 1 -%}
-			{{ AWARDS[0]}}, {{ AWARDS[1]}} వంటి ఎన్నో అవార్డులు, పురస్కారాలు {{gender_pronoun_5}}.
+			{{ AWARDS[0]}}, {{ AWARDS[3]}} వంటి ఎన్నో అవార్డులు, పురస్కారాలు {{gender_pronoun_5}}.
 		{%- else -%}
 			{{gender_pronoun_1}} {{ AWARDS[0]}} పురస్కారం {{gender_pronoun_5}}.
 		{%- endif -%}
