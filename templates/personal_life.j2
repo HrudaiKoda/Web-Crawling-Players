@@ -44,6 +44,12 @@
 {% set y = new_dict.__setitem__("Birth_Place",list_str(new_dict["Birth_Place"],5)) %}
 
 {% endif %}
+{%- if new_dict["Death_Date"] != "nan"%}
+{% set y = new_dict.__setitem__("Death_Date",list_str(new_dict["Death_Date"],2)) %}
+{%-endif-%}  
+{%- if new_dict["Death_Place"] != "nan"%}
+{% set y = new_dict.__setitem__("Death_Place",list_str(new_dict["Death_Place"],4)) %}
+{%-endif-%}
 ==వ్యక్తిగత జీవితం== 
 {{'\n'}}
 {%- if new_dict["Birth_Place"] != 'nan' and new_dict["Birth_Date"] != "-1"%}
@@ -68,20 +74,15 @@
 {%- set s = new_dict["Relations"]-%}
 {{relation_print(s)}}
 {%-endif-%}
-{%- if new_dict["Death_Date"] != "nan"%}
-{% set y = new_dict.__setitem__("Death_Date",list_str(new_dict["Death_Date"],2)) %}
-{%-endif-%}  
-{%- if new_dict["Death_Place"] != "nan"%}
-{% set y = new_dict.__setitem__("Death_Place",list_str(new_dict["Death_Place"],4)) %}
-{%-endif-%}
+
 {%-if new_dict["Death_Date"] != 'nan' and  new_dict["Death_Place"] != 'nan'-%}
-{%-set line1 = [gender_pronoun_1," ",new_dict["Death_Date"],"న ",new_dict["Death_Place"],"లో ",die,"."] | join('')-%}
+{%-set line1 = [" ",gender_pronoun_1," ",new_dict["Death_Date"],"న ",new_dict["Death_Place"],"లో ",die,"."] | join('')-%}
 {{[line1] | random}}
 {%- elif new_dict["Death_Date"] != 'nan'-%}
-{%-set line1 = [gender_pronoun_1," ",new_dict["Death_Date"],"న ",die,"."] | join('')-%}
+{%-set line1 = [" ",gender_pronoun_1," ",new_dict["Death_Date"],"న ",die,"."] | join('')-%}
 {{[line1] | random}}
 {%- elif new_dict["Death_Place"] != 'nan'  -%}
-{%-set line1 = [gender_pronoun_1," ",new_dict["Death_Place"],"లో ",die,"."] | join('')-%}
+{%-set line1 = [" ",gender_pronoun_1," ",new_dict["Death_Place"],"లో ",die,"."] | join('')-%}
 {{[line1] | random}}
 {%-endif-%}
 {%endmacro%}
