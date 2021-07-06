@@ -149,19 +149,19 @@
 	{%- endif -%}
     {%- if Teams != 'nan' -%}
 	{%- if ',' in Teams -%}
-    	{%-set line4 =  [gender_pronoun_1,' ',Teams,' మొదలైన జట్టులలో ',gender_pronoun_3,'.'] | join('')-%}
+    	{%-set line4 =  [gender_pronoun_1,' ',Teams,' మొదలైన జట్టులలో ',gender_pronoun_3,'. '] | join('')-%}
         {{[line4] | random}}
 	{%- else -%}
-		{%-set line4 =  [gender_pronoun_1,' ',Teams,' జట్టుకి ',gender_pronoun_3,'.'] | join('')-%}
+		{%-set line4 =  [gender_pronoun_1,' ',Teams,' జట్టుకి ',gender_pronoun_3,'. '] | join('')-%}
         {{[line4] | random}}
 	{%- endif -%}	
 	{%- endif -%}
     {%- if Major_trophies != 'nan' -%}
 		{%- if ',' in Major_trophies -%}
-		{%- set line1 = [' ',gender_pronoun_1,' ',Major_trophies,' వంటి ఎన్నో ప్రసిద్ధి చెందిన ట్రోఫీలలో ', gender_pronoun_4, '. ' ] | join('') -%}
+		{%- set line1 = [gender_pronoun_1,' ',Major_trophies,' వంటి ఎన్నో ప్రసిద్ధి చెందిన ట్రోఫీలలో ', gender_pronoun_4, '. ' ] | join('') -%}
    			{{[line1] | random}}
 		{%- else -%}
-		{%- set line1 = [' ',gender_pronoun_1,' ',Major_trophies,' ట్రోఫీలో ', gender_pronoun_4, '. ' ] | join('') -%}
+		{%- set line1 = [gender_pronoun_1,' తన కెరీర్ లో ',Major_trophies,' లో ', gender_pronoun_4, '. ' ] | join('') -%}
    			{{[line1] | random}}
 		{%- endif -%}
 
@@ -171,7 +171,7 @@
 		{%- if AWARDS|length > 1 -%}
 			{{ AWARDS[0]}}, {{ AWARDS[3]}} వంటి ఎన్నో అవార్డులు, పురస్కారాలు {{gender_pronoun_5}}.
 		{%- else -%}
-			{{gender_pronoun_1}} {{ AWARDS[0]}} పురస్కారం {{gender_pronoun_5}}.
+			{{Player_Name}} {{ AWARDS[0]}} పురస్కారం {{gender_pronoun_5}}.
 		{%- endif -%}
 	{%- endif -%}
 {%- endmacro -%}

@@ -12,6 +12,11 @@ def date(row):
         return 'nan'
     row = ast.literal_eval(row)
     return row[1]
+def height(row):
+    if not is_valid_string(row):
+        return 'nan'
+    row = int(row)
+    return row
 
 def get_source(profile_ref, player_name):
     return profile_ref + " " + player_name + " ప్రొఫైల్"
@@ -67,7 +72,7 @@ def getData(row):
         'Player_Name': row['Player_Name_Telugu'].values[0],
         'Nationality': row['Nationality_Telugu'].values[0].strip(),
         'Born': birth_date,
-        'Birth_place': row['Birth_Place_telugu_transliterated'].values[0],
+        'Birth_place': row['Birth_Place_Telugu'].values[0],
         'Born_ov': birth_overview,
         'age': row['Age_telugu'].values[0],
         'Died': row['Died_telugu'].values[0],
@@ -75,12 +80,13 @@ def getData(row):
         'career_span': row['career_span'].values[0],
         'Batting_Style': row['Batting_Style_telugu'].values[0],
         'Bowling_Style': row['Bowling_Style_telugu'].values[0],
-        'height_in_feets': row['height_in_feets'].values[0],
-        'height_in_inches': row['height_in_inches'].values[0],
+        'height_in_feets': height(row['height_in_feets'].values[0]),
+        'height_in_inches': height(row['height_in_inches'].values[0]),
         'height_in_meters': row['height_in_meters'].values[0],
         'Gender': row['Gender'].values[0],
+
         'Playing_Role': row['Playing Role_Telugu'].values[0],
-        'Teams': row['teams_ov_telugu'].values[0],
+        'Teams': row['teams_ov_telugu_y'].values[0],
         'testdebutdate': date(row['Test_info_Matches_debut_Telugu'].values[0]),
         'testdebutyear': year(row['Test_info_Matches_debut_Telugu'].values[0]),
         'testdebutagainst': against(row['Test_info_Matches_debut_Telugu'].values[0]),
@@ -112,20 +118,19 @@ def main():
     file_loader = FileSystemLoader('./template')
     env = Environment(loader=file_loader)
     template = env.get_template('info.j2')
-    # glob = {'conv': conv}
     glob = {'get_profile_ref': get_profile_ref, 'get_source': get_source, 'conv': conv}
     template.globals.update(glob)
     cricket_players_DF = pd.read_csv("final_cricket_players_translated_dataset_with_images.csv")
-    # pickle.load(open('./data/pickle.pkl', 'rb'))
     cricket_players_DF.fillna(value="nan", inplace=True)
     # cricket_players_DF.to_csv("1234.csv")
     ids = cricket_players_DF.columns.tolist()
     # row = cricket_players_DF.loc[cricket_players_DF['Cricinfo_id'] == 253802]
     # text = getData(row)
-    # print(text)
+    # print(ids)
     with open('infoandoverview.txt', 'w', encoding='utf-8') as fobj:
         # row = moviesDF.head(12).tail(1)
-        row = cricket_players_DF.loc[cricket_players_DF['Cricinfo_id'] == 28081]
+        row = cricket_players_DF.loc[cricket_players_DF['Cricinfo_id'] == 54273]
+        # print(row['trophy_names_Telugu'].values[0])
         text = template.render(getData(row))
         fobj.write(text)
 
