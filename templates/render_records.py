@@ -22,7 +22,7 @@ def getData(row):
 	t20i_records = row.t20i_records_telugu.values[0]
 	gender = row.Gender.values[0]
 	references = ast.literal_eval(row.References.values[0])
-	awards = row.awards_telugu.values[0]
+	awards = str(row.awards_telugu.values[0])
 
 
 	if(all_records !='[]'):
@@ -123,8 +123,7 @@ def main():
 	fobj.write(tewiki+'\n')
 
 	#row = cricketDF.head(12).tail(1)
-	row = cricketDF.loc[cricketDF['Cricinfo_id'] == 253802]
-	#row = cricketDF.loc[cricketDF['Cricinfo_id'] == 54950]
+	row = cricketDF.loc[cricketDF['Cricinfo_id'] == 54273]
 
 	text = template.render(getData(row))
 	player_name = row.Player_Name_Telugu.values[0]
@@ -140,3 +139,8 @@ def main():
 
 if __name__ == '__main__':
 	main()
+
+
+
+
+
