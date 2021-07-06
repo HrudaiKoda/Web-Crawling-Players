@@ -55,20 +55,18 @@ def list_str(val,check_year):
         p = inter_wiki_date(val)
     elif(check_year == 3):
         p = interwiki(val)
+    elif(check_year == 5):
+        pr = val
+        return pr
     else:
-        pr = str(val)
-    
-        p = pr.replace("[","")
-        p = p.replace("]","")
-        p = p.replace("'","")
-
-        if(check_year == 1):
-            p = p.replace("Y"," సంవత్సరాల")
-            p = p.replace("D"," రోజులు")
-    
+        
+        pr = ast.literal_eval(val)
+        p = (", ").join(pr)
+        p = p.replace(", (","(")
+        p = p.replace("( ","(")
     return p
 def nan_check(x):
-    if(x == -1 or x == "nan" or x == 0 or x == "-1"):
+    if(x == -1 or x == "nan" or x == "-1"):
         return "-"
     else:
         return x
@@ -78,6 +76,8 @@ def drop_row(dataset,e):
         d = dataset[e*i:e*i+e]
         p = set(d)
         if(len(p) == 1 and "-" in p):
+            row_drop.append(i)
+        elif(len(p) == 1 and 0 in p):
             row_drop.append(i)
     return row_drop
 
@@ -118,7 +118,6 @@ def change_abbr(h):
     }
     n = ""
     for i in range(len(h)):
-        print(h)
         if(ord(h[i]) >= 65 and ord(h[i]) <= 90):
             n = n + alpha[h[i].upper()] +"."
         else:
@@ -128,7 +127,11 @@ def relation_print(li):
     ret = ast.literal_eval(li)
     s= ""
     for i in range(len(ret)):
-        s = s + ret[i][0] + ret[i][1]
+        s = s + ret[i][0] + ret[i][1] + " "
+    if(s[-1] == " "):
+        s = s[0:-1] + "."
+    else:
+        s = s+ "."
     return s
 def table_check(data):
     one = 0
@@ -182,10 +185,11 @@ func_dict = {
     "relation_print":relation_print
 }
 
+lis_id = [53783]
 def render(template):
-    a = pd.read_csv("final_rel_change.csv",low_memory=False)
+    a = pd.read_csv("use_this_3.csv",low_memory=False)
     head = list(a.columns)
-    val = a.loc[a["Cricinfo_id"] == 7913]
+    val = a.loc[a["Cricinfo_id"] ==10846]
     val = val.replace(np.nan ,"nan")
     val = val.fillna("nan")
     val = dict(val.squeeze())
@@ -196,8 +200,6 @@ def render(template):
     return template_string
 
 if __name__ == "__main__":
-    print(render(template="personal_life.j2"))
-
-    print(render(template="template.j2"))
-
-
+    tem = render(template="personal_life.j2")
+    print(tem)
+    print(render(template="stat_render.j2"))
